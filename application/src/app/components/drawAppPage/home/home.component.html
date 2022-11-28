@@ -1,0 +1,43 @@
+<h1 class="text-center mt-3">Register</h1>
+<div class="container">
+  <div class="row">
+    <div>
+      <label for="emailInput" class="form-label text-center">Name:</label>
+      <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp" placeholder="Drawfriend42" #userName>
+      <div id="nameInputHelp" class="form-text">Mininum of 4 characters</div>
+    </div>
+  </div>
+  <!-- <div class="row">
+    <div>
+      <label for="passwordInput" class="form-label text-center">Passwort:</label>
+      <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp" placeholder="Passwort" #password>
+      <div id="passwordInputHelp" class="form-text">Mindestens 6 Zeichen</div>
+    </div>
+  </div> -->
+  <hr>
+  <!-- Erweiterte Anmeldemöglichkeiten für später -->
+  <!-- <div class="mb-3 row d-flex justify-content-center ">
+    <label for="emailInput" class="form-label text-center">E-Mail:</label>
+    <input type="email" class="form-control w-75" id="emailInput" aria-describedby="emailHelp" placeholder="max.mustermann@gmail.com" #email>
+    <div id="emailHelp" class="form-text w-75">Wir geben deine E-mail nicht weiter.</div>
+  </div>
+
+  <div class="mb-3 row d-flex justify-content-center text-center">
+    <label for="passwordInput" class="form-label">Passwort:</label>
+    <input type="password" class="form-control w-75" id="passwordInput" #_passw>
+  </div>-->
+
+  <div class="row mt-3">
+    <div class="col pt-1 pb-1">
+      <button class="btn btn-success w-100 btn-lg-height btn-gradient"(click)="registerWithName(userName.value, 2)">
+        Register</button>
+    </div>
+    <div class="col pt-1 pb-1">
+      <button class="btn btn-secondary float-end w-100 btn-lg-height" (click)="registerAsGuest()">Guest</button>
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-1">
+  {{errorDisplayMessage}}
+</div>

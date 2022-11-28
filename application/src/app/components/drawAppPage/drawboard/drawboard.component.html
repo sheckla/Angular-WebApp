@@ -1,0 +1,62 @@
+<div class="" >
+
+  <div class="mt-2 mb-2">
+    <div class="row ">
+      <div class="col-4">
+        <button id="saveImageButton" type="button" class="btn btn-success text-nowrap m-1 mx-0">Save Image</button>
+      </div>
+      <div class="col-8">
+          <button type="button" class="btn btn-secondary float-end m-1 ml-1" (click)="buttonGenerateConfetti()"> Confetti </button>
+          <button type="button" class="btn btn-secondary float-end m-1 " (click)="buttonClearSessionCanvas()"> Reset Session </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pt-1 pb-1 h-auto ">
+    <div class="row w-100">
+      <div id="widthForCanvas" style="height: 40em">
+        <canvas id="zeichenflaeche" class="bg-white " style="touch-action:none" ></canvas>
+        <script type="module" src="drawAppCanvas.js"></script>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mt-2 mb-2">
+    <div class="row ">
+      <div class="col-4">
+        <button id="clear" type="button" class="btn btn-danger m-1" (click)="buttonClearClientCanvas()">Wipe off</button>
+      </div>
+      <div class="col-8">
+            <div class="btn-group float-end m-1">
+              <button type="button" id="drawSizeMinusButton" class="btn btn-primary ">-</button>
+              <button type="button" id="resetDrawSizeButton" class="btn btn-primary text-nowrap ">Draw Size: 4</button> <!-- disabled um den Button auszugrauen-->
+              <button type="button" id="drawSizePlusButton" class="btn btn-primary ">+</button>
+            </div>
+            <button id="undo" type="button" class="btn btn-secondary float-end m-1 ml-1">Undo</button>
+            <button id="redo" type="button" class="btn btn-secondary float-end m-1">Redo</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pt-1 pb-1">
+    <div class="row ">
+      <div class="col">
+      </div>
+
+      <div class="col col-sm-auto">
+        <div class="row">
+          <div class="col">
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,68 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  font-family: 'Trebuchet MS', sans-serif, 'Fredoka', sans-serif !important;
+}
+
+html, body { height: 100%;
+  background-color: background-color !important;
+}
+
+body { margin: 0;
+}
+
+.form-control {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.button-secondary {
+  color: rgb(210, 32, 255) !important;
+}
+
+.btn-lg-height {
+  font-size: large!important;
+}
+
+.btn-gradient {
+  background: linear-gradient(45deg, rgb(179, 30, 176) , rgb(74, 15, 163));
+  transition: 0.1s !important;
+}
+
+.btn-gradient:hover {
+  filter: brightness(120%);
+}
+
+.theme-gradient {
+  background: linear-gradient(45deg,rgb(179,30,176),rgb(74, 15, 163));
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.theme-gradient-header {
+  background: linear-gradient(0.25turn,rgb(74, 15, 163),rgb(179,30,176), rgb(74, 15, 163));
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.theme-gradient-center {
+  background-color: rgb(179,30,176);
+}
+
+.theme-gradient-left {
+  background: linear-gradient(-45deg,rgb(179,30,176),rgb(74, 15, 163));
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.theme-gradient-right {
+  background: linear-gradient(45deg,rgb(179,30,176),rgb(74, 15, 163));
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.top-rounded {
+  border-radius: 33px 0px 33px 0px !important;
+  border-bottom: 7px solid rgba(255,255,255, .2) !important;
+}
+
+.sat {
+  filter: saturate(.4);
+}
+
+

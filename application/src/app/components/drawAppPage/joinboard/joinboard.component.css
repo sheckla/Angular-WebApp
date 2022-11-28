@@ -1,0 +1,52 @@
+/*  https://www.w3.org/TR/wai-aria-practices/examples/listbox/listbox-scrollable.html
+*/
+
+#mylist {
+  max-height: 200px;
+  overflow-y: auto;
+}
+.dummy {
+  min-height: 80px;
+  background-color: lightgrey;
+}
+
+.room-display-text {
+  text-align: left !important;
+  background-color: #464646 !important
+}
+
+.img {
+  width:1em;
+  filter: saturate(0%) contrast(0%) brightness(500%)
+  invert(0%) sepia(0%) hue-rotate(0deg);
+}
+
+text-left_ {
+  text-align: left !important;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid #595c5f;
+}
+
+[role="listbox"] {
+  margin: 1em 0 0;
+  padding: 0;
+  min-height: 24em;
+  border: 1px solid #595c5f;
+  background: white;
+}
+
+[role="listbox"]#ss_elem_list {
+  position: relative;
+  max-height: 18em;
+  overflow-y: auto;
+}
+
+.li-chat {
+  border-bottom: 1px solid #595c5f;
+  color: #e2e2e2;
+}
