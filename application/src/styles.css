@@ -4,13 +4,6 @@
   font-family: 'Trebuchet MS', sans-serif, 'Fredoka', sans-serif !important;
 }
 
-html, body { height: 100%;
-  background-color: background-color !important;
-}
-
-body { margin: 0;
-}
-
 .form-control {
   background-color: rgb(255, 255, 255) !important;
 }

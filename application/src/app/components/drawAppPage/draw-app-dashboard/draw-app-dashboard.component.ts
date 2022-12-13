@@ -1,16 +1,16 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserHandlerService } from 'src/app/components/drawAppPage/services/user-handler.service';
 import * as socketio from '../../../../assets/js/socketio';
-import { DrawboardComponent } from '../drawboard/drawboard.component';
-import * as chatScrollHandler from './chatScrollHandler.js'
+import { DrawAppCanvasComponent } from '../draw-app-canvas/draw-app-canvas.component';
+import * as chatScrollHandler from '../draw-app-dashboard/chatScrollHandler.js'
 
 @Component({
-  providers:[DrawboardComponent],
-  selector: 'app-joinboard',
-  templateUrl: './joinboard.component.html',
-  styleUrls: ['./joinboard.component.css']
+  providers:[DrawAppCanvasComponent],
+  selector: 'app-draw-app-dashboard',
+  templateUrl: './draw-app-dashboard.component.html',
+  styleUrls: ['./draw-app-dashboard.component.css']
 })
-export class JoinboardComponent implements OnInit {
+export class DrawAppDashboardComponent implements OnInit {
   roomName: String = '';
   userName : String = '';
   userIsConnected = false;
@@ -25,7 +25,7 @@ export class JoinboardComponent implements OnInit {
   HTMLUserListArray: string[] = [];
   HTMLChatMessagesArray: string[] = [];
 
-  constructor(private userHandlerService: UserHandlerService, private zeichenflaeche: DrawboardComponent) {
+  constructor(private userHandlerService: UserHandlerService, private zeichenflaeche: DrawAppCanvasComponent) {
     this.subcribeToUserHandlerService();
   }
 

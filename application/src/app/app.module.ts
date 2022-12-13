@@ -8,26 +8,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { IndexComponent } from './components/indexPage/index/index.component';
-import { DrawAppComponent } from './components/drawAppPage/draw-app/draw-app.component';
-import { DrawboardComponent } from './components/drawAppPage/drawboard/drawboard.component';
-import { DrawtoolsComponent } from './components/drawAppPage/drawtools/drawtools.component';
-import { HomeComponent } from './components/drawAppPage/home/home.component';
-import { JoinboardComponent } from './components/drawAppPage/joinboard/joinboard.component';
+import { DrawAppLayoutComponent } from './components/drawAppPage/draw-app-layout/draw-app-layout.component';
+import { DrawAppCanvasComponent } from './components/drawAppPage/draw-app-canvas/draw-app-canvas.component';
+import { DrawAppToolsComponent } from './components/drawAppPage/draw-app-tools/draw-app-tools.component';
+import { UserLoginComponent } from './components/drawAppPage/user-login/user-login.component';
+import { DrawAppDashboardComponent } from './components/drawAppPage/draw-app-dashboard/draw-app-dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { QuizAppComponent } from './components/quiz-app/quiz-app.component';
+import { QuizAppLayoutComponent } from './components/quizPage/quiz-app-layout/quiz-app-layout.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DrawboardComponent,
+    DrawAppCanvasComponent,
     NavbarComponent,
-    HomeComponent,
-    DrawtoolsComponent,
-    JoinboardComponent,
-    DrawAppComponent,
+    UserLoginComponent,
+    DrawAppToolsComponent,
+    DrawAppDashboardComponent,
+    DrawAppLayoutComponent,
     IndexComponent,
-    QuizAppComponent,
+    QuizAppLayoutComponent,
   ],
   imports: [
     BrowserModule,

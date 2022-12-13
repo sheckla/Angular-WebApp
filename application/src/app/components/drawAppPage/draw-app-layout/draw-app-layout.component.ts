@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UserHandlerService } from 'src/app/components/drawAppPage/services/user-handler.service';
 
 @Component({
-  selector: 'app-draw-app',
-  templateUrl: './draw-app.component.html',
-  styleUrls: ['./draw-app.component.css']
+  selector: 'app-draw-app-layout',
+  templateUrl: './draw-app-layout.component.html',
+  styleUrls: ['./draw-app-layout.component.css']
 })
-export class DrawAppComponent implements OnInit {
+export class DrawAppLayoutComponent implements OnInit {
   userLoggedIn = false;
   title: any = 'OOAD'
 
