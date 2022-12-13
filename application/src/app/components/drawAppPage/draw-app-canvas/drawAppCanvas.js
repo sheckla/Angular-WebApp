@@ -155,6 +155,8 @@ export function canvasEngine() {
   function resizeCanvas(e) {
     var myCanvas = document.getElementById("zeichenflaeche");
     if (myCanvas) myCanvas.width = document.getElementById("zeichenflaeche").parentNode.parentElement.clientWidth;
+    if (myCanvas) myCanvas.height = document.getElementById("zeichenflaeche").parentNode.parentElement.clientHeight;
+
   }
 
   function resetDrawSize() {

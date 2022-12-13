@@ -1,0 +1,32 @@
+.box {
+  background:red;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+html, body {
+  height:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+table {
+  width:100% !important;
+  height:100% !important;
+  border-collapse: collapse !important;
+}
+td {
+  border:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  height:100% !important;
+}
+#left {
+  background-color:red !important;
+}
+#right {
+  background-color:blue !important;
+}
+

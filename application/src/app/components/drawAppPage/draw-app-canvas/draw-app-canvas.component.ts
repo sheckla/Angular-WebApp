@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as canvas from './drawAppCanvas.js'
+import * as canvas from '../draw-app-canvas/drawAppCanvas.js'
 import * as socketio from '../../../../assets/js/socketio.js';
 import { interval } from 'rxjs';
 import { Point } from './data/Point';
@@ -7,13 +7,13 @@ import { Paths } from './data/ClientPaths';
 import { Path } from './data/Path';
 
 @Component({
-  selector: 'app-drawboard',
-  templateUrl: './drawboard.component.html',
-  styleUrls: ['./drawboard.component.css']
+  selector: 'app-draw-app-canvas',
+  templateUrl: './draw-app-canvas.component.html',
+  styleUrls: ['./draw-app-canvas.component.css']
 })
 
 
-export class DrawboardComponent implements OnInit {
+export class DrawAppCanvasComponent implements OnInit {
   previousClientCanvasStates: any[] = [];
 
   ngOnInit(): void {

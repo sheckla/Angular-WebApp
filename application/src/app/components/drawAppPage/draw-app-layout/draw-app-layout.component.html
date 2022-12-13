@@ -1,0 +1,35 @@
+<body>
+  <div class="container-fluid h-100 text-white bg-dark">
+    <div class="row h-100">
+      <div class="col-md-4 h-100 ">
+        <app-user-login *ngIf="!userLoggedIn; else elseBlock"></app-user-login>
+        <script src="../../../../assets/js/drawAppCanvas.js"></script>
+        <ng-template #elseBlock>
+          <app-draw-app-dashboard></app-draw-app-dashboard>
+        </ng-template>
+      </div>
+      <div class="col-md-8 h-100 ">
+            <app-draw-app-canvas></app-draw-app-canvas>
+            <app-draw-app-tools></app-draw-app-tools>
+      </div>
+    </div>
+  </div>
+
+<!--   <div class="container-fluid text-white bg-dark" >
+
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <app-user-login *ngIf="!userLoggedIn; else elseBlock"></app-user-login>
+        <script src="../../../../assets/js/drawAppCanvas.js"></script>
+      </div>
+
+      <ng-template #elseBlock>
+        <app-draw-app-dashboard></app-draw-app-dashboard>
+      </ng-template>
+
+      <div class="col-md-8" style="align-items: right;">
+      </div>
+    </div>
+  </div> -->
+
+</body>

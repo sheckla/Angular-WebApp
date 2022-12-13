@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DrawAppComponent } from './draw-app.component';
+import { DrawAppLayoutComponent } from './draw-app-layout.component';
 
-describe('DrawAppComponent', () => {
-  let component: DrawAppComponent;
-  let fixture: ComponentFixture<DrawAppComponent>;
+describe('DrawAppLayoutComponent', () => {
+  let component: DrawAppLayoutComponent;
+  let fixture: ComponentFixture<DrawAppLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DrawAppComponent ]
+      declarations: [ DrawAppLayoutComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DrawAppComponent);
+    fixture = TestBed.createComponent(DrawAppLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

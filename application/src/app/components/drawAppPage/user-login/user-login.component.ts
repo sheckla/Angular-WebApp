@@ -2,11 +2,11 @@ import { Component} from '@angular/core';
 import { UserHandlerService } from 'src/app/components/drawAppPage/services/user-handler.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-user-login',
+  templateUrl: './user-login.component.html',
+  styleUrls: ['./user-login.component.css']
 })
-export class HomeComponent {
+export class UserLoginComponent {
   errorDisplayMessage = '';
 
   constructor(private userHandlerService: UserHandlerService){
