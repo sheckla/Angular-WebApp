@@ -38,7 +38,6 @@
               ]
             },
             "scripts": [
-              "./src/app/components/drawAppPage/draw-app-canvas/drawAppCanvas.js"
             ]
           },
           "configurations": {
