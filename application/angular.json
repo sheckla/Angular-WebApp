@@ -38,6 +38,7 @@
               ]
             },
             "scripts": [
+              "src/assets/js/quizClient.js"
             ]
           },
           "configurations": {

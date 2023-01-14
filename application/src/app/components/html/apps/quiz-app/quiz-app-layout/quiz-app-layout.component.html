@@ -1,4 +1,6 @@
 <div class="container-fluid h-100 text-white bg-dark">
+  <div *ngIf="!userLoggedIn; else userLoggedInBlock">
+
     <div class="row h-100">
       <div class="col-md-6 h-100 ">
         <app-user-login></app-user-login>
@@ -7,4 +9,11 @@
         Row2
       </div>
     </div>
+  </div>
+
+  <ng-template #userLoggedInBlock>
+    {{username}} logged in!
+  </ng-template>
+
+
   </div>
