@@ -12,11 +12,11 @@ export class UserLoginComponent {
   constructor(private userHandlerService: UserHandlerService){
   }
 
-  registerAsGuest() {
+  loginAsGuest() {
     this.userHandlerService.updateClientName("Guest" + Math.floor(Math.random() * 2500));
   }
 
-  registerWithName(userName, password) {
+  loginWithName(userName, password) {
     password = "123456"
     if (userName.length >= 3 && password.length >= 6) {
       this.userHandlerService.updateClientName(userName);

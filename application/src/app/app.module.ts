@@ -14,6 +14,7 @@ import { QuizAppLayoutComponent } from './components/html/apps/quiz-app/quiz-app
 import { QuizDashboardComponent } from './components/html/apps/quiz-app/quiz-dashboard/quiz-dashboard.component';
 import { QuizLobbyComponent } from './components/html/apps/quiz-app/quiz-lobby/quiz-lobby.component';
 import { QuizInGameComponent } from './components/html/apps/quiz-app/quiz-in-game/quiz-in-game.component';
+import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-register/quiz-register.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { QuizInGameComponent } from './components/html/apps/quiz-app/quiz-in-gam
     QuizDashboardComponent,
     QuizLobbyComponent,
     QuizInGameComponent,
+    QuizRegisterComponent,
   ],
   imports: [
     BrowserModule,
