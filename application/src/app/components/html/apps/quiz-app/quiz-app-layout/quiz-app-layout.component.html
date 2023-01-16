@@ -1,19 +1,11 @@
 <div class="container-fluid h-100 text-white bg-dark">
-  <div *ngIf="!userLoggedIn; else userLoggedInBlock">
-
-    <div class="row h-100">
-      <div class="col-md-6 h-100 ">
-        <app-user-login></app-user-login>
-      </div>
-      <div class="col-md-6 h-100 ">
-        Row2
-      </div>
-    </div>
+  <!-- User isnt logged in -->
+  <div *ngIf="!userLoggedIn; else dashboardblock">
+    <app-user-login></app-user-login>
   </div>
 
-  <ng-template #userLoggedInBlock>
-    {{username}} logged in!
+  <!-- User is logged in -->
+  <ng-template #dashboardblock>
+    <app-quiz-dashboard></app-quiz-dashboard>
   </ng-template>
-
-
-  </div>
+</div>
