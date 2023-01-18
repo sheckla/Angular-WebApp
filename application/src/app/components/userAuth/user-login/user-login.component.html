@@ -7,7 +7,7 @@
       <div class="form-group mb-2">
         <label for="nameInput" class="form-label text-center">Userame:</label>
         <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp"
-          placeholder="Quizmaster317" #userName required>
+          placeholder="Quizmaster317" #userName>
         <small id="nameInputHelp" class="form-text text-muted">Mininum of 4+ characters</small>
       </div>
 
@@ -19,8 +19,7 @@
       </div> -->
 
       <div class="col">
-        <button type="submit" class="btn btn-success w-100 btn-lg-height btn-gradient"
-          (click)="loginWithName(userName.value, 2)">
+        <button type="submit" class="btn btn-success w-100 btn-lg-height btn-gradient" (click)="login(userName.value)">
           Login</button>
       </div>
 
