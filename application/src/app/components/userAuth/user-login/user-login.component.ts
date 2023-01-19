@@ -1,6 +1,8 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { UserHandlerService } from 'src/app/components/userAuth/services/user-handler.service';
-import * as client from '../../../../assets/js/quizClient';
+import { ErrorMessagesService } from '../services/error-messages.service';
+import { MatDialog } from '@angular/material/dialog'
+
 
 @Component({
   selector: 'app-user-login',
@@ -10,30 +12,38 @@ import * as client from '../../../../assets/js/quizClient';
 export class UserLoginComponent {
   errorDisplayMessage = '';
 
-  constructor(private userHandlerService: UserHandlerService){
+  constructor(
+    private userHandlerService: UserHandlerService,
+    private errorMessageService: ErrorMessagesService,
+    private dialog: MatDialog) {
   }
 
   login(name) {
-    if (!client.getConnected()) {
-      client.establishSocketConnection();
-      client.initOnConnectListeners();
+
+    // Username length check
+    if (name.length < 4) {
+      this.errorDisplayMessage = this.errorMessageService.LoginUsernameTooShort;
+      return;
     }
-    client.login(name);
+
+    /* Don't close connection at failed request
+    * TODO: Was ist performanter:
+    *       Socket-Connection aufrechterhalten bis neuer Login Request
+    *       ODER
+    *       Jedesmal neue Verbindung bei neuem Login
+    * TODO: Timeout einbauen um Ressourcen zu sparen
+    */
+    if (!this.userHandlerService.getConnected())
+    {
+      this.userHandlerService.establishSocketConnection();
+      this.userHandlerService.initOnConnectListeners();
+    }
+    let success = this.userHandlerService.login(name);
+
+/*     if (success) {
+      this.errorDisplayMessage = this.errorMessageService.LoginUsernameTaken;
+    } else {
+      this.userHandlerService.setLoginStatus(true);
+    } */
   }
-
-
-  // loginAsGuest() {
-  //   this.userHandlerService.updateClientName("Guest" + Math.floor(Math.random() * 2500));
-  // }
-
-  // loginWithName(userName, password) {
-  //   password = "123456"
-  //   if (userName.length >= 3 && password.length >= 6) {
-  //     this.userHandlerService.updateClientName(userName);
-  //   } else if (password.length <= 5) {
-  //     this.errorDisplayMessage = "Password too short (6 Characters)";
-  //   } else {
-  //     this.errorDisplayMessage = "Name too short (4+ Characters)";
-  //   }
-  // }
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog'
 
 import { MatSliderModule } from '@angular/material/slider';
 import { IndexComponent } from './components/html/index/index.component';
@@ -33,6 +34,7 @@ import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-regi
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     FormsModule,
     MatSliderModule,
   ],

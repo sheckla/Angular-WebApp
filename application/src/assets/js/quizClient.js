@@ -11,6 +11,7 @@
 /****************************
  Client Socket Initialization
  ****************************/
+/*
 const io = require("socket.io-client");
 var host = "https://socketio-server.up.railway.app/";
 host = "ws://localhost:3000";
@@ -22,13 +23,16 @@ export function establishSocketConnection() {
   socket = io(host, {
     transports: ["websocket"],
   });
+  connected = true;
 }
 
-export function getConnected() {
-  return this.connected;
+export function isConnected() {
+  if (!connected) console.log("Socket not connected - abort");
+  return connected;
 }
 
 export function initOnConnectListeners() {
+  if (!isConnected()) return;
   socket.on("connect", () => {
     console.log("Connection: Established, SockedID = " + socket.id);
     // Set connection to true - Client can check if still connected;
@@ -50,19 +54,18 @@ export function initOnConnectListeners() {
     });
   });
 
-  /****************************
-     Socket Connection Failed
-    ****************************/
   socket.on("connect_error", (err) => {
     console.log(`connect_error due to ${err.message}`);
   });
 }
 
 export function closeSocketConnection() {
+  if (!isConnected()) return;
   socket.emit("Client_ConnectionCloseRequest");
 }
 
 export function login(username) {
+  if (!isConnected()) return;
   console.log("Username: " + username + " send to server.");
   socket.emit("Client_SendUsername", username);
   socket.on("Client_SendUsername_Status", (arg) => {
@@ -71,5 +74,7 @@ export function login(username) {
     } else {
       console.error("Status: Login rejeted, User already logged in.");
     }
+    return arg
   });
 }
+*/
