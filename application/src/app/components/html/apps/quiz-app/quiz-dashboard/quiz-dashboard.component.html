@@ -1,1 +1,84 @@
-<p>quiz-dashboard works!</p>
+<!-- Header -->
+<div class="text-center theme-gradient-header sat">
+  <div class="p-1 text-white">
+    Welcome to QuizGame v.1.0
+  </div>
+</div>
+
+<div class="container pt-5">
+  <!-- FIRST ROW -->
+  <div class="row">
+
+    <!-- FIRST COL - LEFT -->
+    <div class="col-sm">
+      <div class="card text-white bg-transparent mb-3" style="width: 18rem;">
+        <h2 class="mb-3">{{username}}</h2>
+        <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
+          width="100" />
+        <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout">Logout</button>
+      </div>
+    </div>
+
+    <!-- SECOND COL - RRRIGHT -->
+    <div class="col-sm">
+      <form action="">
+        <div class="row mt-2">
+          <!-- Input -->
+          <div class="form-group mb-3">
+            <label for="lobbyInput" class="form-label text-center">Lobby-Name:</label>
+            <input type="text" class="form-control btn-lg-height" id="lobbyInput" aria-describedby="lobbyInputHelp"
+              placeholder="Racehunter" #userName>
+            <small id="lobbyInputHelp" class="form-text text-muted">Please type in an existing lobby or create a
+              new one
+            </small>
+          </div>
+
+          <!-- Buttons -->
+          <!-- TODO: Buttons align with logout button -->
+          <div class="col">
+            <button type="submit" class="btn btn-primary w-100 btn-lg-height">
+              Create</button>
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-secondary w-100 btn-lg-height ">
+              Join</button>
+          </div>
+
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr class="mt-5">
+  </div>
+
+  <!-- NEXT ROW -->
+  <div class="row">
+    <!-- COL LEFT -->
+    <div class="col">
+      <h2>Active Lobbies</h2>
+
+      <div class="row">
+        <div class="col-6" *ngFor="let lobby of this.lobbies">
+          <div class="card bg-primary mb-3">
+            <div class="card-body">
+              <h2 class="card-title">{{lobby.name}}</h2>
+              <h3 class="usersInLobby">{{lobby.users}}/10</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-1 d-flex">
+      <div class="vr"></div>
+    </div> -->
+
+    <div class="col container d-flex border border-warning">
+      <h1 class="mx-auto justify-content-center align-self-center text-warning">Upcoming Leaderboard in the next Update
+      </h1>
+    </div>
+  </div>
+</div>
