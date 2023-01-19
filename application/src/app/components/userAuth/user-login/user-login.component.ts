@@ -27,11 +27,11 @@ export class UserLoginComponent {
     }
 
     /* Don't close connection at failed request
-    * TODO: Was ist performanter:
+    /// TODO: Was ist performanter:
     *       Socket-Connection aufrechterhalten bis neuer Login Request
     *       ODER
     *       Jedesmal neue Verbindung bei neuem Login
-    * TODO: Timeout einbauen um Ressourcen zu sparen
+    /// TODO: Timeout einbauen um Ressourcen zu sparen
     */
     if (!this.userHandlerService.getConnected())
     {
@@ -40,10 +40,5 @@ export class UserLoginComponent {
     }
     let success = this.userHandlerService.login(name);
 
-/*     if (success) {
-      this.errorDisplayMessage = this.errorMessageService.LoginUsernameTaken;
-    } else {
-      this.userHandlerService.setLoginStatus(true);
-    } */
   }
 }

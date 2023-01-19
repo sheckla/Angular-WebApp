@@ -57,14 +57,17 @@ export class UserHandlerService {
   }
 
   login(name: string) {
+    console.log("Username: " + name + " send to server.");
     this.socket.emit("Client_SendUsername", name);
     this.socket.on("Client_SendUsername_Status", (arg) => {
       if (arg) {
         this.setLoginStatus(true);
+        console.log("Status: Login accepted");
         this.username = name;
       }
       else {
         this.setLoginStatus(false);
+        console.error("Status: Login rejeted, User already logged in.");
       }
     })
   }
