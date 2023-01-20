@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { io } from 'socket.io-client';
 //Nein ich will aber dieses Kommentar
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 //This service will be an interface to the Client, which is written in JavaScript
@@ -11,11 +11,13 @@ import { io } from 'socket.io-client';
 export class UserHandlerService {
   // Socket infos
   private socket;
-  private host = "ws://localhost:3000";
+  private host = 'ws://localhost:3000';
   private connected = false;
 
   // Connection Status infos
-  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   public loggedIn$: Observable<boolean> = this.loggedIn.asObservable();
   private username;
 
@@ -33,46 +35,48 @@ export class UserHandlerService {
 
   establishSocketConnection() {
     this.socket = io(this.host, {
-      transports: ["websocket"],
+      transports: ['websocket'],
     });
   }
 
   initOnConnectListeners() {
-    this.socket.on("connect", () => {
+    this.socket.on('connect', () => {
       // Set connection to true - Client can check if still connected;
       this.connected = true;
-      console.log("Connection: Established, SockedID = " + this.socket.id);
+      console.log('Connection: Established, SockedID = ' + this.socket.id);
 
       // Receive Listener:  Disconnect
-      this.socket.on("disconnect", (arg) => {
-        console.log("Local client disconnects" + arg);
+      this.socket.on('disconnect', (arg) => {
+        console.log('Local client disconnects' + arg);
         this.connected = false;
       });
     });
 
     // Socket Connection failed
-    this.socket.on("connect_error", (err) => {
+    this.socket.on('connect_error', (err) => {
       console.log(`connect_error due to ${err.message}`);
     });
   }
 
   login(name: string) {
-    console.log("Username: " + name + " send to server.");
-    this.socket.emit("Client_SendUsername", name);
-    this.socket.on("Client_SendUsername_Status", (arg) => {
+    console.log('Username: ' + name + ' send to server.');
+    this.socket.emit('Client_SendUsername', name);
+    this.socket.on('Client_SendUsername_Status', (arg) => {
       if (arg) {
         this.setLoginStatus(true);
-        console.log("Status: Login accepted");
+        console.log('Status: Login accepted');
         this.username = name;
-      }
-      else {
+      } else {
         this.setLoginStatus(false);
-        console.error("Status: Login rejeted, User already logged in.");
+        console.error('Status: Login rejeted, User already logged in.');
       }
-    })
+    });
   }
 
-  constructor() { }
+  logout() {
+    this.socket.disconnect();
+    this.setLoginStatus(false);
+  }
+
+  constructor() {}
 }
-
-

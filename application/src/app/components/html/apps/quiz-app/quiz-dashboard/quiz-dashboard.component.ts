@@ -9,7 +9,7 @@ import { UserHandlerService } from 'src/app/components/userAuth/services/user-ha
 export class QuizDashboardComponent implements OnInit {
   lobbies: any = [];
 
-  constructor(private userHandlerService: UserHandlerService) {
+  constructor(public userHandlerService: UserHandlerService) {
     //TODO: Must be replaced with data from server
     this.lobbies = [
       {
@@ -44,5 +44,7 @@ export class QuizDashboardComponent implements OnInit {
   //username = this.userHandlerService.getUsername();
   username = 'QuizMaster1239';
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.username = this.userHandlerService.getUsername();
+  }
 }

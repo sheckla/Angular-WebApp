@@ -1,6 +1,6 @@
 <div class="container-fluid h-100 text-white bg-dark">
   <!-- User isnt logged in -->
-  <div *ngIf="userLoggedIn; else dashboardblock">
+  <div *ngIf="!userLoggedIn; else dashboardblock">
     <app-user-login></app-user-login>
   </div>
 
