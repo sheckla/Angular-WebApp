@@ -1,6 +1,5 @@
 import { io, Socket } from 'socket.io-client';
 import { Debug } from './Debug'
-
 /*
 * ClientSocket SocketIO Handler
 * - establishes Connection with host
