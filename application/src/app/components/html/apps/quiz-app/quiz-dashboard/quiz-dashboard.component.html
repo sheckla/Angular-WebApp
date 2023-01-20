@@ -1,1 +1,18 @@
-<p>quiz-dashboard works!</p>
+<div class="container-fluid h-100 text-white bg-dark">
+  <!-- User isnt logged in -->
+  <div *ngIf="!insideLobby; else lobbyBlock">
+    <p>quiz-dashboard works!</p>
+    <p>Hello {{this.userHandlerService.username}}</p>
+    <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp"
+              placeholder="Quizmaster317" #lobbyname>
+    <button type="submit"  class="btn btn-success w-100 btn-lg-height btn-gradient" (click)="createLobby(lobbyname.value)" >CreateRoom</button>
+    <button type="submit" class="btn btn-success w-100 btn-lg-height btn-gradient" (click)="joinLobby(lobbyname.value)">JoinRoom</button>
+    <a>{{statusMessage}}</a>
+  </div>
+
+  <!-- User is logged in -->
+  <ng-template #lobbyBlock>
+    <app-quiz-lobby></app-quiz-lobby>
+  </ng-template>
+</div>
+

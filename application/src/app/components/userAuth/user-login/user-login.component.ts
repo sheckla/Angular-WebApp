@@ -38,12 +38,6 @@ export class UserLoginComponent {
       this.userHandlerService.establishSocketConnection();
       this.userHandlerService.initOnConnectListeners();
     }
-    let success = this.userHandlerService.login(name);
-
-/*     if (success) {
-      this.errorDisplayMessage = this.errorMessageService.LoginUsernameTaken;
-    } else {
-      this.userHandlerService.setLoginStatus(true);
-    } */
+    this.userHandlerService.login(name);
   }
 }

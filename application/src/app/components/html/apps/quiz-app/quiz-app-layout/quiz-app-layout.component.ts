@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserHandlerService } from '../../../../userAuth/services/user-handler.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-quiz-app-layout',
@@ -7,23 +8,21 @@ import { UserHandlerService } from '../../../../userAuth/services/user-handler.s
   styleUrls: ['./quiz-app-layout.component.css']
 })
 export class QuizAppLayoutComponent implements OnInit {
-  userLoggedIn = false;
-
+  private loginEventSubscription;
+  public loggedIn;
 
   constructor(private userHandlerService: UserHandlerService) {
-    this.subscribeUserHandlerService();
-
+    this.loggedIn = userHandlerService.loggedIn;
   }
 
   ngOnInit(): void {
-
+    this.loginEventSubscription =
+      this.userHandlerService.loginEventStatus.subscribe(status => {
+      this.loggedIn = this.userHandlerService.loggedIn;
+    })
   }
 
-  subscribeUserHandlerService() {
-    this.userHandlerService.loggedIn$.subscribe(loggedIn => {
-      this.userLoggedIn = loggedIn;
-    });
+  ngOnDestroy(): void {
+    this.loginEventSubscription.unsubscribe();
   }
-
-
 }
