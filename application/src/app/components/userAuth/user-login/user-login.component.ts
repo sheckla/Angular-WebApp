@@ -19,7 +19,6 @@ export class UserLoginComponent {
   }
 
   login(name) {
-
     // Username length check
     if (name.length < 4) {
       this.errorDisplayMessage = this.errorMessageService.LoginUsernameTooShort;
@@ -27,17 +26,17 @@ export class UserLoginComponent {
     }
 
     /* Don't close connection at failed request
-    * TODO: Was ist performanter:
+    /// TODO: Was ist performanter:
     *       Socket-Connection aufrechterhalten bis neuer Login Request
     *       ODER
     *       Jedesmal neue Verbindung bei neuem Login
-    * TODO: Timeout einbauen um Ressourcen zu sparen
+    /// TODO: Timeout einbauen um Ressourcen zu sparen
     */
-    if (!this.userHandlerService.getConnected())
-    {
-      this.userHandlerService.establishSocketConnection();
-      this.userHandlerService.initOnConnectListeners();
-    }
-    this.userHandlerService.login(name);
+
+    // Async establishConnection call
+    this.userHandlerService.getClientSocket().establishConnection().then( () => {
+      this.userHandlerService.initQuizGameListeners();
+      this.userHandlerService.login(name);
+    });
   }
 }

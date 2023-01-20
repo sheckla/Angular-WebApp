@@ -8,21 +8,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./quiz-app-layout.component.css']
 })
 export class QuizAppLayoutComponent implements OnInit {
-  private loginEventSubscription;
-  public loggedIn;
-
-  constructor(private userHandlerService: UserHandlerService) {
-    this.loggedIn = userHandlerService.loggedIn;
+  constructor(public userHandlerService: UserHandlerService) {
   }
 
   ngOnInit(): void {
-    this.loginEventSubscription =
-      this.userHandlerService.loginEventStatus.subscribe(status => {
-      this.loggedIn = this.userHandlerService.loggedIn;
-    })
   }
 
   ngOnDestroy(): void {
-    this.loginEventSubscription.unsubscribe();
   }
 }

@@ -1,118 +1,155 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { io } from 'socket.io-client';
 import { EventEmitter } from '@angular/core';
+import { Debug } from './util/Debug';
+import { ClientSocket } from './util/ClientSocket';
+import { User, LobbyInfo } from './util/QuizAppDataTypes';
 @Injectable({
   providedIn: 'root'
 })
-
-//This service will be an interface to the Client, which is written in JavaScript
-//We will also implements an observerable ConnectedStatus
+/*
+* UserHandlerService:
+* - This service will be an connection-interface for the Client to Server communication
+* - Status Events will be provided by subscribeable EventEmitters
+* - Saves information regarding aspects of the quiz-game (User, Lobby, Questions ...)
+*/
 export class UserHandlerService {
-  // Socket infos
-  private socket;
-  private host = "ws://localhost:3000";
-  private connected = false;
+  private _clientConnection: ClientSocket = new ClientSocket();
+  private _user: User = new User();
+  private _currentLobby: LobbyInfo = new LobbyInfo();
+  private _openLobbies: LobbyInfo[] = [];
 
-  // Connection Status infos
-  public loggedIn;
-  public insideLobby;
+  /*
+  * Subscribeable EventEmitters:
+  * - be notified when the client-socket receives an answer from the server
+  * - Event must be first emitted inside UserHanderService
+  *
+  * Example:
+  *   this.userHandlerService.loginEventStatus.subscribe(statusBoolean => {
+  *    // callback - do stuff here when Event happens
+  *    })
+  */
+  public lobbyJoinedEvent = new EventEmitter<boolean>();
+  public lobbyCreationEvent = new EventEmitter<boolean>();
+  public openLobbyFetchEvent = new EventEmitter<any[]>();
 
-  // Quiz Game Info
-  public username;
-
-  // Lobby info
-  public lobbyName;
-  public totalQuestionCount;
-  public categoryName;
-  public difficulty;
-  public leader;
-  public usernamesInLobby;
-
-  public loginEventStatus = new EventEmitter<boolean>();
-  public lobbyCreationEventStatus = new EventEmitter<boolean>();
-  public lobbyJoinEventStatus = new EventEmitter<boolean>();
-  public lobbyInformationChangedEventStatus = new EventEmitter<any>();
-
-  constructor() { }
-
-  getConnected() {
-    return this.connected;
+  constructor() {
   }
 
-  getUsername() {
-    return this.username;
-  }
+  // Socket Listeners for Quiz-Game Client<->Server communication
+  initQuizGameListeners() {
+    // Login Status
+    this._clientConnection.getSocket().on("Client_SendUsername_Status", (status) => {
+      this._user.isLoggedIn = status;
+    })
 
-  establishSocketConnection() {
-    this.socket = io(this.host, {
-      transports: ["websocket"],
-    });
-  }
+    // Current Open Lobbies
+    this._clientConnection.getSocket().on("CurrentOpenLobbies", (lobbies) => {
+      var openLobbyInfo: any = [];
+      for (var i = 0; i < lobbies.length; i++) {
+        var lobby: LobbyInfo = this.parseLobbyInfo(lobbies[i]);
+        var info = {
+          name: lobby.name,
+          users: lobby.users.length + 1, // (leader)
+        }
+        openLobbyInfo.push(info);
+      }
+      this.openLobbyFetchEvent.emit(openLobbyInfo);
+    })
 
-  // Socket Listener
-  initOnConnectListeners() {
-    this.socket.on("connect", () => {
-      // Set connection to true - Client can check if still connected;
-      this.connected = true;
-      console.log("Connection: Established, SockedID = " + this.socket.id);
-
-      // Login Status
-      this.socket.on("Client_SendUsername_Status", (status) => {
-        this.loggedIn = status;
-        this.loginEventStatus.emit(status);
-      })
-
-      // Lobby Creation Status
-      this.socket.on("Client_LobbyCreationRequest_Status", (status) => {
-        this.insideLobby = status;
-        this.lobbyCreationEventStatus.emit(status);
-      });
-
-      // Lobby Join Status
-      this.socket.on("Client_LobbyJoinRequest_Status", (status) => {
-        this.insideLobby = status;
-        this.lobbyJoinEventStatus.emit(status);
-      })
-
-      // Lobby Information Status
-      this.socket.on("LobbyInformationChanged", (info) => {
-        this.lobbyName = info.lobbyName;
-        this.totalQuestionCount = info.totalQuestionCount;
-        this.categoryName = info.categoryName;
-        this.difficulty = info.difficulty;
-        this.leader = info.leader.name;
-        this.usernamesInLobby = info.users;
-        this.lobbyInformationChangedEventStatus.emit(info);
-      })
-
-      // Receive Listener:  Disconnect
-      this.socket.on("disconnect", (arg) => {
-        console.log("Local client disconnects" + arg);
-        this.connected = false;
-      });
+    // Lobby Creation Status
+    this._clientConnection.getSocket().on("Client_LobbyCreationRequest_Status", (status) => {
+      this._user.isInsideLobby = status;
+      this.lobbyCreationEvent.emit(status);
     });
 
-    // Socket Connection failed
-    this.socket.on("connect_error", (err) => {
-      console.log(`connect_error due to ${err.message}`);
-    });
+    // Lobby Join Status
+    this._clientConnection.getSocket().on("Client_LobbyJoinRequest_Status", (status) => {
+      this._user.isInsideLobby = status;
+      this.lobbyJoinedEvent.emit(status);
+    })
+
+    // Lobby Leave Status
+    this._clientConnection.getSocket().on("Client_LobbyLeaveRequest_Status", (status) => {
+      if (status == true) {
+        this._user.isInsideLobby = false;
+      } else {
+        this._user.isInsideLobby = true;
+      }
+    })
+
+    // Lobby Information Status
+    this._clientConnection.getSocket().on("CurrentLobbyInformationChanged", (info) => {
+      this._currentLobby = this.parseLobbyInfo(info);
+    })
+
+    // Question Topic Status
+    this._clientConnection.getSocket().on("Client_RequestQuestionTopics_Status", (questions) => {
+      console.log(questions);
+    })
   }
 
+  // *** Emit Events
   login(name: string) {
-    this.socket.emit("Client_SendUsername", name);
-    this.username = name;
+    Debug.log("Username: " + name + " login-request sent to server");
+    this._clientConnection.getSocket().emit("Client_SendUsername", name);
+    this._user.name = name;
+  }
+
+  logout(): void {
+    if (this._user.isLoggedIn && this._clientConnection.closeConnection()) {
+      this.resetQuizGameStatus();
+    }
   }
 
   createLobby(lobbyName: string) {
-    this.socket.emit("Client_LobbyCreationRequest", lobbyName);
-    this.lobbyName = lobbyName;
+    this._clientConnection.getSocket().emit("Client_LobbyCreationRequest", lobbyName);
   }
 
   joinLobby(lobbyName: string) {
-    this.socket.emit("Client_LobbyJoinRequest", lobbyName);
+    this._clientConnection.getSocket().emit("Client_LobbyJoinRequest", lobbyName);
   }
 
+  leaveLobby(): void {
+    if (this._currentLobby.name == "") return;
+    Debug.log("Leaving Lobby");
+    this._clientConnection.getSocket().emit("Client_LobbyLeaveRequest", this._currentLobby.name);
+  }
+
+  startLobby(): void {
+    this._clientConnection.getSocket().emit("Client_LobbyStartRequest", this._currentLobby.name); //TODO
+    this._clientConnection.getSocket().emit("Client_RequestQuestionTopics", this._currentLobby.name);
+  }
+
+  // *** Getters
+  getUser(): User {
+    return this._user;
+  }
+
+  getLobbyInfo(): LobbyInfo {
+    return this._currentLobby;
+  }
+
+  getClientSocket(): ClientSocket {
+    return this._clientConnection;
+  }
+
+  // *** Helper functions
+  private parseLobbyInfo(info: any): LobbyInfo {
+    var lobbyInfo: LobbyInfo = new LobbyInfo();
+    lobbyInfo.name = info.name;
+    lobbyInfo.totalQuestions = info.totalQuestionCount;
+    lobbyInfo.category = info.categoryName;
+    lobbyInfo.difficulty = info.difficulty;
+    lobbyInfo.leader = info.leader;
+    lobbyInfo.users = info.users;
+    return lobbyInfo;
+  }
+
+  private resetQuizGameStatus(): void {
+    this._user = new User();
+    this._clientConnection = new ClientSocket();
+    this._currentLobby = new LobbyInfo();
+  }
 }
 
 

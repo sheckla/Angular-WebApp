@@ -1,6 +1,9 @@
-<a>Lobby Name: {{this.userHandlerService.lobbyName}}</a><br>
-<a>Total Questions: {{this.userHandlerService.totalQuestionCount}}</a><br>
-<a>Category: {{this.userHandlerService.categoryName}}</a><br>
-<a>Difficulty: {{this.userHandlerService.difficulty}}</a><br>
-<a>Lobby Leader: {{this.userHandlerService.leader}}</a><br>
-<a>Other Users: {{this.userHandlerService.usernamesInLobby}}</a><br>
+<a> Welcome to the lobby, {{this.userHandlerService.getUser().name}}</a><br>
+<button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="leaveLobby()">Leave Lobby</button><br>
+<a>Lobby Name: {{this.userHandlerService.getLobbyInfo().name}}</a><br>
+<a>Total Questions: {{this.userHandlerService.getLobbyInfo().totalQuestions}}</a><br>
+<a>Category: {{this.userHandlerService.getLobbyInfo().category}}</a><br>
+<a>Difficulty: {{this.userHandlerService.getLobbyInfo().difficulty}}</a><br>
+<a>Lobby Leader: {{this.userHandlerService.getLobbyInfo().leader}}</a><br>
+<a>Other Users: {{this.userHandlerService.getLobbyInfo().users}}</a><br>
+<button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="startLobby()">[TEST]GetQuestionsFromServer(check console)</button><br>

@@ -1,18 +1,94 @@
-<div class="container-fluid h-100 text-white bg-dark">
-  <!-- User isnt logged in -->
-  <div *ngIf="!insideLobby; else lobbyBlock">
-    <p>quiz-dashboard works!</p>
-    <p>Hello {{this.userHandlerService.username}}</p>
-    <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp"
-              placeholder="Quizmaster317" #lobbyname>
-    <button type="submit"  class="btn btn-success w-100 btn-lg-height btn-gradient" (click)="createLobby(lobbyname.value)" >CreateRoom</button>
-    <button type="submit" class="btn btn-success w-100 btn-lg-height btn-gradient" (click)="joinLobby(lobbyname.value)">JoinRoom</button>
-    <a>{{statusMessage}}</a>
+<!-- User isnt in lobby -->
+<div *ngIf="!this.userHandlerService.getUser().isInsideLobby; else lobbyBlock">
+  <!-- Header -->
+  <div class="text-center theme-gradient-header sat">
+    <div class="p-1 text-white">
+      Welcome to QuizGame v.1.0
+    </div>
   </div>
 
-  <!-- User is logged in -->
-  <ng-template #lobbyBlock>
-    <app-quiz-lobby></app-quiz-lobby>
-  </ng-template>
+  <div class="container pt-5">
+    <!-- FIRST ROW -->
+    <div class="row">
+
+      <!-- FIRST COL - LEFT -->
+      <div class="col-sm">
+        <div class="card text-white bg-transparent mb-3" style="width: 18rem;">
+          <h2 class="mb-3">{{this.userHandlerService.getUser().name}}</h2>
+          <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
+            width="100" />
+          <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="logout()">Logout</button>
+        </div>
+      </div>
+
+      <!-- SECOND COL - RRRIGHT -->
+      <div class="col-sm">
+        <form action="">
+          <div class="row mt-2">
+            <!-- Input -->
+            <div class="form-group mb-3">
+              <label for="lobbyInput" class="form-label text-center">Lobby-Name:</label>
+              <input type="text" class="form-control btn-lg-height" id="lobbyInput" aria-describedby="lobbyInputHelp"
+                placeholder="Racehunter" #lobbyName>
+              <small id="lobbyInputHelp" class="form-text text-muted">Please type in an existing lobby or create a
+                new one
+              </small>
+            </div>
+
+            <!-- Buttons -->
+            <!-- TODO: Buttons align with logout button -->
+            <div class="col">
+              <button type="submit" class="btn btn-primary w-100 btn-lg-height" (click)="createLobby(lobbyName.value)">
+                Create</button>
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-secondary w-100 btn-lg-height" (click)="joinLobby(lobbyName.value)">
+                Join</button>
+            </div>
+            <a>{{this.statusMessage}}</a>
+
+
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <hr class="mt-5">
+    </div>
+
+    <!-- NEXT ROW -->
+    <div class="row">
+      <!-- COL LEFT -->
+      <div class="col">
+        <h2>Active Lobbies</h2>
+
+        <div class="row">
+          <div class="col-6" *ngFor="let lobby of this.lobbies">
+            <div class="card bg-primary mb-3">
+              <div class="card-body">
+                <h2 class="card-title">{{lobby.name}}</h2>
+                <h3 class="usersInLobby">{{lobby.users}}/10</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-1 d-flex">
+      <div class="vr"></div>
+    </div> -->
+
+      <div class="col container d-flex border border-warning">
+        <h1 class="mx-auto justify-content-center align-self-center text-warning">Upcoming Leaderboard in the next
+          Update
+        </h1>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- User in lobby -->
+<ng-template #lobbyBlock>
+  <app-quiz-lobby></app-quiz-lobby>
+</ng-template>

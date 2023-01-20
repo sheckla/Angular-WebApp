@@ -15,13 +15,17 @@ export class QuizLobbyComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.userHandlerService.lobbyInformationChangedEventStatus.subscribe(info => {
-      })
-    )
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  leaveLobby(): void {
+    this.userHandlerService.leaveLobby();
+  }
+
+  startLobby(): void {
+    this.userHandlerService.startLobby();
   }
 }
