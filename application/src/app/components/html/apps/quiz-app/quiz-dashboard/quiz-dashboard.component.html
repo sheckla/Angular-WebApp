@@ -1,11 +1,11 @@
+<!-- Header -->
+<div class="text-center theme-gradient-header sat">
+  <div class="p-1 text-white">
+    Welcome to QuizGame v.1.0
+  </div>
+</div>
 <!-- User isnt in lobby -->
 <div *ngIf="!this.userHandlerService.getUser().isInsideLobby; else lobbyBlock">
-  <!-- Header -->
-  <div class="text-center theme-gradient-header sat">
-    <div class="p-1 text-white">
-      Welcome to QuizGame v.1.0
-    </div>
-  </div>
 
   <div class="container pt-5">
     <!-- FIRST ROW -->

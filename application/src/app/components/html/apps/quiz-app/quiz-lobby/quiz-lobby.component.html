@@ -1,9 +1,64 @@
-<a> Welcome to the lobby, {{this.userHandlerService.getUser().name}}</a><br>
-<button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="leaveLobby()">Leave Lobby</button><br>
-<a>Lobby Name: {{this.userHandlerService.getLobbyInfo().name}}</a><br>
-<a>Total Questions: {{this.userHandlerService.getLobbyInfo().totalQuestions}}</a><br>
-<a>Category: {{this.userHandlerService.getLobbyInfo().category}}</a><br>
-<a>Difficulty: {{this.userHandlerService.getLobbyInfo().difficulty}}</a><br>
-<a>Lobby Leader: {{this.userHandlerService.getLobbyInfo().leader}}</a><br>
-<a>Other Users: {{this.userHandlerService.getLobbyInfo().users}}</a><br>
-<button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="startLobby()">[TEST]GetQuestionsFromServer(check console)</button><br>
+<div class="container pt-5">
+  <a> Welcome to the lobby, {{this.userHandlerService.getUser().name}}</a><br>
+  <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="leaveLobby()">Leave Lobby</button><br>
+  <a>Lobby Name: {{this.userHandlerService.getLobbyInfo().name}}</a><br>
+  <a>Total Questions: {{this.userHandlerService.getLobbyInfo().totalQuestions}}</a><br>
+  <a>Category: {{this.userHandlerService.getLobbyInfo().category}}</a><br>
+  <a>Difficulty: {{this.userHandlerService.getLobbyInfo().difficulty}}</a><br>
+  <a>Lobby Leader: {{this.userHandlerService.getLobbyInfo().leader}}</a><br>
+  <a>Other Users: {{this.userHandlerService.getLobbyInfo().users}}</a><br>
+  <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout"
+    (click)="startLobby()">[TEST]GetQuestionsFromServer(check console)</button><br>
+
+
+  <!-- FIRST ROW - TOP -->
+  <div class="row">
+    <!-- LEFT COLUMN -->
+    <div class="col-9">
+
+
+      <div class="row">
+        <div class="col">
+          <h2>Welcome to <u>{{this.userHandlerService.getLobbyInfo().name}}</u>,
+            {{this.userHandlerService.getUser().name}}!</h2>
+          <h3>Todays Category is <b>"{{this.userHandlerService.getLobbyInfo().category}}"</b> on
+            <b>{{this.userHandlerService.getLobbyInfo().difficulty}}.</b> Good Luck.
+          </h3>
+        </div>
+
+        <div class="col">
+
+          <button class="btn btn-primary btn-rounded m-3" style="width: 10rem;">Start Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-3">
+      <h2 class="text-center">Player: {{this.userHandlerService.getLobbyInfo().users.length}} / 10</h2>
+      <!-- LEADER ON TOP -->
+      <div class="row mb-3">
+        <div class="col-5">
+          <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
+            width="100" />
+        </div>
+        <div class="col">
+          <h2 class="mb-1 mt-2">{{this.userHandlerService.getLobbyInfo().leader}}</h2>
+          <img src="https://cdn-icons-png.flaticon.com/512/6941/6941697.png" alt="crown" width="30">
+        </div>
+      </div>
+
+      <!-- NGFOR USER -->
+      <div class="row mb-3" *ngFor="let user of this.userHandlerService.getLobbyInfo().users">
+        <div class="col-5">
+          <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
+            width="100" />
+        </div>
+        <div class="col">
+          <h2 class="mt-2">{{user}}</h2>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
