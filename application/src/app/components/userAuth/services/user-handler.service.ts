@@ -4,7 +4,7 @@ import { Debug } from './util/Debug';
 import { ClientSocket } from './util/ClientSocket';
 import { User, LobbyInfo } from './util/QuizAppDataTypes';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 /*
 * UserHandlerService:
@@ -151,5 +151,3 @@ export class UserHandlerService {
     this._currentLobby = new LobbyInfo();
   }
 }
-
-
