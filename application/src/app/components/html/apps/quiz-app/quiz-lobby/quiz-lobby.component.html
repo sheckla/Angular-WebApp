@@ -1,23 +1,11 @@
 <div class="container pt-5">
-  <a> Welcome to the lobby, {{this.userHandlerService.getUser().name}}</a><br>
-  <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="leaveLobby()">Leave Lobby</button><br>
-  <a>Lobby Name: {{this.userHandlerService.getLobbyInfo().name}}</a><br>
-  <a>Total Questions: {{this.userHandlerService.getLobbyInfo().totalQuestions}}</a><br>
-  <a>Category: {{this.userHandlerService.getLobbyInfo().category}}</a><br>
-  <a>Difficulty: {{this.userHandlerService.getLobbyInfo().difficulty}}</a><br>
-  <a>Lobby Leader: {{this.userHandlerService.getLobbyInfo().leader}}</a><br>
-  <a>Other Users: {{this.userHandlerService.getLobbyInfo().users}}</a><br>
-  <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout"
-    (click)="startLobby()">[TEST]GetQuestionsFromServer(check console)</button><br>
 
-
-  <!-- FIRST ROW - TOP -->
   <div class="row">
-    <!-- LEFT COLUMN -->
+    <!-- LEFT COLUMN 9/12 75%-->
     <div class="col-9">
 
-
-      <div class="row">
+      <div class="row bg-info">
+        <!-- Welcome Col -->
         <div class="col">
           <h2>Welcome to <u>{{this.userHandlerService.getLobbyInfo().name}}</u>,
             {{this.userHandlerService.getUser().name}}!</h2>
@@ -26,15 +14,71 @@
           </h3>
         </div>
 
-        <div class="col">
+        <!-- Start Game Col -->
+        <div class="col d-flex justify-content-center align-content-center">
 
-          <button class="btn btn-primary btn-rounded m-3" style="width: 10rem;">Start Game</button>
+          <!-- Attention! If the User != Leader, he isnt allowed to start the game, so the button is disabled tho -->
+          <button class="btn btn-rounded btn-outline-primary m-4 text-uppercase"
+            [disabled]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">Start
+            Game</button>
+          <button class="btn btn-rounded btn-outline-danger m-4 text-uppercase" (click)="leaveLobby()">Leave
+            Lobby</button>
         </div>
+
+        <hr>
+      </div>
+
+      <div class="row bg-secondary">
+
+        <!-- Amount -->
+        <div class="row mt-2">
+          <div class="col-3 bg-danger">
+            <p>hi</p>
+          </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="row mt-2">
+          <div class="col-3 bg-danger">
+            <p>hi</p>
+          </div>
+
+          <div class=" col-9">
+            <p>hi
+            </p>
+          </div>
+        </div>
+
+        <!-- Difficulty -->
+        <div class="row mt-2">
+          <div class="col-3 bg-danger">
+            <p>hi</p>
+          </div>
+
+          <div class="col-9">
+            <p>hi
+            </p>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="row mt-2">
+          <div class="col-3 bg-danger">
+            <p>hi</p>
+          </div>
+
+          <div class=" col-9">
+            <p>hi
+            </p>
+          </div>
+        </div>
+
+
       </div>
     </div>
 
-    <!-- RIGHT COLUMN -->
-    <div class="col-3">
+    <!-- RIGHT COLUMN 3/12 25%-->
+    <div class=" col-3 bg-warning">
       <h2 class="text-center">Player: {{this.userHandlerService.getLobbyInfo().users.length}} / 10</h2>
       <!-- LEADER ON TOP -->
       <div class="row mb-3">
@@ -61,4 +105,11 @@
 
     </div>
   </div>
+
 </div>
+
+<button class="btn btn-danger btn-rounded text-uppercase logout m-2" style="width: 10rem;"
+  (click)="startLobby()">GetQuestion</button>
+
+<input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+<label class="btn btn-secondary" for="option2">Radio</label>
