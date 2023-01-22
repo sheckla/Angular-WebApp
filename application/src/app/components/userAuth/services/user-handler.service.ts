@@ -181,11 +181,22 @@ export class UserHandlerService {
     var testLobby = new LobbyInfo();
     var testUser = new User();
     //Filling half of User
-    testUser.name = 'Mike';
+    testUser.name = 'PrettyEyebrowsOMG';
     //Filling the lobby
-    testLobby.name = 'Testos Teron Lobby';
+    testLobby.name = 'VerteilteSystemeSux';
     testLobby.leader = 'Mike';
-    testLobby.users = ['mike', 'daniel', 'steve', 'max', 'liz22', 'heiko'];
+    testLobby.users = [
+      'PrettyEyebrowsOMG',
+      'Iamvile',
+      'S0phus',
+      'Gamerbadger',
+      'Helixo',
+      'Quackster',
+      'Goff',
+      'Chiseler',
+      'Wild Hog',
+      'Phantom361',
+    ];
     testLobby.category = 'Art';
     testLobby.totalQuestions = 10;
     testLobby.difficulty = 'hard';

@@ -7,8 +7,9 @@ padding: auto;
 }
 
 .setting-button {
-  width: 7em;
-  height: 2em;
+  width: 8.25em;
+  color: white;
+  margin-right: .5rem; /* mr-2 == .5rem */
 
 }
 

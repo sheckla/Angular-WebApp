@@ -2,14 +2,14 @@
 
   <!-- Row needed to use col -->
   <div class="row">
-    <!-- LEFT COLUMN 9/12 75%-->
+    <!-- LEFT COLUMN 9/12 75% WELCOME AND SETTING-->
     <div class="col-9">
 
       <!-- Welcome Section -->
-      <div class="row bg-info">
+      <div class="row">
         <!-- Welcome Col -->
         <div class="col">
-          <h2>Welcome to <u>{{this.userHandlerService.getLobbyInfo().name}}</u>,
+          <h2>Welcome to {{this.userHandlerService.getLobbyInfo().name}},
             {{this.userHandlerService.getUser().name}}!</h2>
           <h3>Todays Category is <b>"{{this.userHandlerService.getLobbyInfo().category}}"</b> on
             <b>{{this.userHandlerService.getLobbyInfo().difficulty}}.</b> Good Luck.
@@ -20,112 +20,274 @@
         <div class="col d-flex justify-content-center align-content-center">
 
           <!-- Attention! If the User != Leader, he isnt allowed to start the game, so the button is disabled tho -->
-          <button class="btn btn-rounded btn-outline-primary m-4 text-uppercase"
-            [disabled]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">Start
-            Game</button>
-          <button class="btn btn-rounded btn-outline-danger m-4 text-uppercase" (click)="leaveLobby()">Leave
+          <button class="btn btn-rounded btn-outline-primary text-uppercase setting-button" style="height: 3rem;"
+            type="submit" form="lobby-settings"
+            [disabled]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">Start
+            Game</button> <!-- //TODO: Button belongs to Form lobby-settings in Setting Section -->
+          <button class="btn btn-rounded btn-outline-danger text-uppercase setting-button" style="height: 3rem;"
+            (click)="
+            leaveLobby()">Leave
             Lobby</button>
         </div>
 
-        <hr>
       </div>
 
       <!-- Setting Section -->
       <!-- Whole Section will be disabled if user != leader -->
-      <div class="row"
-        [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
+      <form id="lobby-settings" action=""> <!-- //TODO: Form belongs to Submit button in Start-Game-Col -->
+        <div class="row"
+          [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
 
-        <div class="text-center theme-gradient-header sat">
-          <!-- Only for regular user -->
-          <div class="p-1 text-white"
-            [hidden]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">
-            Sorry {{this.userHandlerService.getUser().name}}, but settings are only aviable for lobby-leaders!
-          </div>
+          <!-- Header -->
+          <div class="text-center theme-gradient-header sat">
+            <!-- Only for regular user -->
+            <div class="p-1 text-white"
+              [hidden]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">
+              Sorry {{this.userHandlerService.getUser().name}}, but settings are only aviable for lobby-leaders!
+            </div>
 
-          <!-- Banner for leader -->
-          <div class="p-1 text-white"
-            [hidden]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">
-            Hey {{this.userHandlerService.getUser().name}}, please set up your lobby and press start!
-          </div>
-        </div>
-
-        <!-- Amount -->
-        <div class="row mt-2">
-          <div class="col-3 setting-label">
-            <p>Question Amount</p>
-          </div>
-
-          <div class="col-9">
-            <div class="btn-group" role="group">
-              <button type="button" class="btn setting-button btn-primary">5</button>
-              <button type=" button" class="btn setting-button btn-primary">10</button>
-              <button type="button" class="btn setting-button btn-primary">20</button>
+            <!-- Banner for leader -->
+            <div class="p-1 text-white"
+              [hidden]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">
+              Hey {{this.userHandlerService.getUser().name}}, please set up your lobby and press start!
             </div>
           </div>
+
+          <!-- Amount -->
+          <div class="row mt-2">
+            <div class="col-2 setting-label d-flex justify-content-center align-content-center">
+              <p>Question Amount</p>
+            </div>
+
+            <div class="col-10">
+
+              <input type="radio" class="btn-check" name="amount" id="amount-5" value="5" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="amount-5">5</label>
+
+              <input type="radio" class="btn-check" name="amount" id="amount-10" value="10" autocomplete="off" checked>
+              <label class="btn btn-outline-primary setting-button" for="amount-10">10</label>
+
+              <input type="radio" class="btn-check" name="amount" id="amount-20" value="20" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="amount-20">20</label>
+
+            </div>
+          </div>
+
+          <!-- Timer -->
+          <div class="row mt-2">
+            <div class="col-2 setting-label">
+              <p>Timer</p>
+            </div>
+
+            <div class=" col-10">
+              <input type="radio" class="btn-check" name="timer" id="timer-15" value="15" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="timer-15">15</label>
+
+              <input type="radio" class="btn-check" name="timer" id="timer-30" value="30" autocomplete="off" checked>
+              <label class="btn btn-outline-primary setting-button" for="timer-30">30</label>
+
+              <input type="radio" class="btn-check" name="timer" id="timer-45" value="45" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="timer-45">45</label>
+            </div>
+          </div>
+
+          <!-- Difficulty -->
+          <div class="row mt-2">
+            <div class="col-2 setting-label">
+              <p>Difficulty</p>
+            </div>
+
+            <div class="col-10">
+              <input type="radio" class="btn-check" name="difficulty" id="difficulty-prog" value="Progressive"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="difficulty-prog">Progressive</label>
+
+              <input type="radio" class="btn-check" name="difficulty" id="difficulty-easy" value="Easy"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="difficulty-easy">Easy</label>
+
+              <input type="radio" class="btn-check" name="difficulty" id="difficulty-normal" value="Normal"
+                autocomplete="off" checked>
+              <label class="btn btn-outline-primary setting-button" for="difficulty-normal">Normal</label>
+
+              <input type="radio" class="btn-check" name="difficulty" id="difficulty-hard" value="Hard"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="difficulty-hard">Hard</label>
+            </div>
+          </div>
+
+
+          <!-- Categories 1/5-->
+          <div class="row mt-2">
+            <div class="col-2 setting-label">
+              <p>Categorie</p>
+            </div>
+
+            <div class=" col-10">
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Any" value="Any" autocomplete="off"
+                checked>
+              <label class="btn btn-outline-primary setting-button" for="categorie-Any">Any</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-General-Knowledge"
+                value="General Knowledge" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-General-Knowledge">General</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Books" value="Entertainment: Books"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Books">Books</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Film" value="Entertainment: Film"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Film">Film</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Music" value="Entertainment: Music"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Music">Music</label>
+            </div>
+
+          </div>
+
+          <!-- Categories 2/5-->
+          <div class="row mt-2">
+            <div class="col-2">
+
+            </div>
+
+            <div class=" col-10">
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Musicals"
+                value="Entertainment: Musicals & Theatres" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Musicals">Musicals</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Television"
+                value="Entertainment: Television" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Television">Television</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Games"
+                value="Entertainment: Video Games" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Games">Video-Games</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Board"
+                value="Entertainment: Board Games" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Board">Board Games</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Nature" value="Science & Nature"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Nature">Nature</label>
+            </div>
+          </div>
+
+          <!-- Categories 3/5-->
+          <div class="row mt-2">
+            <div class="col-2">
+
+            </div>
+
+            <div class=" col-10">
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Computers" value="Science: Computers"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Computers">Computers</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Mathematics"
+                value="Science: Mathematics" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Mathematics">Mathematics</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Mythology" value="Mythology"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Mythology">Mythology</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Sports" value="Sports"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Sports">Sports</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Geography" value="Geography"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Geography">Geography</label>
+            </div>
+          </div>
+
+          <!-- Categories 4/5-->
+          <div class="row mt-2">
+            <div class="col-2">
+            </div>
+
+            <div class=" col-10">
+              <input type="radio" class="btn-check" name="categorie" id="categorie-History" value="History"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-History">History</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Politics" value="Politics"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Politics">Politics</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Art" value="Art" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Art">Art</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Celebrities" value="Celebrities"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Celebrities">Celebrities</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Animals" value="Animals"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Animals">Animals</label>
+            </div>
+          </div>
+
+          <!-- Categories 5/5-->
+          <div class="row mt-2">
+            <div class="col-2">
+            </div>
+
+            <div class=" col-10">
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Vehicles" value="Vehicles"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Vehicles">Vehicles</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Comics" value="Entertainment: Comics"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Comics">Comics</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Gadgets" value="Science: Gadgets"
+                autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Gadgets">Gadgets</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Anime"
+                value="Entertainment: Japanese Anime & Manga" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Anime">Anime</label>
+
+              <input type="radio" class="btn-check" name="categorie" id="categorie-Cartoons"
+                value="Entertainment: Cartoons & Animations" autocomplete="off">
+              <label class="btn btn-outline-primary setting-button" for="categorie-Cartoons">Cartoons</label>
+            </div>
+          </div>
+
         </div>
-
-        <!-- Timer -->
-        <div class="row mt-2">
-          <div class="col-3 setting-label">
-            <p>Timer</p>
-          </div>
-
-          <div class=" col-9">
-            <p>hi
-            </p>
-          </div>
-        </div>
-
-        <!-- Difficulty -->
-        <div class="row mt-2">
-          <div class="col-3 setting-label">
-            <p>Difficulty</p>
-          </div>
-
-          <div class="col-9">
-            <p>hi
-            </p>
-          </div>
-        </div>
-
-        <!-- Categories -->
-        <div class="row mt-2">
-          <div class="col-3 setting-label">
-            <p>Categories</p>
-          </div>
-
-          <div class=" col-9">
-            <p>hi
-            </p>
-          </div>
-        </div>
-
-      </div>
+      </form>
     </div>
 
-    <!-- RIGHT COLUMN 3/12 25%-->
-    <div class=" col-3 bg-warning">
+
+    <!-- RIGHT COLUMN 3/12 25% PLAYER-->
+    <div class=" col-3">
       <h2 class="text-center">Player: {{this.userHandlerService.getLobbyInfo().users.length}} / 10</h2>
       <!-- LEADER ON TOP -->
-      <div class="row mb-3">
-        <div class="col-5">
-          <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
-            width="100" />
+      <div class="row mb-2">
+        <div class="col-3">
+          <img src="../../../../../../assets/img/profiles/leader.png" alt="user" class="rounded-circle" width="60" />
         </div>
         <div class="col">
-          <h2 class="mb-1 mt-2">{{this.userHandlerService.getLobbyInfo().leader}}</h2>
-          <img src="https://cdn-icons-png.flaticon.com/512/6941/6941697.png" alt="crown" width="30">
+          <h3 class="mb-1 mt-2">{{this.userHandlerService.getLobbyInfo().leader}}</h3>
+          <img src="https://cdn-icons-png.flaticon.com/512/6941/6941697.png" alt="crown" width="15">
         </div>
       </div>
 
       <!-- NGFOR USER -->
-      <div class="row mb-3" *ngFor="let user of this.userHandlerService.getLobbyInfo().users">
-        <div class="col-5">
-          <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
-            width="100" />
+      <div class="row mb-2" *ngFor="let user of this.userHandlerService.getLobbyInfo().users; index as i">
+        <!-- TODO: Make some prettier solution for profile pic, bro -->
+        <div class="col-3">
+          <img src="../../../../../../assets/img/profiles/profile_{{i+1}}.png" alt="user" class="rounded-circle"
+            width="60" />
         </div>
         <div class="col">
-          <h2 class="mt-2">{{user}}</h2>
+          <h3 class="mt-2">{{user}}</h3>
         </div>
       </div>
 
@@ -137,11 +299,3 @@
 
 <button class="btn btn-danger btn-rounded text-uppercase logout m-2" style="width: 10rem;"
   (click)="startLobby()">GetQuestion</button>
-
-
-<!-- <div class="btn-group" role="group" aria-label="Basic mixed styles example"
-  [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
-  <button type="button" class="btn btn-danger">Left</button>
-  <button type="button" class="btn btn-warning">Middle</button>
-  <button type="button" class="btn btn-success">Right</button>
-</div> -->
