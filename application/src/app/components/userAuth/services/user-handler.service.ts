@@ -34,7 +34,7 @@ export class UserHandlerService {
 
   constructor() {
     // TODO: PLEASE REMOVE WHEN LOGIN SCREEN IS FINISHED
-    this.fillLobbyForTesting();
+    // this.fillLobbyForTesting();
   }
 
   // Socket Listeners for Quiz-Game Client<->Server communication
