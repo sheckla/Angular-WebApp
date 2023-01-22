@@ -1,9 +1,11 @@
 <div class="container pt-5">
 
+  <!-- Row needed to use col -->
   <div class="row">
     <!-- LEFT COLUMN 9/12 75%-->
     <div class="col-9">
 
+      <!-- Welcome Section -->
       <div class="row bg-info">
         <!-- Welcome Col -->
         <div class="col">
@@ -28,19 +30,44 @@
         <hr>
       </div>
 
-      <div class="row bg-secondary">
+      <!-- Setting Section -->
+      <!-- Whole Section will be disabled if user != leader -->
+      <div class="row"
+        [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
+
+        <div class="text-center theme-gradient-header sat">
+          <!-- Only for regular user -->
+          <div class="p-1 text-white"
+            [hidden]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">
+            Sorry {{this.userHandlerService.getUser().name}}, but settings are only aviable for lobby-leaders!
+          </div>
+
+          <!-- Banner for leader -->
+          <div class="p-1 text-white"
+            [hidden]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">
+            Hey {{this.userHandlerService.getUser().name}}, please set up your lobby and press start!
+          </div>
+        </div>
 
         <!-- Amount -->
         <div class="row mt-2">
-          <div class="col-3 bg-danger">
-            <p>hi</p>
+          <div class="col-3 setting-label">
+            <p>Question Amount</p>
+          </div>
+
+          <div class="col-9">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn setting-button btn-primary">5</button>
+              <button type=" button" class="btn setting-button btn-primary">10</button>
+              <button type="button" class="btn setting-button btn-primary">20</button>
+            </div>
           </div>
         </div>
 
         <!-- Timer -->
         <div class="row mt-2">
-          <div class="col-3 bg-danger">
-            <p>hi</p>
+          <div class="col-3 setting-label">
+            <p>Timer</p>
           </div>
 
           <div class=" col-9">
@@ -51,8 +78,8 @@
 
         <!-- Difficulty -->
         <div class="row mt-2">
-          <div class="col-3 bg-danger">
-            <p>hi</p>
+          <div class="col-3 setting-label">
+            <p>Difficulty</p>
           </div>
 
           <div class="col-9">
@@ -63,8 +90,8 @@
 
         <!-- Categories -->
         <div class="row mt-2">
-          <div class="col-3 bg-danger">
-            <p>hi</p>
+          <div class="col-3 setting-label">
+            <p>Categories</p>
           </div>
 
           <div class=" col-9">
@@ -72,7 +99,6 @@
             </p>
           </div>
         </div>
-
 
       </div>
     </div>
@@ -104,6 +130,7 @@
       </div>
 
     </div>
+
   </div>
 
 </div>
@@ -111,5 +138,10 @@
 <button class="btn btn-danger btn-rounded text-uppercase logout m-2" style="width: 10rem;"
   (click)="startLobby()">GetQuestion</button>
 
-<input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-<label class="btn btn-secondary" for="option2">Radio</label>
+
+<!-- <div class="btn-group" role="group" aria-label="Basic mixed styles example"
+  [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
+  <button type="button" class="btn btn-danger">Left</button>
+  <button type="button" class="btn btn-warning">Middle</button>
+  <button type="button" class="btn btn-success">Right</button>
+</div> -->

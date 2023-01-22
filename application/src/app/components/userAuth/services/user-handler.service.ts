@@ -181,7 +181,7 @@ export class UserHandlerService {
     var testLobby = new LobbyInfo();
     var testUser = new User();
     //Filling half of User
-    testUser.name = 'Jeff';
+    testUser.name = 'Mike';
     //Filling the lobby
     testLobby.name = 'Testos Teron Lobby';
     testLobby.leader = 'Mike';
