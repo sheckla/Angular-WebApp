@@ -1,13 +1,16 @@
 .setting-label
 {
+height: 2.25em;
 border-radius: 5px;
 background-color: blueviolet;
 text-align: center;
-padding: auto;
+vertical-align: middle;
+
 }
 
 .setting-button {
   width: 8.25em;
+  height: 2.25em;
   color: white;
   margin-right: .5rem; /* mr-2 == .5rem */
 

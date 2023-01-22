@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { IndexComponent } from './components/html/index/index.component';
@@ -16,7 +16,7 @@ import { QuizDashboardComponent } from './components/html/apps/quiz-app/quiz-das
 import { QuizLobbyComponent } from './components/html/apps/quiz-app/quiz-lobby/quiz-lobby.component';
 import { QuizInGameComponent } from './components/html/apps/quiz-app/quiz-in-game/quiz-in-game.component';
 import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-register/quiz-register.component';
-
+import { QuizCurrentPlayerComponent } from './components/html/apps/quiz-app/quiz-current-player/quiz-current-player.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-regi
     QuizLobbyComponent,
     QuizInGameComponent,
     QuizRegisterComponent,
+    QuizCurrentPlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +40,6 @@ import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-regi
     MatSliderModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

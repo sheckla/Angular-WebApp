@@ -8,7 +8,7 @@
       <!-- Welcome Section -->
       <div class="row">
         <!-- Welcome Col -->
-        <div class="col">
+        <div class="col-9">
           <h2>Welcome to {{this.userHandlerService.getLobbyInfo().name}},
             {{this.userHandlerService.getUser().name}}!</h2>
           <h3>Todays Category is <b>"{{this.userHandlerService.getLobbyInfo().category}}"</b> on
@@ -17,17 +17,17 @@
         </div>
 
         <!-- Start Game Col -->
-        <div class="col d-flex justify-content-center align-content-center">
+        <div class="col-3">
 
           <!-- Attention! If the User != Leader, he isnt allowed to start the game, so the button is disabled tho -->
-          <button class="btn btn-rounded btn-outline-primary text-uppercase setting-button" style="height: 3rem;"
-            type="submit" form="lobby-settings"
+          <button class="btn btn-rounded btn-outline-primary text-uppercase welcome-button" type="submit"
+            form="lobby-settings"
             [disabled]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">Start
             Game</button> <!-- //TODO: Button belongs to Form lobby-settings in Setting Section -->
-          <button class="btn btn-rounded btn-outline-danger text-uppercase setting-button" style="height: 3rem;"
-            (click)="
+          <button class="btn btn-rounded btn-outline-danger text-uppercase welcome-button" (click)="
             leaveLobby()">Leave
             Lobby</button>
+
         </div>
 
       </div>
@@ -55,39 +55,33 @@
 
           <!-- Amount -->
           <div class="row mt-2">
-            <div class="col-2 setting-label d-flex justify-content-center align-content-center">
-              <p>Question Amount</p>
+            <div class="col-2 setting-label">
+              <p>Amount</p>
             </div>
 
             <div class="col-10">
-
-              <input type="radio" class="btn-check" name="amount" id="amount-5" value="5" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="amount-5">5</label>
-
-              <input type="radio" class="btn-check" name="amount" id="amount-10" value="10" autocomplete="off" checked>
-              <label class="btn btn-outline-primary setting-button" for="amount-10">10</label>
-
-              <input type="radio" class="btn-check" name="amount" id="amount-20" value="20" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="amount-20">20</label>
-
+              <span *ngFor="let amount of this.settingHandler.amounts, let i = index">
+                <input type="radio" class="btn-check" name="amount" id="amount-{{this.amount}}" value="{{this.amount}}"
+                  autocomplete="off" [checked]="i == 1">
+                <label class="btn btn-outline-primary setting-button" for="amount-{{this.amount}}">
+                  {{this.amount}}</label>
+              </span>
             </div>
           </div>
 
           <!-- Timer -->
           <div class="row mt-2">
             <div class="col-2 setting-label">
-              <p>Timer</p>
+              <p>Time</p>
             </div>
 
             <div class=" col-10">
-              <input type="radio" class="btn-check" name="timer" id="timer-15" value="15" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="timer-15">15</label>
-
-              <input type="radio" class="btn-check" name="timer" id="timer-30" value="30" autocomplete="off" checked>
-              <label class="btn btn-outline-primary setting-button" for="timer-30">30</label>
-
-              <input type="radio" class="btn-check" name="timer" id="timer-45" value="45" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="timer-45">45</label>
+              <span *ngFor="let time of this.settingHandler.times, let i = index">
+                <input type="radio" class="btn-check" name="time" id="time-{{this.time}}" value="{{this.time}}"
+                  autocomplete="off" [checked]="i == 1">
+                <label class="btn btn-outline-primary setting-button" for="time-{{this.time}}">
+                  {{this.time}}</label>
+              </span>
             </div>
           </div>
 
@@ -98,168 +92,32 @@
             </div>
 
             <div class="col-10">
-              <input type="radio" class="btn-check" name="difficulty" id="difficulty-prog" value="Progressive"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="difficulty-prog">Progressive</label>
-
-              <input type="radio" class="btn-check" name="difficulty" id="difficulty-easy" value="Easy"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="difficulty-easy">Easy</label>
-
-              <input type="radio" class="btn-check" name="difficulty" id="difficulty-normal" value="Normal"
-                autocomplete="off" checked>
-              <label class="btn btn-outline-primary setting-button" for="difficulty-normal">Normal</label>
-
-              <input type="radio" class="btn-check" name="difficulty" id="difficulty-hard" value="Hard"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="difficulty-hard">Hard</label>
+              <span *ngFor="let difficult of this.settingHandler.difficults, let i = index">
+                <input type="radio" class="btn-check" name="difficult" id="difficult-{{this.difficult}}"
+                  value="{{this.difficult}}" autocomplete="off" [checked]="i == 2">
+                <label class="btn btn-outline-primary setting-button" for="difficult-{{this.difficult}}">
+                  {{this.difficult}}</label>
+              </span>
             </div>
           </div>
 
-
-          <!-- Categories 1/5-->
+          <!-- Categorie -->
           <div class="row mt-2">
             <div class="col-2 setting-label">
               <p>Categorie</p>
             </div>
 
-            <div class=" col-10">
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Any" value="Any" autocomplete="off"
-                checked>
-              <label class="btn btn-outline-primary setting-button" for="categorie-Any">Any</label>
+            <div class="col-10">
+              <span *ngFor="let categorie of this.settingHandler.categories, let i = index">
+                <input type="radio" class="btn-check" name="categorie" id="categorie-{{this.categorie.name}}"
+                  value="{{this.categorie.name}}" autocomplete="off" [checked]="i == 0">
+                <label class="btn btn-outline-primary setting-button mb-2" for="categorie-{{this.categorie.name}}">
+                  {{this.categorie.name.substring(this.categorie.name.lastIndexOf("
+                  ")+1)}}</label>
+              </span>
 
-              <input type="radio" class="btn-check" name="categorie" id="categorie-General-Knowledge"
-                value="General Knowledge" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-General-Knowledge">General</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Books" value="Entertainment: Books"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Books">Books</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Film" value="Entertainment: Film"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Film">Film</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Music" value="Entertainment: Music"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Music">Music</label>
-            </div>
-
-          </div>
-
-          <!-- Categories 2/5-->
-          <div class="row mt-2">
-            <div class="col-2">
-
-            </div>
-
-            <div class=" col-10">
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Musicals"
-                value="Entertainment: Musicals & Theatres" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Musicals">Musicals</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Television"
-                value="Entertainment: Television" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Television">Television</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Games"
-                value="Entertainment: Video Games" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Games">Video-Games</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Board"
-                value="Entertainment: Board Games" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Board">Board Games</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Nature" value="Science & Nature"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Nature">Nature</label>
             </div>
           </div>
-
-          <!-- Categories 3/5-->
-          <div class="row mt-2">
-            <div class="col-2">
-
-            </div>
-
-            <div class=" col-10">
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Computers" value="Science: Computers"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Computers">Computers</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Mathematics"
-                value="Science: Mathematics" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Mathematics">Mathematics</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Mythology" value="Mythology"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Mythology">Mythology</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Sports" value="Sports"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Sports">Sports</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Geography" value="Geography"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Geography">Geography</label>
-            </div>
-          </div>
-
-          <!-- Categories 4/5-->
-          <div class="row mt-2">
-            <div class="col-2">
-            </div>
-
-            <div class=" col-10">
-              <input type="radio" class="btn-check" name="categorie" id="categorie-History" value="History"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-History">History</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Politics" value="Politics"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Politics">Politics</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Art" value="Art" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Art">Art</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Celebrities" value="Celebrities"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Celebrities">Celebrities</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Animals" value="Animals"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Animals">Animals</label>
-            </div>
-          </div>
-
-          <!-- Categories 5/5-->
-          <div class="row mt-2">
-            <div class="col-2">
-            </div>
-
-            <div class=" col-10">
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Vehicles" value="Vehicles"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Vehicles">Vehicles</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Comics" value="Entertainment: Comics"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Comics">Comics</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Gadgets" value="Science: Gadgets"
-                autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Gadgets">Gadgets</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Anime"
-                value="Entertainment: Japanese Anime & Manga" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Anime">Anime</label>
-
-              <input type="radio" class="btn-check" name="categorie" id="categorie-Cartoons"
-                value="Entertainment: Cartoons & Animations" autocomplete="off">
-              <label class="btn btn-outline-primary setting-button" for="categorie-Cartoons">Cartoons</label>
-            </div>
-          </div>
-
         </div>
       </form>
     </div>
@@ -267,30 +125,7 @@
 
     <!-- RIGHT COLUMN 3/12 25% PLAYER-->
     <div class=" col-3">
-      <h2 class="text-center">Player: {{this.userHandlerService.getLobbyInfo().users.length}} / 10</h2>
-      <!-- LEADER ON TOP -->
-      <div class="row mb-2">
-        <div class="col-3">
-          <img src="../../../../../../assets/img/profiles/leader.png" alt="user" class="rounded-circle" width="60" />
-        </div>
-        <div class="col">
-          <h3 class="mb-1 mt-2">{{this.userHandlerService.getLobbyInfo().leader}}</h3>
-          <img src="https://cdn-icons-png.flaticon.com/512/6941/6941697.png" alt="crown" width="15">
-        </div>
-      </div>
-
-      <!-- NGFOR USER -->
-      <div class="row mb-2" *ngFor="let user of this.userHandlerService.getLobbyInfo().users; index as i">
-        <!-- TODO: Make some prettier solution for profile pic, bro -->
-        <div class="col-3">
-          <img src="../../../../../../assets/img/profiles/profile_{{i+1}}.png" alt="user" class="rounded-circle"
-            width="60" />
-        </div>
-        <div class="col">
-          <h3 class="mt-2">{{user}}</h3>
-        </div>
-      </div>
-
+      <app-quiz-current-player></app-quiz-current-player>
     </div>
 
   </div>
