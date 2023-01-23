@@ -65,6 +65,18 @@ export class SettingHandlerService {
       if (this.categories[i].name == categoryName) return this.categories[i];
     }
   }
+
+  generateNumber(name: string): number {
+    var hash = 0;
+    for (var i = 0; i < name.length; i++) {
+      var char = name.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash;
+    }
+
+    console.log('Der Name ' + name + ' ergibt den Hash ' + Math.abs(hash % 10));
+    return Math.abs(hash % 10);
+  }
 }
 
 class Category {

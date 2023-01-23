@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingHandlerService } from 'src/app/components/userAuth/services/setting-handler.service';
 import { UserHandlerService } from 'src/app/components/userAuth/services/user-handler.service';
 
 @Component({
@@ -7,7 +8,10 @@ import { UserHandlerService } from 'src/app/components/userAuth/services/user-ha
   styleUrls: ['./quiz-current-player.component.css'],
 })
 export class QuizCurrentPlayerComponent implements OnInit {
-  constructor(public userHandlerService: UserHandlerService) {}
+  constructor(
+    public userHandlerService: UserHandlerService,
+    public settingHandler: SettingHandlerService
+  ) {}
 
   ngOnInit(): void {}
 }
