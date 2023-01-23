@@ -14,8 +14,8 @@
 <div class="row mb-2" *ngFor="let user of this.userHandlerService.getLobbyInfo().users; index as i">
   <!-- TODO: Make some prettier solution for profile pic, bro -->
   <div class="col-3">
-    <img src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(user)}}.png" alt="user"
-      class="rounded-circle" width="60" />
+    <img src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(user)}}.png"
+      alt="user-{{i}}" class="rounded-circle" width="60" />
   </div>
   <div class="col-9">
     <h3 class="mt-2">{{user}}</h3>

@@ -39,7 +39,7 @@
           [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
 
           <!-- Header -->
-          <div class="text-center theme-gradient-header sat">
+          <div class="text-center theme-gradient-header sat mb-2">
             <!-- Only for regular user -->
             <div class="p-1 text-white"
               [hidden]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">
@@ -54,7 +54,7 @@
           </div>
 
           <!-- Amount -->
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-2 setting-label">
               <p>Amount</p>
             </div>
@@ -63,14 +63,14 @@
               <span *ngFor="let amount of this.settingHandler.amounts, let i = index">
                 <input type="radio" class="btn-check" name="amount" id="amount-{{this.amount}}" value="{{this.amount}}"
                   autocomplete="off" [checked]="i == 1">
-                <label class="btn btn-outline-primary setting-button" for="amount-{{this.amount}}">
+                <label class="btn btn-outline-primary setting-button mb-2" for="amount-{{this.amount}}">
                   {{this.amount}}</label>
               </span>
             </div>
           </div>
 
           <!-- Timer -->
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-2 setting-label">
               <p>Time</p>
             </div>
@@ -79,14 +79,14 @@
               <span *ngFor="let time of this.settingHandler.times, let i = index">
                 <input type="radio" class="btn-check" name="time" id="time-{{this.time}}" value="{{this.time}}"
                   autocomplete="off" [checked]="i == 1">
-                <label class="btn btn-outline-primary setting-button" for="time-{{this.time}}">
+                <label class="btn btn-outline-primary setting-button  mb-2" for="time-{{this.time}}">
                   {{this.time}}</label>
               </span>
             </div>
           </div>
 
           <!-- Difficulty -->
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-2 setting-label">
               <p>Difficulty</p>
             </div>
@@ -95,14 +95,14 @@
               <span *ngFor="let difficult of this.settingHandler.difficults, let i = index">
                 <input type="radio" class="btn-check" name="difficult" id="difficult-{{this.difficult}}"
                   value="{{this.difficult}}" autocomplete="off" [checked]="i == 2">
-                <label class="btn btn-outline-primary setting-button" for="difficult-{{this.difficult}}">
+                <label class="btn btn-outline-primary setting-button mb-2" for="difficult-{{this.difficult}}">
                   {{this.difficult}}</label>
               </span>
             </div>
           </div>
 
           <!-- Categorie -->
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-2 setting-label">
               <p>Categorie</p>
             </div>

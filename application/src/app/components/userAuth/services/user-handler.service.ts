@@ -186,7 +186,7 @@ export class UserHandlerService {
     testLobby.name = 'VerteilteSystemeSux';
     testLobby.leader = 'PrettyEyebrowsOMG';
     testLobby.users = [
-      'PrettyEyebrowsOMG',
+      'Daniel',
       'Iamvile',
       'S0phus',
       'Gamerbadger',
