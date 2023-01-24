@@ -1,0 +1,11 @@
+.answer {
+  width: 100%;
+  text-align: left;
+  border-color: aqua;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.what{
+  height: 4rem;
+}

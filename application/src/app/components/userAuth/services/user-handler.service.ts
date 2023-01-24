@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Debug } from './util/Debug';
 import { ClientSocket } from './util/ClientSocket';
-import { User, LobbyInfo } from './util/QuizAppDataTypes';
+import { User, LobbyInfo, Quiz, QuizQuestion } from './util/QuizAppDataTypes';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,6 +17,10 @@ export class UserHandlerService {
   private _user: User = new User();
   private _currentLobby: LobbyInfo = new LobbyInfo();
   private _openLobbies: LobbyInfo[] = [];
+
+  // TODO: We dont know how to handle the Quiz, so its a workarount [24.01.23; mihammer]
+  public _quiz: Quiz = new Quiz();
+  started: boolean = false;
 
   /*
    * Subscribeable EventEmitters:
@@ -35,6 +39,9 @@ export class UserHandlerService {
   constructor() {
     // TODO: PLEASE REMOVE WHEN LOGIN SCREEN IS FINISHED
     this.fillLobbyForTesting();
+    this.fillQuizForTesting();
+    Debug.log('Switched this.started = true');
+    this.started = true;
   }
 
   // Socket Listeners for Quiz-Game Client<->Server communication
@@ -136,6 +143,9 @@ export class UserHandlerService {
   }
 
   startLobby(): void {
+    // TODO: remove also this setting
+    this.started = true;
+
     this._clientConnection
       .getSocket()
       .emit('Client_LobbyStartRequest', this._currentLobby.name); //TODO
@@ -186,7 +196,7 @@ export class UserHandlerService {
     testLobby.name = 'VerteilteSystemeSux';
     testLobby.leader = 'PrettyEyebrowsOMG';
     testLobby.users = [
-      'Daniel',
+      'Robin',
       'Iamvile',
       'S0phus',
       'Gamerbadger',
@@ -204,5 +214,106 @@ export class UserHandlerService {
     //Override
     this._currentLobby = testLobby;
     this._user = testUser;
+    Debug.log('Filled lobby for developing');
+    Debug.log('Replaced current user by: ' + testUser.name);
+    Debug.log('Replaced current lobby by: ' + testLobby.name);
+  }
+
+  // *** FILL QUIZ FOR TESTING ONLY ***
+  // TODO: Please remove when inGame is ready!
+  private fillQuizForTesting() {
+    var testQuiz = new Quiz();
+    testQuiz.questions = [
+      {
+        category: 'Entertainment: Cartoon & Animations',
+        type: 'multiple',
+        difficulty: 'easy',
+        question:
+          'Who was the villain of &#039;&#039;The Lion King&#039;&#039;?',
+        correctAnswer: 'Scar',
+        falseAnswers: ['Fred', 'Jafar', 'Vada'],
+      },
+      {
+        category: 'Entertainment: Film',
+        type: 'multiple',
+        difficulty: 'medium',
+        question:
+          'Which retired American football quarterback played himself in &#039;Ace Ventura: Pet Detective&#039; and &#039;Little Nicky&#039;?',
+        correctAnswer: 'Dan Marino',
+        falseAnswers: ['John Elway', 'Tom Brady', 'Joe Montana'],
+      },
+      {
+        category: 'Geography',
+        type: 'multiple',
+        difficulty: 'medium',
+        question: 'Montreal is in which Canadian province?',
+        correctAnswer: 'Quebec',
+        falseAnswers: ['Ontario', 'Nova Scotia', 'Alberta'],
+      },
+      {
+        category: 'Geography',
+        type: 'multiple',
+        difficulty: 'medium',
+        question: 'What is the largest non-continental island in the world?',
+        correctAnswer: 'Greenland',
+        falseAnswers: ['New Guinea', 'Borneo', 'Madagascar'],
+      },
+      {
+        category: 'Geography',
+        type: 'multiple',
+        difficulty: 'easy',
+        question: 'What is the capital of Scotland?',
+        correctAnswer: 'Edinburgh',
+        falseAnswers: ['Glasgow', 'Dundee', 'London'],
+      },
+      {
+        category: 'History',
+        type: 'multiple',
+        difficulty: 'easy',
+        question: 'In 1453, which important city fell?',
+        correctAnswer: 'Constantinople',
+        falseAnswers: ['Rome', 'Hamburg', 'Athens'],
+      },
+      {
+        category: 'Entertainment: Video Games',
+        type: 'boolean',
+        difficulty: 'medium',
+        question: 'Shang Tsung is a playable character in Mortal Kombat XL.',
+        correctAnswer: 'False',
+        falseAnswers: ['True'],
+      },
+      {
+        category: 'Science & Nature',
+        type: 'boolean',
+        difficulty: 'medium',
+        question:
+          '&quot;Tachycardia&quot; or &quot;Tachyarrhythmia&quot; refers to a resting heart-rate near or over 100 BPM.',
+        correctAnswer: 'True',
+        falseAnswers: ['False'],
+      },
+      {
+        category: 'Geography',
+        type: 'multiple',
+        difficulty: 'hard',
+        question: 'Which is not a country in Africa?',
+        correctAnswer: 'Guyana',
+        falseAnswers: ['Senegal', 'Liberia', 'Somalia'],
+      },
+      {
+        category: 'Entertainment: Music',
+        type: 'multiple',
+        difficulty: 'easy',
+        question: 'Who is the lead singer of Foo Fighters?',
+        correctAnswer: 'Dave Grohl',
+        falseAnswers: [
+          'Dave Mustaine',
+          'James Hetfield',
+          'Little Red Riding Hood',
+        ],
+      },
+    ];
+    this._quiz = testQuiz;
+    Debug.log('Filled quiz for developing');
+    console.log(this._quiz.questions);
   }
 }

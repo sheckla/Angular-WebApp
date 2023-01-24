@@ -2,8 +2,8 @@
 
   <!-- Row needed to use col -->
   <div class="row">
-    <!-- LEFT COLUMN 9/12 75% WELCOME AND SETTING-->
-    <div class="col-9">
+    <!-- LEFT COLUMN 9/12 75% WELCOME AND SETTING | This column is only visible when no game started yet-->
+    <div class="col-9" *ngIf="!this.userHandlerService.started">
 
       <!-- Welcome Section -->
       <div class="row">
@@ -108,7 +108,8 @@
             </div>
 
             <div class="col-10">
-              <span *ngFor="let categorie of this.settingHandler.categories, let i = index">
+              <span *ngFor="let categorie of this.settingHandler.categories, let i = index" data-toggle="tooltip"
+                data-placement="top" title="{{this.categorie.name}}">
                 <input type="radio" class="btn-check" name="categorie" id="categorie-{{this.categorie.name}}"
                   value="{{this.categorie.name}}" autocomplete="off" [checked]="i == 0">
                 <label class="btn btn-outline-primary setting-button mb-2" for="categorie-{{this.categorie.name}}">
@@ -122,8 +123,13 @@
       </form>
     </div>
 
+    <!-- This column will only be visible when game started -->
+    <div class="container col-9" *ngIf="this.userHandlerService.started">
+      <app-quiz-in-game></app-quiz-in-game>
+    </div>
 
-    <!-- RIGHT COLUMN 3/12 25% PLAYER-->
+
+    <!-- RIGHT COLUMN 3/12 25% PLAYER | This column is fix, it has to stay there in and out game-->
     <div class=" col-3">
       <app-quiz-current-player></app-quiz-current-player>
     </div>

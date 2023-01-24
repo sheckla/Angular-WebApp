@@ -1,1 +1,77 @@
-<p>quiz-in-game works!</p>
+<!-- We're already in a col-9 -->
+<div class="row">
+  <div class="col-5">
+
+    <span class="inGameInfo">
+      <p>Lobby: {{this.userHandlerService.getLobbyInfo().name}}</p>
+      <p>Difficulty: {{this.userHandlerService.getLobbyInfo().difficulty}}</p>
+      <p>Category: {{this.userHandlerService.getLobbyInfo().category}}</p>
+    </span>
+
+
+  </div>
+
+  <div class="col-1 d-flex">
+    <div class="vr"></div>
+  </div>
+
+  <div class="col-6">
+    <span class="inGameInfo">
+      <p>Correct: keine :(</p>
+      <!-- TODO: no idea yet -->
+      <p>Wrong: alle :)</p> <!-- TODO: no idea yet -->
+      <p>Score: 1. mio</p> <!-- TODO: no idea yet -->
+    </span>
+  </div>
+
+
+
+</div>
+
+<!-- Header -->
+<div class="text-center theme-gradient-header sat mb-2 mt-2">
+  <div class="p-1 text-white">
+    Question: {{this.userHandlerService._quiz.total}}/{{this.userHandlerService.getLobbyInfo().totalQuestions}} | Timer:
+    <b>30</b> seconds left!
+  </div>
+</div>
+
+<!-- TODO: keep Question Row fixed size and HR on bottom -->
+<div class="row question" style="min-height: 5rem;">
+  <h1>{{this.userHandlerService._quiz.questions[3].question}}</h1>
+</div>
+
+<hr>
+
+<div class="row">
+  <!-- TODO: Questions must be shuffled in an array, then NGFOR over it -->
+  <span class="what">
+    <input type="radio" class="btn-check" name="question" id="question-a" value="a" autocomplete="off">
+    <label class="btn answer answerA" for="question-a">A |
+      {{this.userHandlerService._quiz.questions[3].falseAnswers[0]}}</label>
+  </span>
+
+
+  <span class="what">
+    <input type="radio" class="btn-check" name="question" id="question-b" value="b" autocomplete="off">
+    <label class="btn answer answerB" for="question-b">B |
+      {{this.userHandlerService._quiz.questions[3].falseAnswers[1]}}</label>
+  </span>
+
+
+  <span class="what">
+    <input type="radio" class="btn-check" name="question" id="question-c" value="c" autocomplete="off">
+    <label class="btn answer answerC" for="question-c">C |
+      {{this.userHandlerService._quiz.questions[3].falseAnswers[2]}}</label>
+  </span>
+
+
+  <span class="what">
+    <input type="radio" class="btn-check" name="question" id="question-d" value="d" autocomplete="off">
+    <label class="btn answer answerD" for="question-d">D |
+      {{this.userHandlerService._quiz.questions[3].correctAnswer}}</label>
+  </span>
+
+
+
+</div>
