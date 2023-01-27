@@ -1,29 +1,30 @@
 <!-- We're already in a col-9 -->
 <div class="row">
   <div class="col-5">
-
     <span class="inGameInfo">
       <p>Lobby: {{this.userHandlerService.getLobbyInfo().name}}</p>
       <p>Difficulty: {{this.userHandlerService.getLobbyInfo().difficulty}}</p>
       <p>Category: {{this.userHandlerService.getLobbyInfo().category}}</p>
     </span>
-
-
   </div>
 
   <div class="col-1 d-flex">
     <div class="vr"></div>
   </div>
 
-  <div class="col-6">
+  <div class="col-5">
     <span class="inGameInfo">
-      <p>Correct: keine :(</p>
+      <p>Correct: correct++</p>
       <!-- TODO: no idea yet -->
-      <p>Wrong: alle :)</p> <!-- TODO: no idea yet -->
-      <p>Score: 1. mio</p> <!-- TODO: no idea yet -->
+      <p>Wrong: wrong++</p> <!-- TODO: no idea yet -->
+      <p>Score: currentScore + timeYouSelected</p> <!-- TODO: no idea yet -->
     </span>
   </div>
 
+  <div class="col-1">
+    <button type="button" class="btn-close btn-close-white" aria-label="Close"
+      (click)="this.userHandlerService.leaveLobby()"></button>
+  </div>
 
 
 </div>
@@ -37,38 +38,44 @@
 </div>
 
 <!-- TODO: keep Question Row fixed size and HR on bottom -->
-<div class="row question" style="min-height: 5rem;">
+<div class="row questionSection" style="min-height: 5rem;">
   <h1>{{this.userHandlerService._quiz.questions[3].question}}</h1>
 </div>
 
 <hr>
 
-<div class="row">
+<div class="row answerSection">
   <!-- TODO: Questions must be shuffled in an array, then NGFOR over it -->
-  <span class="what">
-    <input type="radio" class="btn-check" name="question" id="question-a" value="a" autocomplete="off">
-    <label class="btn answer answerA" for="question-a">A |
-      {{this.userHandlerService._quiz.questions[3].falseAnswers[0]}}</label>
+  <!-- TODO: Idea - if you answer, the class change from outline to "normal button" (filled); if its incorrect the correct answer changed to btn-danger (filled red!) -->
+  <span class="answers">
+    <input type="radio" class="btn-check " name="answer" id="answer-a" value="a" autocomplete="off">
+    <label class="btn btn-outline-primary answer" for="answer-a">
+      <img src="https://cdn-icons-png.flaticon.com/512/3522/3522248.png" class="answerIcon" alt="A">
+      {{this.userHandlerService._quiz.questions[3].falseAnswers[0]}}
+    </label>
   </span>
 
 
-  <span class="what">
-    <input type="radio" class="btn-check" name="question" id="question-b" value="b" autocomplete="off">
-    <label class="btn answer answerB" for="question-b">B |
+  <span class="answers">
+    <input type="radio" class="btn-check" name="answer" id="answer-b" value="b" autocomplete="off">
+    <label class="btn btn-outline-primary answer" for="answer-b">
+      <img src="https://cdn-icons-png.flaticon.com/512/3522/3522266.png" class="answerIcon" alt="B">
       {{this.userHandlerService._quiz.questions[3].falseAnswers[1]}}</label>
   </span>
 
 
-  <span class="what">
-    <input type="radio" class="btn-check" name="question" id="question-c" value="c" autocomplete="off">
-    <label class="btn answer answerC" for="question-c">C |
+  <span class="answers">
+    <input type="radio" class="btn-check" name="answer" id="answer-c" value="c" autocomplete="off">
+    <label class="btn btn-outline-primary answer" for="answer-c">
+      <img src="https://cdn-icons-png.flaticon.com/512/3522/3522283.png" class="answerIcon" alt="C">
       {{this.userHandlerService._quiz.questions[3].falseAnswers[2]}}</label>
   </span>
 
 
-  <span class="what">
-    <input type="radio" class="btn-check" name="question" id="question-d" value="d" autocomplete="off">
-    <label class="btn answer answerD" for="question-d">D |
+  <span class="answers">
+    <input type="radio" class="btn-check" name="answer" id="answer-d" value="d" autocomplete="off">
+    <label class="btn btn-outline-primary answer" for="answer-d">
+      <img src="https://cdn-icons-png.flaticon.com/512/3523/3523617.png" class="answerIcon" alt="D">
       {{this.userHandlerService._quiz.questions[3].correctAnswer}}</label>
   </span>
 

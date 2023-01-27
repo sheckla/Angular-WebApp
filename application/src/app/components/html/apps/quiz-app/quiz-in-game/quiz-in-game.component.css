@@ -1,11 +1,22 @@
 .answer {
   width: 100%;
+  height: 100%;
   text-align: left;
-  border-color: aqua;
+  vertical-align: middle;
+
   color: white;
   margin-bottom: 0.5rem;
 }
 
-.what{
-  height: 4rem;
+.answers {
+  margin-bottom: .5rem;
+
+}
+
+.answerIcon {
+  height: 20px;
+}
+
+.btn-close {
+  float: right;
 }
