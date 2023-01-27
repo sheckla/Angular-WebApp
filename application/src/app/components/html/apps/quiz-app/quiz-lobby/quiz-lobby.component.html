@@ -5,7 +5,7 @@
     <!-- LEFT COLUMN 9/12 75% WELCOME AND SETTING | This column is only visible when no game started yet-->
     <div class="col-9" *ngIf="!this.userHandlerService.started">
 
-      <!-- Welcome Section -->
+      <!-- Welcome/Start Section -->
       <div class="row">
         <!-- Welcome Col -->
         <div class="col-9">
@@ -22,8 +22,9 @@
           <!-- Attention! If the User != Leader, he isnt allowed to start the game, so the button is disabled tho -->
           <button class="btn btn-rounded btn-outline-primary text-uppercase welcome-button" type="submit"
             form="lobby-settings"
-            [disabled]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">Start
-            Game</button> <!-- //TODO: Button belongs to Form lobby-settings in Setting Section -->
+            [disabled]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader"
+            (click)="this.userHandlerService.startLobby()">Start
+            Game</button> <!-- //TODO: Change Click, its just workaround -->
           <button class="btn btn-rounded btn-outline-danger text-uppercase welcome-button" (click)="
             leaveLobby()">Leave
             Lobby</button>

@@ -8,20 +8,21 @@
 <div *ngIf="!this.userHandlerService.getUser().isInsideLobby; else lobbyBlock">
 
   <div class="container pt-5">
-    <!-- FIRST ROW -->
+    <!-- TOP -->
     <div class="row">
 
-      <!-- FIRST COL - LEFT -->
+      <!-- USER INFOS -->
       <div class="col-sm">
         <div class="card text-white bg-transparent mb-3" style="width: 18rem;">
           <h2 class="mb-3">Hello {{this.userHandlerService.getUser().name}}!</h2>
-          <img src="https://cdn-icons-png.flaticon.com/512/2202/2202112.png" alt="user" class="rounded-circle"
-            width="100" />
+          <img
+            src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(this.userHandlerService.getUser().name)}}.png"
+            alt="user" class="rounded-circle" width="100" />
           <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="logout()">Logout</button>
         </div>
       </div>
 
-      <!-- SECOND COL - RRRIGHT -->
+      <!-- LOBBY LOGIN -->
       <div class="col-sm">
         <form action="">
           <div class="row mt-2">
@@ -36,7 +37,6 @@
             </div>
 
             <!-- Buttons -->
-            <!-- TODO: Buttons align with logout button -->
             <div class="col">
               <button type="submit" class="btn btn-primary w-100 btn-lg-height" (click)="createLobby(lobbyName.value)">
                 Create</button>
@@ -53,21 +53,21 @@
       </div>
     </div>
 
+    <!-- Horizontal Line -->
     <div class="row">
       <hr class="mt-5">
     </div>
 
-    <!-- NEXT ROW -->
+    <!-- BOTTOM -->
     <div class="row">
-      <!-- COL LEFT -->
+      <!-- ACTIVE LOBBIES -->
       <div class="col">
         <h2>Active Lobbies</h2>
-
         <div class="row">
           <div class="col-6" *ngFor="let lobby of this.lobbies">
-            <div class="card bg-primary mb-3">
+            <div class="card bg-primary mb-3 project-image" (click)="joinLobby(lobby.name)">
               <div class="card-body">
-                <h2 class="card-title">{{lobby.name}}</h2>
+                <h3 class="card-title">{{lobby.name}}</h3>
                 <h3 class="usersInLobby">{{lobby.users}}/10</h3>
               </div>
             </div>
@@ -75,10 +75,11 @@
         </div>
       </div>
 
-      <!-- <div class="col-1 d-flex">
-      <div class="vr"></div>
-    </div> -->
+      <div class="col-1 d-flex">
+        <div class="vr"></div>
+      </div>
 
+      <!-- UPCOMING LEADERBOARD -->
       <div class="col container d-flex border border-warning">
         <h1 class="mx-auto justify-content-center align-self-center text-warning">Upcoming Leaderboard in the next
           Update

@@ -40,8 +40,8 @@ export class UserHandlerService {
     // TODO: PLEASE REMOVE WHEN LOGIN SCREEN IS FINISHED
     this.fillLobbyForTesting();
     this.fillQuizForTesting();
-    Debug.log('Switched this.started = true');
-    this.started = true;
+    // Debug.log('Switched this.started = true');
+    // this.started = true;
   }
 
   // Socket Listeners for Quiz-Game Client<->Server communication
@@ -136,6 +136,9 @@ export class UserHandlerService {
 
   leaveLobby(): void {
     if (this._currentLobby.name == '') return;
+
+    this.started = false; //TODO: Remove here
+
     Debug.log('Leaving Lobby');
     this._clientConnection
       .getSocket()

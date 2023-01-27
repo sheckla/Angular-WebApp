@@ -3,6 +3,7 @@ import { UserHandlerService } from 'src/app/components/userAuth/services/user-ha
 import { ErrorMessagesService } from 'src/app/components/userAuth/services/error-messages.service';
 import { Subscription } from 'rxjs';
 import { Debug } from 'src/app/components/userAuth/services/util/Debug';
+import { SettingHandlerService } from 'src/app/components/userAuth/services/setting-handler.service';
 
 @Component({
   selector: 'app-quiz-dashboard',
@@ -16,6 +17,7 @@ export class QuizDashboardComponent implements OnInit {
 
   constructor(
     public userHandlerService: UserHandlerService,
+    public settingHandler: SettingHandlerService,
     private _errorMessageService: ErrorMessagesService
   ) {
     // Lobby Join Event
