@@ -1,17 +1,23 @@
-<div class="container-fluid h-100 text-white bg-dark">
+<div class="h-100 text-white bg-dark">
+  <!-- Header -->
+<div class="fade-in-0 width-animation">
+  <div class="text-center theme-gradient-header sat">
+    <div class="p-1 text-white">
+      Welcome to QuizGame v.1.0 | DebugLogging = {{this.debugEnabled}}
+    </div>
+  </div>
+</div>
 
+<div class="fade-in-2">
   <div *ngIf="!this.userHandlerService.getUser().isLoggedIn; else dashboardblock">
     <app-user-login></app-user-login>
   </div>
-
-
   <ng-template #dashboardblock>
     <app-quiz-dashboard></app-quiz-dashboard>
   </ng-template>
-
-
 </div>
 
+</div>
 
 
 <!-- <div class="container-fluid h-100 text-white bg-dark">

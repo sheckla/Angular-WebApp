@@ -6,44 +6,39 @@ import { Injectable } from '@angular/core';
 export class SettingHandlerService {
   public amounts = [5, 10, 20];
   public times = [15, 30, 45];
-  public difficults = ['Progressive', 'Easy', 'Normal', 'Hard'];
+  public difficults = ['Any', 'Easy', 'Normal', 'Hard'];
   public categories = new Array();
 
   constructor() {
-    this.categories.push(new Category('Any', 0));
-    this.categories.push(new Category('General Knowledge', 9));
-    this.categories.push(new Category('Entertainment: Books', 10));
-    this.categories.push(new Category('Entertainment: Film', 11));
-    this.categories.push(new Category('Entertainment: Music', 12));
+    this.categories.push(new Category('Any', 0, '', 'Select from all Catgories!'));
+    this.categories.push(new Category('General Knowledge', 9, '', 'Tooltip'));
+    this.categories.push(new Category('Entertainment: Books', 10, 'Books', 'Tooltip'));
+    this.categories.push(new Category('Entertainment: Film', 11, 'Film & Cinema', 'Tooltip'));
+    this.categories.push(new Category('Entertainment: Music', 12, 'Music', 'Tooltip'));
+    this.categories.push(new Category('Entertainment: Musicals & Theatres', 13, 'Musicals & Theatres', 'Tooltip'));
+    this.categories.push(new Category('Entertainment: Television', 14, 'Television', 'Tooltip'));
+    this.categories.push(new Category('Entertainment: Video Games', 15, 'Video Games','Tooltip'));
+    this.categories.push(new Category('Entertainment: Board Games', 16, 'Board Games','Tooltip'));
+    this.categories.push(new Category('Science & Nature', 17, 'Science & Nature','Tooltip'));
+    this.categories.push(new Category('Science: Computers', 18, 'Computer Science','Tooltip'));
+    this.categories.push(new Category('Science: Mathematics', 19, 'Mathematics','Tooltip'));
+    this.categories.push(new Category('Mythology', 20, '','Tooltip'));
+    this.categories.push(new Category('Sports', 21, '','Tooltip'));
+    this.categories.push(new Category('Geography', 22, '','Tooltip'));
+    this.categories.push(new Category('History', 23, '','Tooltip'));
+    this.categories.push(new Category('Politics', 24, '','Tooltip'));
+    this.categories.push(new Category('Art', 25, '','Tooltip'));
+    this.categories.push(new Category('Celebrities', 26, '','Tooltip'));
+    this.categories.push(new Category('Animals', 27, '','Tooltip'));
+    this.categories.push(new Category('Vehicles', 28, '','Tooltip'));
+    this.categories.push(new Category('Entertainment: Comics', 29, 'Comics','Tooltip'));
+    this.categories.push(new Category('Science: Gadgets', 30, 'Gadgets','Tooltip'));
     this.categories.push(
-      new Category('Entertainment: Musicals & Theatres', 13)
-    );
-    this.categories.push(new Category('Entertainment: Television', 14));
-    this.categories.push(new Category('Entertainment: Video Games', 15));
-    this.categories.push(new Category('Entertainment: Board Games', 16));
-    this.categories.push(new Category('Science & Nature', 17));
-    this.categories.push(new Category('Science: Computers', 18));
-    this.categories.push(new Category('Science: Mathematics', 19));
-    this.categories.push(new Category('Mythology', 20));
-    this.categories.push(new Category('Sports', 21));
-    this.categories.push(new Category('Geography', 22));
-    this.categories.push(new Category('History', 23));
-    this.categories.push(new Category('Politics', 24));
-    this.categories.push(new Category('Art', 25));
-    this.categories.push(new Category('Celebrities', 26));
-    this.categories.push(new Category('Animals', 27));
-    this.categories.push(new Category('Vehicles', 28));
-    this.categories.push(new Category('Entertainment: Comics', 29));
-    this.categories.push(new Category('Science: Gadgets', 30));
-    this.categories.push(
-      new Category('Entertainment: Japanese Anime & Manga', 31)
+      new Category('Entertainment: Japanese Anime & Manga', 31, 'Anime & Manga','Tooltip')
     );
     this.categories.push(
-      new Category('Entertainment: Cartoons & Animations', 32)
+      new Category('Entertainment: Cartoons & Animations', 32, 'Cartoons & Animation','Tooltip')
     );
-
-    console.log('Logging der Categories jetzt!s');
-    console.log(this.categories);
   }
 
   // Gets ID for specific category-name
@@ -74,7 +69,6 @@ export class SettingHandlerService {
       hash = hash & hash;
     }
 
-    console.log('Der Name ' + name + ' ergibt den Hash ' + Math.abs(hash % 10));
     return Math.abs(hash % 10);
   }
 }
@@ -82,9 +76,14 @@ export class SettingHandlerService {
 class Category {
   name: string;
   id: number;
+  shortenedName: string;
+  tooltip: string;
 
-  constructor(name, id) {
+  constructor(name, id, shortenedName, tooltip) {
     this.name = name;
+    this.shortenedName = shortenedName;
+    if (this.shortenedName == '') this.shortenedName = this.name
     this.id = id;
+    this.tooltip = tooltip;
   }
 }

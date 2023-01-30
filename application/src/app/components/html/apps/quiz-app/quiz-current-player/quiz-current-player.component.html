@@ -1,23 +1,64 @@
-<h2 class="text-center">Player: {{this.userHandlerService.getLobbyInfo().users.length}} / 10</h2>
+<h2 class="text-center">Players: {{this.userHandlerService.getLobbyInfo().users.length+1}} / 10</h2>
 <!-- LEADER ON TOP -->
-<div class="row mb-2">
+<div class="row mb-2 d-flex flex-wrap align-items-center">
   <div class="col-3">
     <img src="../../../../../../assets/img/profiles/leader.png" alt="user" class="rounded-circle" width="60" />
   </div>
+  <!-- Client Icon, Name & Score -->
   <div class="col-9">
-    <h3 class="mb-1 mt-2">{{this.userHandlerService.getLobbyInfo().leader}}</h3>
-    <img src="https://cdn-icons-png.flaticon.com/512/6941/6941697.png" alt="crown" width="15">
+    <div class="row d-flex flex-wrap align-items-center">
+      <!-- Crown -->
+      <div class="col-1">
+        <img src="https://cdn-icons-png.flaticon.com/512/6941/6941697.png" alt="crown" width="15">
+      </div>
+      <!-- Name & Score -->
+      <div class="col">
+        <!-- Mark User if name matches -->
+        <div *ngIf="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader.name; else otherUserBlock">
+          <h3 class="mb-1 mt-2 mark-user">{{this.userHandlerService.getLobbyInfo().leader.name}}
+            <span class="streak" *ngIf="this.userHandlerService.getLobbyInfo().leader.currentStreak > 0">({{this.userHandlerService.getLobbyInfo().leader.currentStreak}})</span>
+          </h3>
+        </div>
+        <!-- Dont mark user if name doesn't match -->
+        <ng-template #otherUserBlock>
+          <h3 class="mb-1 mt-2">{{this.userHandlerService.getLobbyInfo().leader.name}}
+            <span class="streak" *ngIf="this.userHandlerService.getLobbyInfo().leader.currentStreak > 0">({{this.userHandlerService.getLobbyInfo().leader.currentStreak}})</span>
+          </h3>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row d-flex flex-wrap align-items-center">
+      <a *ngIf="this.userHandlerService.getLobbyInfo().started">Score: {{this.userHandlerService.getLobbyInfo().leader.currentScore.toString()}}</a>
+      <a *ngIf="this.userHandlerService.getLobbyInfo().leader.answerSubmitted"> has submitted answer (needs css styling)</a>
+    </div>
   </div>
 </div>
 
 <!-- NGFOR USER -->
-<div class="row mb-2" *ngFor="let user of this.userHandlerService.getLobbyInfo().users; index as i">
-  <!-- TODO: Make some prettier solution for profile pic, bro -->
+<div class="row mb-2 d-flex flex-wrap align-items-center" *ngFor="let user of this.userHandlerService.getLobbyInfo().users; index as i">
+  <!-- Client Icon -->
   <div class="col-3">
-    <img src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(user)}}.png"
+    <img src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(user.name)}}.png"
       alt="user-{{i}}" class="rounded-circle" width="60" />
   </div>
+  <!-- Client Icon, Name & Score -->
   <div class="col-9">
-    <h3 class="mt-2">{{user}}</h3>
+    <div class="row d-flex flex-wrap align-items-center">
+      <!-- Name & Score -->
+      <div class="col">
+        <!-- Mark User if name matches-->
+        <div *ngIf="this.userHandlerService.getUser().name == user.name; else otherUserBlock">
+          <h3 class="mb-1 mt-2 mark-user">{{user.name}}</h3>
+        </div>
+        <!-- Dont mark user if name doesn't match -->
+        <ng-template #otherUserBlock>
+          <h3 class="mb-1 mt-2">{{user.name}}</h3>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row d-flex flex-wrap align-items-center">
+      <a *ngIf="this.userHandlerService.getLobbyInfo().started">Score: {{user.currentScore}}</a>
+      <a *ngIf="user.answerSubmitted"> has submitted answer (needs css styling)</a>
+    </div>
   </div>
 </div>

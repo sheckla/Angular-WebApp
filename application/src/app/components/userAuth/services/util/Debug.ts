@@ -6,7 +6,7 @@
 *     => all Debug logs will not be printed in console
 */
 export class Debug {
-  private static _enableLogging = true; // Change to enable Client-Console Debug-Message logging
+  public static _enableLogging = true; // Change to enable Client-Console Debug-Message logging
 
   static log(str: any): void {
     if (!this._enableLogging) return;
@@ -19,6 +19,10 @@ export class Debug {
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const seconds = date.getSeconds().toString().padStart(2, "0");
     return "[" + hours + ":" + minutes + ":" + seconds + "]";
+  }
+
+  public static enabled(): boolean {
+    return this._enableLogging;
   }
 }
 

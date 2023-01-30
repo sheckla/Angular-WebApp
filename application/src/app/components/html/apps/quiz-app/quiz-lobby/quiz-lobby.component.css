@@ -9,17 +9,22 @@ vertical-align: middle;
 }
 
 .setting-button {
-  width: 8.25em;
+  width: 12.25em;
   height: 2.25em;
   color: white;
   margin-right: .5rem; /* mr-2 == .5rem */
 
 }
 
+.welcome-button {
+  white-space: nowrap;
+}
+
 .disabledButton {
   pointer-events: none;
   opacity: 0.4;
 }
+
 
  /* .disabledButton .disabledText {
 

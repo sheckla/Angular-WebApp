@@ -1,0 +1,13 @@
+.mark-user {
+  font-weight: bold;
+  color: rgb(210, 32, 255)
+}
+
+.mark-submitted {
+  background-color: gray !important;
+}
+
+.streak {
+  color: orange !important;
+  page-break-inside: avoid !important;
+}

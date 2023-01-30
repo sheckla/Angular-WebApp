@@ -1,56 +1,70 @@
-<div class="container pt-5">
+<div class="container-fluid" style="width:90%">
 
   <!-- Row needed to use col -->
   <div class="row">
     <!-- LEFT COLUMN 9/12 75% WELCOME AND SETTING | This column is only visible when no game started yet-->
-    <div class="col-9" *ngIf="!this.userHandlerService.started">
+    <div class="col-9" *ngIf="!this.userHandlerService.getLobbyInfo().started">
 
       <!-- Welcome/Start Section -->
       <div class="row">
         <!-- Welcome Col -->
-        <div class="col-9">
+        <div class="col-md-7">
           <h2>Welcome to {{this.userHandlerService.getLobbyInfo().name}},
             {{this.userHandlerService.getUser().name}}!</h2>
-          <h3>Todays Category is <b>"{{this.userHandlerService.getLobbyInfo().category}}"</b> on
+          <h3>Todays Category is <b>"{{this.userHandlerService.getLobbyInfo().categoryName}}"</b> on
             <b>{{this.userHandlerService.getLobbyInfo().difficulty}}.</b> Good Luck.
           </h3>
         </div>
 
         <!-- Start Game Col -->
-        <div class="col-3">
-
-          <!-- Attention! If the User != Leader, he isnt allowed to start the game, so the button is disabled tho -->
-          <button class="btn btn-rounded btn-outline-primary text-uppercase welcome-button" type="submit"
-            form="lobby-settings"
-            [disabled]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader"
-            (click)="this.userHandlerService.startLobby()">Start
-            Game</button> <!-- //TODO: Change Click, its just workaround -->
-          <button class="btn btn-rounded btn-outline-danger text-uppercase welcome-button" (click)="
-            leaveLobby()">Leave
-            Lobby</button>
-
+        <div class="col-md-5 my-auto">
+          <div class="row ">
+            <div class="col-md-6">
+              <!-- Attention! If the User != Leader, he isnt allowed to start the game, so the button is disabled tho -->
+              <button mat-button class="btn pull-right btn-rounded btn-outline-primary text-uppercase welcome-button"
+              [disabled]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader.name"
+              (click)="this.startLobby()">
+               <!-- TODO fix spinner layout, width is kinda breaking -->
+                <div class="row">
+                  <div class="col-9">
+                    Start Game
+                  </div>
+                  <div class="col-3">
+                    <div class="spin-container">
+                      <mat-icon *ngIf="this.userHandlerService.getLobbyInfo().isStarting"><mat-spinner color="accent" [diameter]="20"></mat-spinner></mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </button> <!-- //TODO: Change Click, its just workaround -->
+            </div>
+            <div class="col-md-6">
+              <button class="btn pull-right btn-rounded btn-outline-danger text-uppercase welcome-button" (click)="
+                leaveLobby()">Leave
+                Lobby</button>
+            </div>
+          </div>
         </div>
 
       </div>
 
       <!-- Setting Section -->
       <!-- Whole Section will be disabled if user != leader -->
-      <form id="lobby-settings" action=""> <!-- //TODO: Form belongs to Submit button in Start-Game-Col -->
+      <form id="lobby-settings" action="" > <!-- //TODO: Form belongs to Submit button in Start-Game-Col -->
         <div class="row"
-          [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader}">
+          [ngClass]="{'disabledButton': this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader.name}">
 
           <!-- Header -->
           <div class="text-center theme-gradient-header sat mb-2">
             <!-- Only for regular user -->
             <div class="p-1 text-white"
-              [hidden]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader">
+              [hidden]="this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader.name">
               Sorry {{this.userHandlerService.getUser().name}}, but settings are only aviable for lobby-leaders!
             </div>
 
             <!-- Banner for leader -->
             <div class="p-1 text-white"
-              [hidden]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader">
-              Hey {{this.userHandlerService.getUser().name}}, please set up your lobby and press start!
+              [hidden]="this.userHandlerService.getUser().name != this.userHandlerService.getLobbyInfo().leader.name">
+              Hey {{this.userHandlerService.getUser().name}}, you're the current lobby leader - please setup the quiz settings!
             </div>
           </div>
 
@@ -60,14 +74,15 @@
               <p>Amount</p>
             </div>
 
-            <div class="col-10">
-              <span *ngFor="let amount of this.settingHandler.amounts, let i = index">
-                <input type="radio" class="btn-check" name="amount" id="amount-{{this.amount}}" value="{{this.amount}}"
-                  autocomplete="off" [checked]="i == 1">
-                <label class="btn btn-outline-primary setting-button mb-2" for="amount-{{this.amount}}">
-                  {{this.amount}}</label>
-              </span>
+            <div class="col-10" >
+                <span *ngFor="let amount of this.settingHandler.amounts, let i = index">
+                  <input type="radio" class="btn-check" name="amount" id="amount-{{this.amount}}"
+                  autocomplete="off" [(ngModel)]="this.defaultAmount" [value]="amount" (ngModelChange)="selectAmount($event)">
+                  <label class="btn btn-outline-primary setting-button mb-2" for="amount-{{this.amount}}">
+                    {{this.amount}}</label>
+                  </span>
             </div>
+
           </div>
 
           <!-- Timer -->
@@ -78,8 +93,8 @@
 
             <div class=" col-10">
               <span *ngFor="let time of this.settingHandler.times, let i = index">
-                <input type="radio" class="btn-check" name="time" id="time-{{this.time}}" value="{{this.time}}"
-                  autocomplete="off" [checked]="i == 1">
+                <input type="radio" class="btn-check" name="time" id="time-{{this.time}}"
+                  autocomplete="off" [(ngModel)]="this.defaultTimer" [value]="time" (ngModelChange)="selectTimer($event)">
                 <label class="btn btn-outline-primary setting-button  mb-2" for="time-{{this.time}}">
                   {{this.time}}</label>
               </span>
@@ -89,13 +104,13 @@
           <!-- Difficulty -->
           <div class="row">
             <div class="col-2 setting-label">
-              <p>Difficulty</p>
+              <p class="text-center" >Difficulty</p>
             </div>
 
             <div class="col-10">
               <span *ngFor="let difficult of this.settingHandler.difficults, let i = index">
                 <input type="radio" class="btn-check" name="difficult" id="difficult-{{this.difficult}}"
-                  value="{{this.difficult}}" autocomplete="off" [checked]="i == 2">
+                  autocomplete="off" [(ngModel)]="this.defaultDifficulty" [value]="difficult" (ngModelChange)="selectDifficulty($event)">
                 <label class="btn btn-outline-primary setting-button mb-2" for="difficult-{{this.difficult}}">
                   {{this.difficult}}</label>
               </span>
@@ -107,25 +122,24 @@
             <div class="col-2 setting-label">
               <p>Categorie</p>
             </div>
-
+            <!-- TODO: Add more detailed tooltips -->
             <div class="col-10">
-              <span *ngFor="let categorie of this.settingHandler.categories, let i = index" data-toggle="tooltip"
-                data-placement="top" title="{{this.categorie.name}}">
-                <input type="radio" class="btn-check" name="categorie" id="categorie-{{this.categorie.name}}"
-                  value="{{this.categorie.name}}" autocomplete="off" [checked]="i == 0">
-                <label class="btn btn-outline-primary setting-button mb-2" for="categorie-{{this.categorie.name}}">
-                  {{this.categorie.name.substring(this.categorie.name.lastIndexOf("
-                  ")+1)}}</label>
+              <span *ngFor="let category of this.settingHandler.categories, let i = index" data-toggle="tooltip"
+                data-placement="top" title="{{this.category.tooltip}}">
+                <input type="radio" class="btn-check" name="categorie" id="categorie-{{this.category.name}}"
+                  autocomplete="off" [(ngModel)]="this.defaultCategory" [value]="category.name" (ngModelChange)="selectCategory($event)">
+                <label class="btn btn-outline-primary setting-button mb-2" for="categorie-{{this.category.name}}">
+                  {{this.category.shortenedName}}</label>
               </span>
-
             </div>
+
           </div>
         </div>
       </form>
     </div>
 
     <!-- This column will only be visible when game started -->
-    <div class="container col-9" *ngIf="this.userHandlerService.started">
+    <div class="container col-9" *ngIf="this.userHandlerService.getLobbyInfo().started">
       <app-quiz-in-game></app-quiz-in-game>
     </div>
 
@@ -138,6 +152,3 @@
   </div>
 
 </div>
-
-<button class="btn btn-danger btn-rounded text-uppercase logout m-2" style="width: 10rem;"
-  (click)="startLobby()">GetQuestion</button>

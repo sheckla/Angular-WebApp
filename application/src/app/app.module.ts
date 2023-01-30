@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconModule } from '@angular/material/icon'
 
 import { MatSliderModule } from '@angular/material/slider';
 import { IndexComponent } from './components/html/index/index.component';
@@ -35,7 +37,9 @@ import { QuizCurrentPlayerComponent } from './components/html/apps/quiz-app/quiz
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
+    MatIconModule,
     FormsModule,
     MatSliderModule,
   ],

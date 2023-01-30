@@ -1,9 +1,3 @@
-<!-- Header -->
-<div class="text-center theme-gradient-header sat">
-  <div class="p-1 text-white">
-    Welcome to QuizGame v.1.0
-  </div>
-</div>
 <!-- User isnt in lobby -->
 <div *ngIf="!this.userHandlerService.getUser().isInsideLobby; else lobbyBlock">
 
@@ -41,9 +35,19 @@
               <button type="submit" class="btn btn-primary w-100 btn-lg-height" (click)="createLobby(lobbyName.value)">
                 Create</button>
             </div>
+
             <div class="col">
               <button type="submit" class="btn btn-secondary w-100 btn-lg-height" (click)="joinLobby(lobbyName.value)">
                 Join</button>
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-danger w-100 btn-lg-height" (click)="createLobby('Lobby1')">
+                Create 'Lobby1'</button>
+            </div>
+
+            <div class="col">
+              <button type="submit" class="btn btn-danger w-100 btn-lg-height" (click)="joinLobby('Lobby1')">
+                Join 'Lobby1'</button>
             </div>
             <a>{{this.statusMessage}}</a>
 
@@ -61,6 +65,8 @@
     <!-- BOTTOM -->
     <div class="row">
       <!-- ACTIVE LOBBIES -->
+      <!-- TODO: (staggered) Fade-In Animation for lobbies => last lobby fades-in as last one. see /styles.css::fade-in-0-->
+      <!-- TODO: Fix OpenLobby Info Polling from server because the animation goes crazy on hover if the lobbies are being re-initialized every time-->
       <div class="col">
         <h2>Active Lobbies</h2>
         <div class="row">
