@@ -19,6 +19,7 @@ import { QuizLobbyComponent } from './components/html/apps/quiz-app/quiz-lobby/q
 import { QuizInGameComponent } from './components/html/apps/quiz-app/quiz-in-game/quiz-in-game.component';
 import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-register/quiz-register.component';
 import { QuizCurrentPlayerComponent } from './components/html/apps/quiz-app/quiz-current-player/quiz-current-player.component';
+import { ImpressumComponent } from './components/html/impressum/impressum.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { QuizCurrentPlayerComponent } from './components/html/apps/quiz-app/quiz
     QuizInGameComponent,
     QuizRegisterComponent,
     QuizCurrentPlayerComponent,
+    ImpressumComponent,
   ],
   imports: [
     BrowserModule,

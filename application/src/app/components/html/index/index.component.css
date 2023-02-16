@@ -2,7 +2,9 @@
   width: 90% !important;
 }
 
-
+.href-theme {
+  color: rgb(147, 100, 146) !important;
+}
 
 .li-container {
   width: 75%

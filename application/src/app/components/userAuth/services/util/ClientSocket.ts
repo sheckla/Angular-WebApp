@@ -8,6 +8,7 @@ import { Debug } from './Debug'
 export class ClientSocket {
   private _socket!: Socket;
   private _host: string = "ws://localhost:3000";
+  //private _host: string = "https://socketio-server.up.railway.app/";
   private _connected: boolean = false;
 
   // Async Connection Establish
