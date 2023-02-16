@@ -3,7 +3,7 @@
   <!-- Row needed to use col -->
   <div class="row">
     <!-- LEFT COLUMN 9/12 75% WELCOME AND SETTING | This column is only visible when no game started yet-->
-    <div class="col-9" *ngIf="!this.userHandlerService.started">
+    <div class="col-9" *ngIf="!this.userHandlerService.getLobbyInfo().started">
 
       <!-- Welcome/Start Section -->
       <div class="row">
@@ -62,16 +62,19 @@
 
             <div class="col-10">
               <span *ngFor="let amount of this.settingHandler.amounts, let i = index">
-                <input type="radio" class="btn-check" name="amount" id="amount-{{this.amount}}" value="{{this.amount}}"
-                  autocomplete="off" [checked]="i == 1">
-                <label class="btn btn-outline-primary setting-button mb-2" for="amount-{{this.amount}}">
+                <input type="radio" name="amount" id="amount-{{i}}" class="btn-check"
+                  [(ngModel)]="this.userHandlerService._currentLobby.totalQuestions" [value]="this.amount"
+                  autocomplete="off">
+                <label class="btn btn-outline-primary setting-button mb-2" for="amount-{{i}}">
                   {{this.amount}}</label>
               </span>
+
+              <p>Hiers dein amount digga {{this.userHandlerService._currentLobby.totalQuestions}}</p>
             </div>
           </div>
 
-          <!-- Timer -->
-          <div class="row">
+          <!-- TODO: Timer? We wont do that :D -->
+          <!-- <div class="row">
             <div class="col-2 setting-label">
               <p>Time</p>
             </div>
@@ -84,7 +87,7 @@
                   {{this.time}}</label>
               </span>
             </div>
-          </div>
+          </div> -->
 
           <!-- Difficulty -->
           <div class="row">
@@ -95,10 +98,12 @@
             <div class="col-10">
               <span *ngFor="let difficult of this.settingHandler.difficults, let i = index">
                 <input type="radio" class="btn-check" name="difficult" id="difficult-{{this.difficult}}"
-                  value="{{this.difficult}}" autocomplete="off" [checked]="i == 2">
+                  [(ngModel)]="this.userHandlerService._currentLobby.difficulty" [value]="this.difficult"
+                  autocomplete="off">
                 <label class="btn btn-outline-primary setting-button mb-2" for="difficult-{{this.difficult}}">
                   {{this.difficult}}</label>
               </span>
+              <p>Hier ist deine diffi digga {{this.userHandlerService._currentLobby.difficulty}} </p>
             </div>
           </div>
 
@@ -125,7 +130,7 @@
     </div>
 
     <!-- This column will only be visible when game started -->
-    <div class="container col-9" *ngIf="this.userHandlerService.started">
+    <div class="container col-9" *ngIf="this.userHandlerService.getLobbyInfo().started">
       <app-quiz-in-game></app-quiz-in-game>
     </div>
 

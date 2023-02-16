@@ -8,9 +8,9 @@ export class LobbyInfo {
   public name: string = '';
   public leader: string = '';
   public users: string[] = []; // All current Users in Lobby (joined + leader)
-  public category: string = '';
-  public totalQuestions: number = 0;
-  public difficulty: string = '';
+  public category: string = 'Any'; // Default should be Any
+  public totalQuestions: number = 10; // Default should be '10'
+  public difficulty: string = 'Normal'; // Default should be normal
   public started: boolean = false;
 }
 
@@ -28,6 +28,8 @@ export class QuizQuestion {
 export class Quiz {
   public questions: QuizQuestion[] = [];
   public total: number = 0; // Will count up each question
+  public correct: number = 0;
+  public wrong: number = 0;
   public timer: number = 30; // Timer in Seconds, must be replaced
   // TODO: Timer replacen
 }

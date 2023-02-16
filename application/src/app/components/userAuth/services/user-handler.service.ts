@@ -15,7 +15,7 @@ import { User, LobbyInfo, Quiz, QuizQuestion } from './util/QuizAppDataTypes';
 export class UserHandlerService {
   private _clientConnection: ClientSocket = new ClientSocket();
   private _user: User = new User();
-  private _currentLobby: LobbyInfo = new LobbyInfo();
+  public _currentLobby: LobbyInfo = new LobbyInfo(); //TODO: for testing public
   private _openLobbies: LobbyInfo[] = [];
 
   // TODO: We dont know how to handle the Quiz, so its a workarount [24.01.23; mihammer]
@@ -147,7 +147,7 @@ export class UserHandlerService {
 
   startLobby(): void {
     // TODO: remove also this setting
-    this.started = true;
+    this._currentLobby.started = true;
 
     this._clientConnection
       .getSocket()
@@ -212,7 +212,7 @@ export class UserHandlerService {
     ];
     testLobby.category = 'Art';
     testLobby.totalQuestions = 10;
-    testLobby.difficulty = 'hard';
+    testLobby.difficulty = 'Hard';
     testLobby.started = false;
     //Override
     this._currentLobby = testLobby;

@@ -14,10 +14,9 @@
 
   <div class="col-5">
     <span class="inGameInfo">
-      <p>Correct: correct++</p>
-      <!-- TODO: no idea yet -->
-      <p>Wrong: wrong++</p> <!-- TODO: no idea yet -->
-      <p>Score: currentScore + timeYouSelected</p> <!-- TODO: no idea yet -->
+      <p>Correct: correct++</p> <!-- TODO: no idea yet -->
+      <p>Wrong:   wrong++</p> <!-- TODO: no idea yet -->
+      <p>Score:   currentScore + timeYouSelected</p> <!-- TODO: no idea yet -->
     </span>
   </div>
 
@@ -49,7 +48,7 @@
   <!-- TODO: Idea - if you answer, the class change from outline to "normal button" (filled); if its incorrect the correct answer changed to btn-danger (filled red!) -->
   <span class="answers">
     <input type="radio" class="btn-check " name="answer" id="answer-a" value="a" autocomplete="off">
-    <label class="btn btn-outline-primary answer" for="answer-a">
+    <label class="btn btn-outline-danger answer" for="answer-a">
       <img src="https://cdn-icons-png.flaticon.com/512/3522/3522248.png" class="answerIcon" alt="A">
       {{this.userHandlerService._quiz.questions[3].falseAnswers[0]}}
     </label>
@@ -57,7 +56,7 @@
 
 
   <span class="answers">
-    <input type="radio" class="btn-check" name="answer" id="answer-b" value="b" autocomplete="off">
+    <input type="radio" class="btn-check" name="answer" id="answer-b" value="{{this.userHandlerService._quiz.questions[3].falseAnswers[1]}}" autocomplete="off">
     <label class="btn btn-outline-primary answer" for="answer-b">
       <img src="https://cdn-icons-png.flaticon.com/512/3522/3522266.png" class="answerIcon" alt="B">
       {{this.userHandlerService._quiz.questions[3].falseAnswers[1]}}</label>
