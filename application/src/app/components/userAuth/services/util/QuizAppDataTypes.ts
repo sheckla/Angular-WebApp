@@ -22,6 +22,7 @@ export class LobbyInfo {
   public currentQuestionTopic: QuizQuestion = new QuizQuestion();
   public finished: boolean = false;
   public isStarting: boolean = false;
+  public currentTimer: number = 0;
 }
 
 // Same interface as requested from opentdb

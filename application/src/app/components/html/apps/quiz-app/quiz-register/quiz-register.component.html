@@ -1,35 +1,36 @@
 <div class="container-fluid h-100 text-white bg-dark">
-  <div class="w-50 p-3 container">
-    <h1 class="text-center mt-3">Register</h1>
+    <div class="w-50 p-3 container">
+        <h1 class="text-center mt-3">Register</h1>
 
-    <form>
-      <div class="row">
-        <!-- NAME INPUT -->
-        <div class="form-group mb-2">
-          <label for="nameInput" class="form-label text-center">Userame:</label>
-          <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp"
-            placeholder="Shitmapantsbru" #userName required>
-          <small id="nameInputHelp" class="form-text text-muted">Mininum of 4+ characters</small>
-        </div>
+        <form>
+            <div class="row">
+                <!-- NAME INPUT -->
+                <div class="form-group mb-2">
+                    <label for="nameInput" class="form-label text-center">Userame:</label>
+                    <input type="text" class="form-control btn-lg-height" id="nameInput" aria-describedby="nameInputHelp" placeholder="Shitmapantsbru" #userName required>
+                    <small id="nameInputHelp" class="form-text text-muted">Mininum of 4+ characters</small>
+                </div>
 
-        <!-- PASSWORT; ITERATION2 -->
-        <!-- <div class="mb-4 form-group">
-        <label for="passwordInput" class="form-label text-center">Password:</label>
-        <input type="password" class="form-control btn-lg-height" id="passwordInput" placeholder="Password" #password
-          autocomplete="on">
-      </div> -->
+                <!-- PASSWORT; ITERATION2 -->
+                <div class="mb-4 form-group">
+                    <label for="passwordInput" class="form-label text-center">Password:</label>
+                    <input type="password" class="form-control btn-lg-height" id="passwordInput" placeholder="Password" #password autocomplete="on">
+                </div>
 
-        <div class="col">
-          <button type="submit" class="btn btn-success w-100 btn-lg-height btn-gradient">
+                <div class="col">
+                    <button type="submit" class="btn btn-success w-100 btn-lg-height btn-gradient" (click)="register(userName.value, password.value)">
             Register</button>
-        </div>
+                </div>
 
-        <a class="mt-3 text-center text-muted" routerLink="/quizApp">Already registered yet?
+                <a class="mt-3 text-center text-muted" routerLink="/quizApp">Already registered yet?
           Click here!</a>
 
 
-
-      </div>
-    </form>
-  </div>
+                <!-- DEBUG INFO -->
+                <div class=" text-center mt-1">
+                    {{errorDisplayMessage}}
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

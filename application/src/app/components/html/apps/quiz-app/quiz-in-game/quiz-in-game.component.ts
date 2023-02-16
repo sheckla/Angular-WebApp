@@ -4,6 +4,7 @@ import { UserHandlerService } from 'src/app/components/userAuth/services/user-ha
 import { Subscription } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { Debug } from 'src/app/components/userAuth/services/util/Debug';
+import { TimerService } from 'src/app/components/userAuth/services/timer.service';
 
 @Component({
   selector: 'app-quiz-in-game',
@@ -12,53 +13,67 @@ import { Debug } from 'src/app/components/userAuth/services/util/Debug';
 })
 export class QuizInGameComponent implements OnInit {
   private _subscriptions: Subscription[] = [];
-  public currentTimer: number = 0;
-  private _maxCurrentTimer: number = 0;
   public currentSpinnerProgress: number = 25;
   public selectedAnswer: string = '';
   public answerisSelected: boolean = false;
   public answerIconPaths: string[] = [];
-  public finished: boolean = false;
 
-  private _timerDelta: number = 1000; // in ms, defines udpate rate
-  private _intervalID: any;
-  private _timerFinishedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(public userHandlerService: UserHandlerService,
+    public timerService: TimerService,
     private sanitizer: DomSanitizer) {
-      this._maxCurrentTimer = this.userHandlerService.getLobbyInfo().maxTimerSeconds;
-      // Restard Timer each time a new question is received (local timer)
-      this._subscriptions.push(
-          this.userHandlerService.lobbyQuestionChangedEvent.subscribe((status) => {
-          if (status) {
-            this.startTimer();
-            this.answerisSelected = false;
-          }
-        })
-      )
-      this._subscriptions.push(
-        this.userHandlerService.lobbyGameFinishedEvent.subscribe((status) => {
-          this._maxCurrentTimer = 15;
-          this.startTimer();
-          Debug.log("Lobby Game finished, preparing to return to lobby in " + this._maxCurrentTimer + " seconds.");
-          this.finished = true;
-        })
+    // *** Subscriptions ***
+    this._subscriptions.push(
+      // Timer for each new question
+      this.userHandlerService.lobbyQuestionChangedEvent.subscribe((status) => {
+        if (status) {
+          this.currentSpinnerProgress = 100;
+          this.timerService.stopTimer();
+          this.timerService.startTimer(this.userHandlerService.getLobbyInfo().maxTimerSeconds);
+          this.answerisSelected = false;
+        }
+      })
       )
 
+      // time accurate timer representation
       this._subscriptions.push(
-        this._timerFinishedEvent.subscribe((status) => {
-          Debug.log("Returning to Lobby")
+        this.userHandlerService.lobbyTimerReceivedEvent.subscribe((timer) => {
+          this.currentSpinnerProgress = timer / this.userHandlerService.getLobbyInfo().maxTimerSeconds * 100;
+      })
+    )
+    // Return to Lobby after game finish
+    this._subscriptions.push(
+      this.userHandlerService.lobbyGameFinishedEvent.subscribe((status) => {
+        this.timerService.stopTimer(),
+          this.timerService.startTimer(15);
+        Debug.log("Lobby Game finished, preparing to return to lobby in " + 15 + " seconds.");
+      })
+    )
+    // Update Spinner for timer-tick or leave lobby if game is finished
+    this._subscriptions.push(
+      this.timerService.timerTickEvent.subscribe((tick) => {
+        this.currentSpinnerProgress = tick / this.timerService.maxTimer * 100;
+        if (userHandlerService.getLobbyInfo().finished && tick == 0) {
+          Debug.log("Returning to lobby");
           this.userHandlerService.finishGame();
-        })
-      )
-    }
+        }
+      })
+    )
+  }
+
+  startQuestionTimer(time: number): void {
+    this.timerService.stopTimer();
+    this.timerService.startTimer(time);
+    this.answerisSelected = false;
+  }
 
   ngOnInit(): void {
     this.initAnswerIconPaths();
   }
 
-  ngOnDestroy() : void {
+  ngOnDestroy(): void {
     this._subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.timerService.stopTimer();
   }
 
   private initAnswerIconPaths(): void {
@@ -79,18 +94,4 @@ export class QuizInGameComponent implements OnInit {
     this.userHandlerService.submitAnswer(answer);
   }
 
-  startTimer() {
-    clearInterval(this._intervalID);
-    this.currentTimer = this._maxCurrentTimer;
-    this.currentSpinnerProgress = 100;
-    this._intervalID = setInterval(() => {
-      this.currentTimer--;
-      this.currentSpinnerProgress = this.currentTimer / this._maxCurrentTimer * 100;
-      if (this.currentTimer === 0) {
-        clearInterval(this._intervalID);
-        this.currentSpinnerProgress = 0;
-        if (this.finished) this._timerFinishedEvent.emit(true);
-      }
-      }, this._timerDelta)
-    }
 }

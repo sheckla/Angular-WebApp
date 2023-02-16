@@ -1,134 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
+    /* You can add global styles to this file, and also import other style files */
 
-* {
-  font-family: 'Trebuchet MS', sans-serif, 'Fredoka', sans-serif !important;
-}
+    * {
+        font-family: 'Trebuchet MS', sans-serif, 'Fredoka', sans-serif !important;
+    }
 
-.form-control {
-  background-color: rgb(255, 255, 255) !important;
-}
+    .form-control {
+        background-color: rgb(255, 255, 255) !important;
+    }
 
-.button-secondary {
-  color: rgb(210, 32, 255) !important;
-}
+    .button-secondary {
+        color: rgb(210, 32, 255) !important;
+    }
 
-.btn-lg-height {
-  font-size: large!important;
-}
+    .btn-lg-height {
+        font-size: large!important;
+    }
 
-.btn-gradient {
-  background: linear-gradient(45deg, rgb(179, 30, 176) , rgb(74, 15, 163));
-  transition: 0.1s !important;
-}
+    .btn-gradient {
+        background: linear-gradient(45deg, rgb(179, 30, 176), rgb(74, 15, 163));
+        transition: 0.1s !important;
+    }
 
-.btn-gradient:hover {
-  filter: brightness(120%);
-}
+    .btn-gradient:hover {
+        filter: brightness(120%);
+    }
 
-.theme-gradient {
-  background: linear-gradient(45deg,rgb(179,30,176),rgb(74, 15, 163));
-  background-color: rgba(0, 0, 0, 0) !important;
-}
+    .theme-gradient {
+        background: linear-gradient(45deg, rgb(179, 30, 176), rgb(74, 15, 163));
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
 
-.theme-gradient-fade {
-  background: radial-gradient(circle, rgba(176,34,255,0.5496535796766744) 0%, rgba(148,187,233,0) 60%);
-  background-color: rgba(0, 0, 0, 0);
-}
+    .theme-gradient-fade {
+        background: radial-gradient(circle, rgba(176, 34, 255, 0.5496535796766744) 0%, rgba(148, 187, 233, 0) 60%);
+        background-color: rgba(0, 0, 0, 0);
+    }
 
-.theme-gradient-header {
-  background: linear-gradient(0.25turn,rgb(74, 15, 163),rgb(179,30,176), rgb(74, 15, 163));
-  background-color: rgba(0, 0, 0, 0);
-}
+    .theme-gradient-header {
+        background: linear-gradient(0.25turn, rgb(74, 15, 163), rgb(179, 30, 176), rgb(74, 15, 163));
+        background-color: rgba(0, 0, 0, 0);
+    }
 
-.theme-gradient-center {
-  background-color: rgb(179,30,176);
-}
+    .theme-gradient-center {
+        background-color: rgb(179, 30, 176);
+    }
 
-.theme-gradient-left {
-  background: linear-gradient(-45deg,rgb(179,30,176),rgb(74, 15, 163));
-  background-color: rgba(0, 0, 0, 0);
-}
+    .theme-gradient-left {
+        background: linear-gradient(-45deg, rgb(179, 30, 176), rgb(74, 15, 163));
+        background-color: rgba(0, 0, 0, 0);
+    }
 
-.theme-gradient-right {
-  background: linear-gradient(45deg,rgb(179,30,176),rgb(74, 15, 163));
-  background-color: rgba(0, 0, 0, 0);
-}
+    .theme-gradient-right {
+        background: linear-gradient(45deg, rgb(179, 30, 176), rgb(74, 15, 163));
+        background-color: rgba(0, 0, 0, 0);
+    }
 
-.top-rounded {
-  border-radius: 33px 0px 33px 0px !important;
-  border-bottom: 7px solid rgba(255,255,255, .2) !important;
-}
+    .top-rounded {
+        border-radius: 33px 0px 33px 0px !important;
+        border-bottom: 7px solid rgba(255, 255, 255, .2) !important;
+    }
 
-.sat {
-  filter: saturate(.4);
-}
+    .sat {
+        filter: saturate(.4);
+    }
 
-.spacer-s{
-  min-height:10px;
-}
+    .spacer-s {
+        min-height: 10px;
+    }
 
-.spin-container {
-  display: flex;
-  flex-direction: row;
-  min-width: 20px;
-}
+    .spin-container {
+        display: flex;
+        flex-direction: row;
+        min-width: 20px;
+    }
 
-/* Animations */
-.fade-in-0 {
-  opacity: 0;
-  animation-fill-mode: forwards !important;
-  animation: fadeIn 1s;
-  transition: width 0.5s;
-}
+    .clickable {
+        cursor: pointer !important;
+    }
+    /* Animations */
 
-.fade-in-1 {
-  opacity: 0;
-  animation-fill-mode: forwards !important;
-  animation: fadeIn 1s;
-  animation-delay: 250ms;
-  transition: width 0.5s;
-}
+    .fade-in-0 {
+        opacity: 0;
+        animation-fill-mode: forwards !important;
+        animation: fadeIn 1s;
+        transition: width 0.5s;
+    }
 
-.fade-in-2 {
-  opacity: 0;
-  animation-fill-mode: forwards !important;
-  animation: fadeIn 1s;
-  animation-delay: 500ms;
-  transition: width 0.5s;
-}
+    .fade-in-1 {
+        opacity: 0;
+        animation-fill-mode: forwards !important;
+        animation: fadeIn 1s;
+        animation-delay: 250ms;
+        transition: width 0.5s;
+    }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+    .fade-in-2 {
+        opacity: 0;
+        animation-fill-mode: forwards !important;
+        animation: fadeIn 1s;
+        animation-delay: 500ms;
+        transition: width 0.5s;
+    }
 
-  to {
-    opacity: 1;
-  }
-}
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 
-.width-animation {
-  margin: 0 auto;
-  overflow: hidden !important;
-  white-space: nowrap !important;
-  animation-fill-mode: forwards !important;
-  animation:width 1s ease-out;
-  border-radius: 0% 0% 100% 100%;
-}
+    .width-animation {
+        margin: 0 auto;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        animation-fill-mode: forwards !important;
+        animation: width 1s ease-out;
+        border-radius: 0% 0% 100% 100%;
+    }
 
-
-@keyframes width {
-  0% {
-    opacity: 0;
-    width:50%;
-  }
-
-  75% {
-  }
-
-  to {
-    opacity: 1;
-    width: 100%;
-    border-radius: 0%;
-  }
-}
+    @keyframes width {
+        0% {
+            opacity: 0;
+            width: 50%;
+        }
+        75% {}
+        to {
+            opacity: 1;
+            width: 100%;
+            border-radius: 0%;
+        }
+    }

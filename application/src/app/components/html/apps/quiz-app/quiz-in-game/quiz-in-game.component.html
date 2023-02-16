@@ -1,5 +1,5 @@
 <!-- We're already in a col-9 -->
-<div *ngIf="!this.finished">
+<div *ngIf="!this.userHandlerService.getLobbyInfo().finished">
   <div class="row">
     <div class="col-5">
       <span class="inGameInfo">
@@ -43,7 +43,7 @@
       [mode]="'determinate'"
       [value]="this.currentSpinnerProgress">
     </mat-progress-spinner>
-    <p class="center">{{this.currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}</p>
+    <p class="center">{{this.timerService.currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}</p>
   </div>
   <div class="spacer-s"></div>
   </div>
@@ -80,7 +80,7 @@
   </div>
 </div>
 
-<div *ngIf="this.finished">
+<div *ngIf="this.userHandlerService.getLobbyInfo().finished">
   GG boiz
-  Returning to lobby in {{this.currentTimer}} seconds
+  Returning to lobby in {{this.timerService.currentTimer}} seconds
 </div>

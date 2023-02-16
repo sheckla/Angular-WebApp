@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class SettingHandlerService {
   public amounts = [5, 10, 20];
   public times = [15, 30, 45];
-  public difficults = ['Any', 'Easy', 'Normal', 'Hard'];
+  public difficults = ['Any', 'Easy', 'Medium', 'Hard'];
   public categories = new Array();
 
   constructor() {

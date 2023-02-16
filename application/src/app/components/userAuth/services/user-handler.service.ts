@@ -29,12 +29,15 @@ export class UserHandlerService {
    *    // callback - do stuff here when Event happens
    *    })
    */
+  public loginStatusEvent = new EventEmitter<boolean>();
+  public registerStatusEvent = new EventEmitter<boolean>();
   public lobbyJoinedEvent = new EventEmitter<boolean>(); // status for successful lobby join
   public lobbyCreationEvent = new EventEmitter<boolean>(); // status for successful lobby creation
   public openLobbyFetchEvent = new EventEmitter<any[]>(); // lobby info for current open lobbies
   public lobbyInformationChangedEvent = new EventEmitter<LobbyInfo>(); // lobby info if current lobby info changed
-  public lobbyQuestionChangedEvent = new EventEmitter<boolean>(); // status if current lobby question changed
+  public lobbyQuestionChangedEvent = new EventEmitter<any>(); // status if current lobby question changed
   public lobbyGameFinishedEvent = new EventEmitter<boolean>(); // status if current game is finished
+  public lobbyTimerReceivedEvent = new EventEmitter<number>(); // for late-joiners of an started quiz game
 
   constructor() {
     // TODO: PLEASE REMOVE WHEN LOGIN SCREEN IS FINISHED
@@ -46,11 +49,21 @@ export class UserHandlerService {
 
   // Socket Listeners for Quiz-Game Client<->Server communication
   initQuizGameListeners() {
+
     // Login Status
     this._clientConnection
       .getSocket()
-      .on('Client_SendUsername_Status', (status) => {
+      .on('Client_LoginRequest_Status', (status) => {
         this._user.isLoggedIn = status;
+        this.loginStatusEvent.emit(status);
+      });
+
+    // Register Status
+    this._clientConnection
+      .getSocket()
+      .on('Client_RegisterRequest_Status', (status) => {
+        this._user.isLoggedIn = status;
+        this.registerStatusEvent.emit(status);
       });
 
     // Current Open Lobbies
@@ -99,6 +112,7 @@ export class UserHandlerService {
       .getSocket()
       .on('CurrentLobbyInformationChanged', (lobbyInfo) => {
         this._currentLobby = lobbyInfo;
+        console.log(lobbyInfo);
         this.lobbyInformationChangedEvent.emit(this._currentLobby);
 
         if (lobbyInfo.leader.name == this._user.name) {
@@ -117,6 +131,10 @@ export class UserHandlerService {
           }
         })
 
+        if (lobbyInfo.timer && lobbyInfo.started) {
+          this.lobbyTimerReceivedEvent.emit(lobbyInfo.timer);
+          this._currentLobby.currentQuestionIndex++;
+        }
       });
 
     // Lobby Start Request Status
@@ -133,14 +151,18 @@ export class UserHandlerService {
     .on('CurrentLobbyQuestion', (question) => {
       this._currentLobby.currentQuestionTopic = question;
       this._currentLobby.currentQuestionIndex++;
+      this._currentLobby.currentTimer = this._currentLobby.maxTimerSeconds;
       if (this._currentLobby.currentQuestionIndex >= this._currentLobby.totalQuestionCount+1) {
-        Debug.log("all");
+        Debug.log("All Questions received");
         this._currentLobby.currentQuestionTopic = new QuizQuestion();
       }
       this.lobbyQuestionChangedEvent.emit(true);
+      this.lobbyTimerReceivedEvent.emit(this._currentLobby.currentTimer);
     })
 
-    // Current Lobby Round Question finished
+    // current lobby timer
+
+    // Current Lobby Users info changed
     this._clientConnection
     .getSocket()
     .on('CurrentLobbyQuestionFinished', (lobbyInfo) => {
@@ -151,16 +173,38 @@ export class UserHandlerService {
     this._clientConnection
     .getSocket()
     .on('LobbyGameFinished', (status) => {
+      this._currentLobby.finished = status;
       this.lobbyGameFinishedEvent.emit(true);
+    })
+
+    // receive current lobby timer for late-joiners
+    this._clientConnection
+    .getSocket()
+    .on('CurrentLobbyTimer', (timer) => {
+      this.lobbyTimerReceivedEvent.emit(timer);
     })
 
   }
 
   // *** Emit Events
-  login(name: string) {
+  login(name: string, password: string) {
     Debug.log('Username: ' + name + ' login-request sent to server');
-    this._clientConnection.getSocket().emit('Client_SendUsername', name);
+    var userPass = {
+      name: name,
+      password: password,
+    }
     this._user.name = name;
+    this._clientConnection.getSocket().emit('Client_LoginRequest', userPass);
+  }
+
+  register(name: string, password: string) {
+    Debug.log('Username: ' + name + ' register request sent to server');
+    var userPass = {
+      name: name,
+      password: password,
+    }
+    this._user.name = name;
+    this._clientConnection.getSocket().emit('Client_RegisterRequest', userPass);
   }
 
   logout(): void {
