@@ -34,7 +34,7 @@
   <!-- Header -->
   <div class="text-center theme-gradient-fade sat mb-2 mt-2">
     <div class="p-1 text-white" style="margin: 0 auto">
-      Question: {{this.userHandlerService.getLobbyInfo().currentQuestionIndex}}/{{this.userHandlerService.getLobbyInfo().totalQuestionCount}}
+      Question: {{this.userHandlerService.getLobbyInfo().currentQuestionTopic.index+1}}/{{this.userHandlerService.getLobbyInfo().totalQuestionCount}}
     </div>
     <div class="spin-container timer mb-2 mt-2">
       <mat-progress-spinner style="margin: 0 auto"
@@ -43,7 +43,7 @@
       [mode]="'determinate'"
       [value]="this.currentSpinnerProgress">
     </mat-progress-spinner>
-    <p class="center">{{this.timerService.currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}</p>
+    <p class="center">{{this.userHandlerService.getQuestionTimer().currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}</p>
   </div>
   <div class="spacer-s"></div>
   </div>
@@ -82,5 +82,5 @@
 
 <div *ngIf="this.userHandlerService.getLobbyInfo().finished">
   GG boiz
-  Returning to lobby in {{this.timerService.currentTimer}} seconds
+  Returning to lobby in {{this.userHandlerService.intermissionTimer.currentTimer}} seconds
 </div>

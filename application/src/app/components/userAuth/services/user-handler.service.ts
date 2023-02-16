@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Debug } from './util/Debug';
 import { ClientSocket } from './util/ClientSocket';
-import { User, LobbyInfo, QuizQuestion } from './util/QuizAppDataTypes';
+import { User, LobbyInfo, QuizQuestion, Timer } from './util/QuizAppDataTypes';
 import { DomSanitizer } from '@angular/platform-browser';
 @Injectable({
   providedIn: 'root',
@@ -18,6 +18,8 @@ export class UserHandlerService {
   private _user: User = new User();
   private _currentLobby: LobbyInfo = new LobbyInfo();
   private _openLobbies: LobbyInfo[] = [];
+  private _questionTimer: Timer = new Timer(); // current question timer
+  public intermissionTimer: Timer = new Timer(); // intermission timer for specific events
 
   /*
    * Subscribeable EventEmitters:
@@ -37,7 +39,6 @@ export class UserHandlerService {
   public lobbyInformationChangedEvent = new EventEmitter<LobbyInfo>(); // lobby info if current lobby info changed
   public lobbyQuestionChangedEvent = new EventEmitter<any>(); // status if current lobby question changed
   public lobbyGameFinishedEvent = new EventEmitter<boolean>(); // status if current game is finished
-  public lobbyTimerReceivedEvent = new EventEmitter<number>(); // for late-joiners of an started quiz game
 
   constructor() {
     // TODO: PLEASE REMOVE WHEN LOGIN SCREEN IS FINISHED
@@ -54,8 +55,12 @@ export class UserHandlerService {
     this._clientConnection
       .getSocket()
       .on('Client_LoginRequest_Status', (status) => {
-        this._user.isLoggedIn = status;
-        this.loginStatusEvent.emit(status);
+        this._user.isLoggedIn = status.success;
+        this.loginStatusEvent.emit(status.success);
+        if (status.success) {
+          this._user.totalScore = status.totalScore;
+          this._user.totalPlayedGames = status.totalPlayedGames;
+        }
       });
 
     // Register Status
@@ -73,7 +78,7 @@ export class UserHandlerService {
         var lobby: LobbyInfo = lobbyInfos[i];
         var info = {
           name: lobby.name,
-          users: lobby.users.length + 1, // (leader)
+          users: lobby.users,
         };
         openLobbyInfo.push(info);
       }
@@ -85,6 +90,7 @@ export class UserHandlerService {
       .getSocket()
       .on('Client_LobbyCreationRequest_Status', (status) => {
         this._user.isInsideLobby = status;
+        console.log(this._currentLobby);
         this.lobbyCreationEvent.emit(status);
       });
 
@@ -100,41 +106,22 @@ export class UserHandlerService {
     this._clientConnection
       .getSocket()
       .on('Client_LobbyLeaveRequest_Status', (status) => {
-        if (status == true) {
-          this._user.isInsideLobby = false;
-        } else {
-          this._user.isInsideLobby = true;
-        }
+        this._user.isInsideLobby = !status;
+        this._currentLobby.isStarting = !status;
       });
 
     // Lobby Information Status
     this._clientConnection
       .getSocket()
       .on('CurrentLobbyInformationChanged', (lobbyInfo) => {
-        this._currentLobby = lobbyInfo;
-        console.log(lobbyInfo);
-        this.lobbyInformationChangedEvent.emit(this._currentLobby);
+        this._currentLobby.name = lobbyInfo.name
+        this._currentLobby.totalQuestionCount = lobbyInfo.totalQuestionCount;
+        this._currentLobby.categoryName = lobbyInfo.categoryName;
+        this._currentLobby.difficulty = lobbyInfo.difficulty;
+        this._currentLobby.started = lobbyInfo.started;
+        this._currentLobby.maxTimerSeconds = lobbyInfo.maxTimerSeconds;
+        this.lobbyInformationChangedEvent.emit(lobbyInfo);
 
-        if (lobbyInfo.leader.name == this._user.name) {
-          this._user.currentCorrectAnswers = lobbyInfo.leader.currentCorrectAnswers;
-          this._user.currentWrongAnswers = lobbyInfo.leader.currentWrongAnswers;
-          this._user.currentScore = lobbyInfo.leader.currentScore;
-          return;
-        }
-
-        lobbyInfo.users.forEach(user => {
-          if (user.name == this._user.name) {
-            this._user.currentCorrectAnswers = user.currentCorrectAnswers;
-            this._user.currentWrongAnswers = user.currentWrongAnswers;
-            this._user.currentScore = user.currentScore;
-            return;
-          }
-        })
-
-        if (lobbyInfo.timer && lobbyInfo.started) {
-          this.lobbyTimerReceivedEvent.emit(lobbyInfo.timer);
-          this._currentLobby.currentQuestionIndex++;
-        }
       });
 
     // Lobby Start Request Status
@@ -143,21 +130,42 @@ export class UserHandlerService {
     .on('CurrentLobbyUserInfoUpdate', (userInfo) => {
       this._currentLobby.leader = userInfo.leader;
       this._currentLobby.users = userInfo.users;
+
+      if (userInfo.leader.name == this._user.name) {
+        this._user.currentCorrectAnswers = userInfo.leader.currentCorrectAnswers;
+        this._user.currentWrongAnswers = userInfo.leader.currentWrongAnswers;
+        this._user.currentScore = userInfo.leader.currentScore;
+        return;
+      }
+
+      userInfo.users.forEach(user => {
+        if (user.name == this._user.name) {
+          this._user.currentCorrectAnswers = user.currentCorrectAnswers;
+          this._user.currentWrongAnswers = user.currentWrongAnswers;
+          this._user.currentScore = user.currentScore;
+          return;
+        }
+      })
+
     })
 
     // Current Lobby Question
     this._clientConnection
     .getSocket()
     .on('CurrentLobbyQuestion', (question) => {
-      this._currentLobby.currentQuestionTopic = question;
-      this._currentLobby.currentQuestionIndex++;
-      this._currentLobby.currentTimer = this._currentLobby.maxTimerSeconds;
-      if (this._currentLobby.currentQuestionIndex >= this._currentLobby.totalQuestionCount+1) {
-        Debug.log("All Questions received");
-        this._currentLobby.currentQuestionTopic = new QuizQuestion();
+      this._currentLobby.currentQuestionTopic.question = question.question;
+      this._currentLobby.currentQuestionTopic.category = question.category;
+      this._currentLobby.currentQuestionTopic.type = question.type;
+      this._currentLobby.currentQuestionTopic.difficulty = question.difficulty;
+      this._currentLobby.currentQuestionTopic.shuffledAnswers = question.shuffledAnswers;
+      this._currentLobby.currentQuestionTopic.index = question.index;
+      this._questionTimer.stop();
+      this._questionTimer.start(this._currentLobby.maxTimerSeconds);
+      if (question.timerForLateJoinedUser) {
+        this._questionTimer.currentTimer = question.timerForLateJoinedUser;
       }
-      this.lobbyQuestionChangedEvent.emit(true);
-      this.lobbyTimerReceivedEvent.emit(this._currentLobby.currentTimer);
+      this.lobbyQuestionChangedEvent.emit();
+      console.log(this._currentLobby);
     })
 
     // current lobby timer
@@ -175,13 +183,6 @@ export class UserHandlerService {
     .on('LobbyGameFinished', (status) => {
       this._currentLobby.finished = status;
       this.lobbyGameFinishedEvent.emit(true);
-    })
-
-    // receive current lobby timer for late-joiners
-    this._clientConnection
-    .getSocket()
-    .on('CurrentLobbyTimer', (timer) => {
-      this.lobbyTimerReceivedEvent.emit(timer);
     })
 
   }
@@ -270,6 +271,10 @@ export class UserHandlerService {
     return this._clientConnection;
   }
 
+  getQuestionTimer(): Timer {
+    return this._questionTimer;
+  }
+
   resetQuizGameStatus() {
     this._user = new User(),
     this._currentLobby = new LobbyInfo();
@@ -284,6 +289,7 @@ export class UserHandlerService {
     this._user.currentCorrectAnswers = 0;
 
     this._currentLobby.started = false;
+    this._currentLobby.isStarting = false;
     this._currentLobby.leader.currentScore = 0;
     this._currentLobby.leader.answerSubmitted = false;
     this._currentLobby.leader.currentStreak = 0;

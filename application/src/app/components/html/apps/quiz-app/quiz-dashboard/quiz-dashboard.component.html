@@ -9,6 +9,8 @@
       <div class="col-sm">
         <div class="card text-white bg-transparent mb-3" style="width: 18rem;">
           <h2 class="mb-3">Hello {{this.userHandlerService.getUser().name}}!</h2>
+          <h2 class="mb-3">Total: {{this.userHandlerService.getUser().totalScore}}!</h2>
+          <h2 class="mb-3">Played: {{this.userHandlerService.getUser().totalPlayedGames}}!</h2>
           <img
             src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(this.userHandlerService.getUser().name)}}.png"
             alt="user" class="rounded-circle" width="100" />

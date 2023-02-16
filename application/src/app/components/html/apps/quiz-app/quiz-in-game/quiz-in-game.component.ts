@@ -4,7 +4,6 @@ import { UserHandlerService } from 'src/app/components/userAuth/services/user-ha
 import { Subscription } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { Debug } from 'src/app/components/userAuth/services/util/Debug';
-import { TimerService } from 'src/app/components/userAuth/services/timer.service';
 
 @Component({
   selector: 'app-quiz-in-game',
@@ -20,51 +19,39 @@ export class QuizInGameComponent implements OnInit {
 
 
   constructor(public userHandlerService: UserHandlerService,
-    public timerService: TimerService,
     private sanitizer: DomSanitizer) {
     // *** Subscriptions ***
     this._subscriptions.push(
       // Timer for each new question
-      this.userHandlerService.lobbyQuestionChangedEvent.subscribe((status) => {
-        if (status) {
-          this.currentSpinnerProgress = 100;
-          this.timerService.stopTimer();
-          this.timerService.startTimer(this.userHandlerService.getLobbyInfo().maxTimerSeconds);
-          this.answerisSelected = false;
-        }
-      })
-      )
-
-      // time accurate timer representation
-      this._subscriptions.push(
-        this.userHandlerService.lobbyTimerReceivedEvent.subscribe((timer) => {
-          this.currentSpinnerProgress = timer / this.userHandlerService.getLobbyInfo().maxTimerSeconds * 100;
-      })
-    )
-    // Return to Lobby after game finish
-    this._subscriptions.push(
-      this.userHandlerService.lobbyGameFinishedEvent.subscribe((status) => {
-        this.timerService.stopTimer(),
-          this.timerService.startTimer(15);
-        Debug.log("Lobby Game finished, preparing to return to lobby in " + 15 + " seconds.");
+      this.userHandlerService.lobbyQuestionChangedEvent.subscribe(() => {
+        this.answerisSelected = false;
       })
     )
     // Update Spinner for timer-tick or leave lobby if game is finished
     this._subscriptions.push(
-      this.timerService.timerTickEvent.subscribe((tick) => {
-        this.currentSpinnerProgress = tick / this.timerService.maxTimer * 100;
-        if (userHandlerService.getLobbyInfo().finished && tick == 0) {
-          Debug.log("Returning to lobby");
+      this.userHandlerService.getQuestionTimer().timerTickEvent.subscribe((tick) => {
+        this.currentSpinnerProgress = tick / this.userHandlerService.getQuestionTimer().maxTimer * 100;
+      })
+    )
+
+
+    // Return to Lobby after game finish
+    this._subscriptions.push(
+      this.userHandlerService.lobbyGameFinishedEvent.subscribe((status) => {
+        Debug.log("Lobby Game finished, preparing to return to lobby in " + 15 + " seconds.");
+        this.userHandlerService.intermissionTimer.stop();
+        this.userHandlerService.intermissionTimer.start(15);
+      })
+    )
+    this._subscriptions.push(
+      this.userHandlerService.intermissionTimer.timerTickEvent.subscribe((tick) => {
+        if (tick <= 0) {
+          Debug.log("returning to lobby");
+          this.userHandlerService.intermissionTimer.stop();
           this.userHandlerService.finishGame();
         }
       })
     )
-  }
-
-  startQuestionTimer(time: number): void {
-    this.timerService.stopTimer();
-    this.timerService.startTimer(time);
-    this.answerisSelected = false;
   }
 
   ngOnInit(): void {
@@ -73,7 +60,6 @@ export class QuizInGameComponent implements OnInit {
 
   ngOnDestroy(): void {
     this._subscriptions.forEach((subscription) => subscription.unsubscribe());
-    this.timerService.stopTimer();
   }
 
   private initAnswerIconPaths(): void {
