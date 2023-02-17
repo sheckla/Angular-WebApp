@@ -7,16 +7,32 @@
 
       <!-- USER INFOS -->
       <div class="col-sm">
-        <div class="card text-white bg-transparent mb-3" style="width: 18rem;">
-          <h2 class="mb-3">Hello {{this.userHandlerService.getUser().name}}!</h2>
-          <h2 class="mb-3">Total: {{this.userHandlerService.getUser().totalScore}}!</h2>
-          <h2 class="mb-3">Played: {{this.userHandlerService.getUser().totalPlayedGames}}!</h2>
-          <img
-            src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(this.userHandlerService.getUser().name)}}.png"
-            alt="user" class="rounded-circle" width="100" />
-          <button class="btn mt-2 btn-danger btn-rounded text-uppercase logout" (click)="logout()">Logout</button>
+        <div class="card text-white bg-transparent mb-3" >
+          <div class="row align-items-center">
+            <div class="col-sm-9">
+              <h2 class="card-title mb-3">Welcome to the QuizGame Dashboard, {{this.userHandlerService.getUser().name}}!</h2>
+              <div class="row align-items-center">
+                <div class="col-sm-auto">
+                  <img src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber(this.userHandlerService.getUser().name)}}.png" alt="user" class="rounded-circle mb-3" width="100" />
+                </div>
+                <div class="col-sm-auto">
+                  <h3 class="card-text mb-3">You played {{this.userHandlerService.getUser().totalPlayedGames}} in total!</h3>
+                  <h3 class="card-text mb-3">Your total score is: {{this.userHandlerService.getUser().totalScore}}!</h3>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-sm-6">
+                  <button class="btn btn-danger btn-rounded text-uppercase logout" (click)="logout()">Logout</button>
+                </div>
+                <div class="col-sm-6">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+
 
       <!-- LOBBY LOGIN -->
       <div class="col-sm">
@@ -27,6 +43,7 @@
               <label for="lobbyInput" class="form-label text-center">Lobby-Name:</label>
               <input type="text" class="form-control btn-lg-height" id="lobbyInput" aria-describedby="lobbyInputHelp"
                 placeholder="Racehunter" #lobbyName>
+                
               <small id="lobbyInputHelp" class="form-text text-muted">Please type in an existing lobby or create a
                 new one
               </small>
@@ -42,7 +59,7 @@
               <button type="submit" class="btn btn-secondary w-100 btn-lg-height" (click)="joinLobby(lobbyName.value)">
                 Join</button>
             </div>
-            <div class="col">
+<!--             <div class="col">
               <button type="submit" class="btn btn-danger w-100 btn-lg-height" (click)="createLobby('Lobby1')">
                 Create 'Lobby1'</button>
             </div>
@@ -50,7 +67,7 @@
             <div class="col">
               <button type="submit" class="btn btn-danger w-100 btn-lg-height" (click)="joinLobby('Lobby1')">
                 Join 'Lobby1'</button>
-            </div>
+            </div> -->
             <a>{{this.statusMessage}}</a>
 
           </div>
@@ -71,7 +88,7 @@
       <div class="col">
         <h2>Active Lobbies</h2>
         <div class="row">
-          <div class="col-6" *ngFor="let lobby of this.lobbies">
+          <div class="col-6" *ngFor="let lobby of this.userHandlerService.getCurrentOpenLobbies()">
             <div class="card bg-primary mb-3 project-image" (click)="joinLobby(lobby.name)">
               <div class="card-body">
                 <h3 class="card-title">{{lobby.name}}</h3>
@@ -91,7 +108,7 @@
           <!-- Second -->
           <div class="podium__item">
             <div class="podium__player">
-              <p>Muschieq 123123
+              <p>{{this.userHandlerService.getLeaderboard()[1].name}} - {{this.userHandlerService.getLeaderboard()[1].totalScore}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
                   <path
@@ -103,14 +120,14 @@
             </div>
             <div class="podium__rank second">
               <img
-                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('mike')}}.png"
+                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('{{this.userHandlerService.getLeaderboard()[1].name}}')}}.png"
                 alt="user" class="rounded-circle " width="70" />
             </div>
           </div>
           <!-- First -->
           <div class="podium__item">
             <div class="podium__player">
-              <p>Daniel 568265
+              <p>{{this.userHandlerService.getLeaderboard()[0].name}} - {{this.userHandlerService.getLeaderboard()[0].totalScore}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
                   <path
@@ -122,14 +139,14 @@
             </div>
             <div class="podium__rank first">
               <img
-                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('daniel')}}.png"
+                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('{{this.userHandlerService.getLeaderboard()[0].name}}')}}.png"
                 alt="user" class="rounded-circle " width="70" />
             </div>
           </div>
           <!-- Third -->
           <div class="podium__item ">
             <div class="podium__player">
-              <p>Client3 55234
+              <p>{{this.userHandlerService.getLeaderboard()[2].name}} - {{this.userHandlerService.getLeaderboard()[2].totalScore}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
                   <path
@@ -141,7 +158,7 @@
             </div>
             <div class="podium__rank third">
               <img
-                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('scheerhorn')}}.png"
+                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('{{this.userHandlerService.getLeaderboard()[2].name}}')}}.png"
                 alt="user" class="rounded-circle " width="70" />
             </div>
           </div>
@@ -149,10 +166,10 @@
         <hr>
         <table class="table table-borderless table-hover mt-2">
           <tbody>
-            <tr *ngFor="let player of ranking; let i = index">
+            <tr *ngFor="let player of this.userHandlerService.getLeaderboard(); let i = index">
               <td style="width: 20%">#{{ i+4 }}</td>
               <td style="width: 50%">{{ player.name }}</td>
-              <td class="score">{{ player.score }}
+              <td class="score">{{ player.totalScore }}
                 <!-- Coin -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">

@@ -25,31 +25,13 @@ export class QuizInGameComponent implements OnInit {
       // Timer for each new question
       this.userHandlerService.lobbyQuestionChangedEvent.subscribe(() => {
         this.answerisSelected = false;
+        this.selectedAnswer = '';
       })
     )
     // Update Spinner for timer-tick or leave lobby if game is finished
     this._subscriptions.push(
       this.userHandlerService.getQuestionTimer().timerTickEvent.subscribe((tick) => {
         this.currentSpinnerProgress = tick / this.userHandlerService.getQuestionTimer().maxTimer * 100;
-      })
-    )
-
-
-    // Return to Lobby after game finish
-    this._subscriptions.push(
-      this.userHandlerService.lobbyGameFinishedEvent.subscribe((status) => {
-        Debug.log("Lobby Game finished, preparing to return to lobby in " + 15 + " seconds.");
-        this.userHandlerService.intermissionTimer.stop();
-        this.userHandlerService.intermissionTimer.start(15);
-      })
-    )
-    this._subscriptions.push(
-      this.userHandlerService.intermissionTimer.timerTickEvent.subscribe((tick) => {
-        if (tick <= 0) {
-          Debug.log("returning to lobby");
-          this.userHandlerService.intermissionTimer.stop();
-          this.userHandlerService.finishGame();
-        }
       })
     )
   }

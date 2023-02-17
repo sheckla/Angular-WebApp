@@ -65,7 +65,6 @@ export class Timer {
 
   stop() {
     clearInterval(this._intervalID);
-    this.currentTimer = this.maxTimer;
   }
 
   restart() {
