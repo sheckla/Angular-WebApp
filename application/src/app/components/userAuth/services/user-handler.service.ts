@@ -21,6 +21,7 @@ export class UserHandlerService {
   private _currentLeaderboardUsers: User[] = [];
   private _questionTimer: Timer = new Timer(); // current question timer
   public intermissionTimer: Timer = new Timer(); // intermission timer for specific events
+  public leaderboardPolled: boolean = false;
 
   /*
    * Subscribeable EventEmitters:
@@ -90,6 +91,7 @@ export class UserHandlerService {
 
       }
       this._currentLeaderboardUsers = leaderboard;
+      this.leaderboardPolled = true;
 /*       var openLobbyInfo: any = [];
       for (var i = 0; i < lobbyInfos.length; i++) {
         var lobby: LobbyInfo = lobbyInfos[i];
