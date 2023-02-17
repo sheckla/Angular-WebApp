@@ -51,7 +51,6 @@
             </div>
             <a>{{this.statusMessage}}</a>
 
-
           </div>
         </form>
       </div>
@@ -81,19 +80,16 @@
         </div>
       </div>
 
-      <div class="col-1 d-flex">
-        <div class="vr"></div>
-      </div>
 
-      <!-- UPCOMING LEADERBOARD -->
+
+      <!-- LEADERBOARD -->
       <div class="col container">
-        <h2>TOP 10 Leaderboard of the GOATs</h2>
-
-
+        <h2>TOP 10 Leaderboard of the GOATs: Best Players by points</h2>
         <div class="podium">
+          <!-- Second -->
           <div class="podium__item">
-            <div class="podium__city">
-              <p>Mike 123123
+            <div class="podium__player">
+              <p>Muschieq 123123
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
                   <path
@@ -106,11 +102,12 @@
             <div class="podium__rank second">
               <img
                 src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('mike')}}.png"
-                alt="user" class="rounded-circle podium__city" width="70" />
+                alt="user" class="rounded-circle " width="70" />
             </div>
           </div>
+          <!-- First -->
           <div class="podium__item">
-            <div class="podium__city">
+            <div class="podium__player">
               <p>Daniel 568265
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
@@ -124,11 +121,12 @@
             <div class="podium__rank first">
               <img
                 src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('daniel')}}.png"
-                alt="user" class="rounded-circle podium__city" width="70" />
+                alt="user" class="rounded-circle " width="70" />
             </div>
           </div>
+          <!-- Third -->
           <div class="podium__item ">
-            <div class="podium__city">
+            <div class="podium__player">
               <p>Client3 55234
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
@@ -142,21 +140,18 @@
             <div class="podium__rank third">
               <img
                 src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('scheerhorn')}}.png"
-                alt="user" class="rounded-circle podium__city" width="70" />
+                alt="user" class="rounded-circle " width="70" />
             </div>
           </div>
         </div>
-
-
-
-
+        <hr>
         <table class="table table-borderless table-hover mt-2">
-
           <tbody>
             <tr *ngFor="let player of ranking; let i = index">
-              <td>#{{ i+4 }}</td>
-              <td>{{ player.name }}</td>
-              <td>{{ player.score }}
+              <td style="width: 20%">#{{ i+4 }}</td>
+              <td style="width: 50%">{{ player.name }}</td>
+              <td class="score">{{ player.score }}
+                <!-- Coin -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                   class="bi bi-check2-circle" viewBox="0 0 16 16">
                   <path
@@ -169,7 +164,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>

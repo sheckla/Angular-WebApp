@@ -7,7 +7,6 @@
       </div>
     </div>
   </div>
-
   <div class="fade-in-2">
     <div *ngIf="!this.userHandlerService.getUser().isLoggedIn; else dashboardblock">
       <app-user-login></app-user-login>
@@ -16,11 +15,4 @@
       <app-quiz-dashboard></app-quiz-dashboard>
     </ng-template>
   </div>
-
-
 </div>
-
-
-<!-- <div class="container-fluid h-100 text-white bg-dark">
-    <app-quiz-lobby></app-quiz-lobby>
-  </div> -->
