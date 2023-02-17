@@ -41,11 +41,7 @@ export class UserHandlerService {
   public lobbyGameFinishedEvent = new EventEmitter<boolean>(); // status if current game is finished
 
   constructor() {
-    // TODO: PLEASE REMOVE WHEN LOGIN SCREEN IS FINISHED
-/*     this.fillLobbyForTesting();
-    this.fillQuizForTesting(); */
-    // Debug.log('Switched this.started = true');
-    // this.started = true;
+
   }
 
   // Socket Listeners for Quiz-Game Client<->Server communication

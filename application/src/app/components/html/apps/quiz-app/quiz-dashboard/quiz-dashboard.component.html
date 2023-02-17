@@ -53,7 +53,6 @@
             </div>
             <a>{{this.statusMessage}}</a>
 
-
           </div>
         </form>
       </div>
@@ -83,15 +82,89 @@
         </div>
       </div>
 
-      <div class="col-1 d-flex">
-        <div class="vr"></div>
-      </div>
 
-      <!-- UPCOMING LEADERBOARD -->
-      <div class="col container d-flex border border-warning">
-        <h1 class="mx-auto justify-content-center align-self-center text-warning">Upcoming Leaderboard in the next
-          Update
-        </h1>
+
+      <!-- LEADERBOARD -->
+      <div class="col container">
+        <h2>TOP 10 Leaderboard of the GOATs: Best Players by points</h2>
+        <div class="podium">
+          <!-- Second -->
+          <div class="podium__item">
+            <div class="podium__player">
+              <p>Muschieq 123123
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check2-circle" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                  <path
+                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                </svg>
+              </p>
+            </div>
+            <div class="podium__rank second">
+              <img
+                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('mike')}}.png"
+                alt="user" class="rounded-circle " width="70" />
+            </div>
+          </div>
+          <!-- First -->
+          <div class="podium__item">
+            <div class="podium__player">
+              <p>Daniel 568265
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check2-circle" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                  <path
+                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                </svg>
+              </p>
+            </div>
+            <div class="podium__rank first">
+              <img
+                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('daniel')}}.png"
+                alt="user" class="rounded-circle " width="70" />
+            </div>
+          </div>
+          <!-- Third -->
+          <div class="podium__item ">
+            <div class="podium__player">
+              <p>Client3 55234
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check2-circle" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                  <path
+                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                </svg>
+              </p>
+            </div>
+            <div class="podium__rank third">
+              <img
+                src="../../../../../../assets/img/profiles/profile_{{this.settingHandler.generateNumber('scheerhorn')}}.png"
+                alt="user" class="rounded-circle " width="70" />
+            </div>
+          </div>
+        </div>
+        <hr>
+        <table class="table table-borderless table-hover mt-2">
+          <tbody>
+            <tr *ngFor="let player of ranking; let i = index">
+              <td style="width: 20%">#{{ i+4 }}</td>
+              <td style="width: 50%">{{ player.name }}</td>
+              <td class="score">{{ player.score }}
+                <!-- Coin -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-check2-circle" viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                  <path
+                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                </svg>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

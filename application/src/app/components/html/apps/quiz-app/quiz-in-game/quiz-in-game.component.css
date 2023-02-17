@@ -8,6 +8,7 @@
   margin-bottom: 0.5rem;
 }
 
+
 .answers {
   margin-bottom: .5rem;
 
@@ -29,8 +30,10 @@
 
 .answerIcon {
   height: 20px;
+  margin-right: 10px;
 }
 
 .btn-close {
   float: right;
 }
+

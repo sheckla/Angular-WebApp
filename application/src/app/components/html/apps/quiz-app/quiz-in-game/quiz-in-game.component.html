@@ -9,23 +9,32 @@
       </span>
     </div>
 
-    <div class="col-1 d-flex">
-      <div class="vr"></div>
+    <!-- Timer / Question -->
+    <div class="col-6 text-center sat mb-2">
+      <div class="p-1 text-white" style="margin: 0 auto">
+        Question:
+        {{this.userHandlerService.getLobbyInfo().currentQuestionIndex}}/{{this.userHandlerService.getLobbyInfo().totalQuestionCount}}
+      </div>
+      <div class="spin-container timer mb-2 mt-2">
+        <mat-progress-spinner style="margin: 0 auto" class="example-margin" color="accent" [mode]="'determinate'"
+          [value]="this.currentSpinnerProgress">
+        </mat-progress-spinner>
+        <p class="center">{{this.currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}</p>
+      </div>
+      <div class="spacer-s"></div>
     </div>
 
-    <div class="col-5">
+    <div class="col-2">
       <span class="inGameInfo">
         <p>Correct: {{this.userHandlerService.getUser().currentCorrectAnswers}}</p>
-        <!-- TODO: no idea yet -->
-        <p>Wrong: {{this.userHandlerService.getUser().currentWrongAnswers}}</p> <!-- TODO: no idea yet -->
-        <p>Score: {{this.userHandlerService.getUser().currentScore}}</p> <!-- TODO: no idea yet -->
+        <p>Wrong: {{this.userHandlerService.getUser().currentWrongAnswers}}</p>
+        <p>Score: {{this.userHandlerService.getUser().currentScore}}</p>
       </span>
     </div>
 
     <div class="col-1">
-      <!-- TODO: Leave Lobby confirmation prompt -->
       <button type="button" class="btn-close btn-close-white" aria-label="Close"
-      (click)="this.userHandlerService.leaveLobby()"></button>
+        (click)="this.userHandlerService.leaveLobby()"></button>
     </div>
 
 
@@ -64,17 +73,20 @@
     <!-- TODO: Idea - if you answer, the class change from outline to "normal button" (filled);
       if its incorrect the correct answer changed to btn-danger (filled red!) -->
 
-    <span *ngFor="let topic of this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers, let i = index">
-        <input type="radio" class="btn-check" autocomplete="off" name="answer" id="answer-{{i}}" [disabled]="this.answerisSelected"
-        [(ngModel)]="this.selectedAnswer" [value]="this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]"
+    <span class="mt-2"
+      *ngFor="let topic of this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers, let i = index">
+      <input type="radio" class="btn-check" autocomplete="off" name="answer" id="answer-{{i}}"
+        [disabled]="this.answerisSelected" [(ngModel)]="this.selectedAnswer"
+        [value]="this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]"
         (ngModelChange)="submitAnswer($event)">
-        <label class="btn btn-outline-primary answer" for="answer-{{i}}">
-          <img src="{{this.answerIconPaths[i]}}" class="answerIcon" alt="Answer-{{i}}">
-            <!--
+      <label class="btn btn-outline-primary answer" for="answer-{{i}}">
+        <img src="{{this.answerIconPaths[i]}}" class="answerIcon" alt="Answer-{{i}}">
+        <!--
             safe [innerHTML binding] for Sanitized DOM text (xss protection)
             If manipulated during runtime Angular will throw security error
             -->
-          <a [innerHTML]="this.sanitizeDom(userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i])"></a>
+        <a
+          [innerHTML]="this.sanitizeDom(userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i])"></a>
       </label>
     </span>
   </div>
