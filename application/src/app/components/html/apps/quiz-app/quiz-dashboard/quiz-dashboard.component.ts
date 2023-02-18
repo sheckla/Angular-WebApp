@@ -27,6 +27,7 @@ export class QuizDashboardComponent implements OnInit {
           this.statusMessage = '';
         } else {
           this.statusMessage = _errorMessageService.LobbyJoinError;
+          this.shakeButton("lobbyInput");
         }
       })
     );
@@ -78,37 +79,6 @@ export class QuizDashboardComponent implements OnInit {
     this.statusMessage = '';
     return true;
   }
-
-  ranking = [
-    {
-      name: 'mike',
-      score: 10000,
-    },
-    {
-      name: 'dan',
-      score: 1234,
-    },
-    {
-      name: 'liz',
-      score: 900,
-    },
-    {
-      name: 'fred',
-      score: 500,
-    },
-    {
-      name: 'pete',
-      score: 443,
-    },
-    {
-      name: 'kev',
-      score: 222,
-    },
-    {
-      name: 'dom',
-      score: 100,
-    },
-  ];
 
   ngOnInit(): void {}
 
