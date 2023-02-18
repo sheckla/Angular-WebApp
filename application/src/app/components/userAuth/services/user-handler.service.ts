@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Debug } from './util/Debug';
 import { ClientSocket } from './util/ClientSocket';
-import { User, LobbyInfo, QuizQuestion, Timer, QuestionTopicResult } from './util/QuizAppDataTypes';
+import {
+  User,
+  LobbyInfo,
+  QuizQuestion,
+  Timer,
+  QuestionTopicResult,
+} from './util/QuizAppDataTypes';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PopupService } from './popupDialog/popup.service';
 @Injectable({
@@ -47,15 +53,19 @@ export class UserHandlerService {
 
   constructor(private popupService: PopupService) {
     this._clientConnection.connectionHasBeenLostEvent.subscribe(() => {
-      if (this._clientConnection.connected()) this.popupService.showPopup('Connection Lost!', "Connection was closed unexpectedly", "Damn bruv")
-      Debug.log("Oh no! Connection failed. RIP");
+      if (this._clientConnection.connected())
+        this.popupService.showPopup(
+          'Connection Lost!',
+          'Connection was closed unexpectedly',
+          'Damn bruv'
+        );
+      Debug.log('Oh no! Connection failed. RIP');
       this.resetQuizAppData();
-    })
+    });
   }
 
   // Socket Listeners for Quiz-Game Client<->Server communication
   initQuizGameListeners() {
-
     // Login Status
     this._clientConnection
       .getSocket()
@@ -77,29 +87,31 @@ export class UserHandlerService {
       });
 
     // Current Open Lobbies
-    this._clientConnection.getSocket().on('CurrentOpenLobbies', (lobbyInfos) => {
-      var openLobbyInfo: any = [];
-      for (var i = 0; i < lobbyInfos.length; i++) {
-        var lobby: LobbyInfo = lobbyInfos[i];
-        var info = {
-          name: lobby.name,
-          users: lobby.users,
-        };
-        openLobbyInfo.push(info);
-      }
-      this.openLobbyFetchEvent.emit(openLobbyInfo);
-      this._openLobbies = openLobbyInfo;
-    });
+    this._clientConnection
+      .getSocket()
+      .on('CurrentOpenLobbies', (lobbyInfos) => {
+        var openLobbyInfo: any = [];
+        for (var i = 0; i < lobbyInfos.length; i++) {
+          var lobby: LobbyInfo = lobbyInfos[i];
+          var info = {
+            name: lobby.name,
+            users: lobby.users,
+          };
+          openLobbyInfo.push(info);
+        }
+        this.openLobbyFetchEvent.emit(openLobbyInfo);
+        this._openLobbies = openLobbyInfo;
+      });
 
     // Current Leaderboard scores CurrentLeaderboard
-    this._clientConnection.getSocket().on('CurrentLeaderboard', (leaderboard) => {
-      var leaderboardUsers: any = [];
-      for (var i = 0; i < leaderboard.length; i++) {
-
-      }
-      this._currentLeaderboardUsers = leaderboard;
-      this.leaderboardPolled = true;
-      /*       var openLobbyInfo: any = [];
+    this._clientConnection
+      .getSocket()
+      .on('CurrentLeaderboard', (leaderboard) => {
+        var leaderboardUsers: any = [];
+        for (var i = 0; i < leaderboard.length; i++) {}
+        this._currentLeaderboardUsers = leaderboard;
+        this.leaderboardPolled = true;
+        /*       var openLobbyInfo: any = [];
             for (var i = 0; i < lobbyInfos.length; i++) {
               var lobby: LobbyInfo = lobbyInfos[i];
               var info = {
@@ -108,7 +120,7 @@ export class UserHandlerService {
               };
               openLobbyInfo.push(info);
             } */
-    });
+      });
 
     // Lobby Creation Status
     this._clientConnection
@@ -133,7 +145,11 @@ export class UserHandlerService {
         this._user.isInsideLobby = !status.success || !status;
         this._currentLobby.isStarting = !status.success || !status;
         if (status.kick) {
-          this.popupService.showPopup("Lobby Leader has closed the lobby!", "You have been returned to the dashboard", "I Understand :sadface:");
+          this.popupService.showPopup(
+            'Lobby Leader has closed the lobby!',
+            'You have been returned to the dashboard',
+            'I Understand :sadface:'
+          );
         }
       });
 
@@ -141,7 +157,7 @@ export class UserHandlerService {
     this._clientConnection
       .getSocket()
       .on('CurrentLobbyInformationChanged', (lobbyInfo) => {
-        this._currentLobby.name = lobbyInfo.name
+        this._currentLobby.name = lobbyInfo.name;
         this._currentLobby.totalQuestionCount = lobbyInfo.totalQuestionCount;
         this._currentLobby.categoryName = lobbyInfo.categoryName;
         this._currentLobby.difficulty = lobbyInfo.difficulty;
@@ -149,7 +165,6 @@ export class UserHandlerService {
         this._currentLobby.maxTimerSeconds = lobbyInfo.maxTimerSeconds;
         this._currentLobby.finished = lobbyInfo.finished;
         this.lobbyInformationChangedEvent.emit(lobbyInfo);
-
       });
 
     // Lobby Users changed
@@ -160,22 +175,22 @@ export class UserHandlerService {
         this._currentLobby.users = userInfo.users;
 
         if (userInfo.leader.name == this._user.name) {
-          this._user.currentCorrectAnswers = userInfo.leader.currentCorrectAnswers;
+          this._user.currentCorrectAnswers =
+            userInfo.leader.currentCorrectAnswers;
           this._user.currentWrongAnswers = userInfo.leader.currentWrongAnswers;
           this._user.currentScore = userInfo.leader.currentScore;
           return;
         }
 
-        userInfo.users.forEach(user => {
+        userInfo.users.forEach((user) => {
           if (user.name == this._user.name) {
             this._user.currentCorrectAnswers = user.currentCorrectAnswers;
             this._user.currentWrongAnswers = user.currentWrongAnswers;
             this._user.currentScore = user.currentScore;
             return;
           }
-        })
-
-      })
+        });
+      });
 
     // Current Lobby Question
     this._clientConnection
@@ -185,8 +200,10 @@ export class UserHandlerService {
         this._currentLobby.currentQuestionTopic.question = question.question;
         this._currentLobby.currentQuestionTopic.category = question.category;
         this._currentLobby.currentQuestionTopic.type = question.type;
-        this._currentLobby.currentQuestionTopic.difficulty = question.difficulty;
-        this._currentLobby.currentQuestionTopic.shuffledAnswers = question.shuffledAnswers;
+        this._currentLobby.currentQuestionTopic.difficulty =
+          question.difficulty;
+        this._currentLobby.currentQuestionTopic.shuffledAnswers =
+          question.shuffledAnswers;
         this._currentLobby.currentQuestionTopic.index = question.index;
         this._questionTimer.stop();
         this._questionTimer.start(this._currentLobby.maxTimerSeconds);
@@ -194,22 +211,22 @@ export class UserHandlerService {
           this._questionTimer.currentTimer = question.timerForLateJoinedUser;
         }
         this.lobbyQuestionChangedEvent.emit();
-      })
+      });
 
     // Current Lobby Questions results after question time has ended or all users have submitted answer
     this._clientConnection
       .getSocket()
       .on('LobbyQuestionTopicResults', (questionTopicResult) => {
-        Debug.log("round finished");
+        Debug.log('round finished');
         this._questionTopicResult = questionTopicResult;
         console.log(this._questionTopicResult);
         var users = [this._currentLobby.leader, ...this._currentLobby.users];
         users.forEach((user) => {
           user.answerSubmitted = false;
-        })
+        });
         this._questionTimer.stop();
         this.questionResultsReceived = true;
-      })
+      });
 
     this._clientConnection
       .getSocket()
@@ -217,30 +234,36 @@ export class UserHandlerService {
         var users = [this._currentLobby.leader, ...this._currentLobby.users];
         users.forEach((user) => {
           if (user.name == username) user.answerSubmitted = true;
-        })
-      })
+        });
+      });
 
     // Current Lobby Game finished
-    this._clientConnection
-      .getSocket()
-      .on('LobbyGameFinished', (status) => {
-        this._currentLobby.finished = status;
-        this._questionTopicResult = new QuestionTopicResult();
-        this.lobbyGameFinishedEvent.emit(true);
+    this._clientConnection.getSocket().on('LobbyGameFinished', (status) => {
+      this._currentLobby.finished = status;
+      this._questionTopicResult = new QuestionTopicResult();
+      this.lobbyGameFinishedEvent.emit(true);
 
-        Debug.log("Lobby Game finished, preparing to return to lobby in " + 15 + " seconds.");
-        this.intermissionTimer = new Timer();
-        this.intermissionTimer.start(5);
-        this.intermissionTimer.timerTickEvent.subscribe((tick) => {
-          if (tick == 0) {
-            Debug.log("returning to lobby");
-            this.intermissionTimer.timerTickEvent.unsubscribe();
-            this.intermissionTimer.stop();
-            this.finishGame();
-          }
-        })
-      })
+      console.log('from userhandler, slice 0,2');
+      console.log(this.getSortedUsers().slice(0, 2));
+      //Popup
+      this.popupService.showWinnerPopup(this.getSortedUsers().slice(0, 2));
 
+      Debug.log(
+        'Lobby Game finished, preparing to return to lobby in ' +
+          15 +
+          ' seconds.'
+      );
+      this.intermissionTimer = new Timer();
+      this.intermissionTimer.start(5);
+      this.intermissionTimer.timerTickEvent.subscribe((tick) => {
+        if (tick == 0) {
+          Debug.log('returning to lobby');
+          this.intermissionTimer.timerTickEvent.unsubscribe();
+          this.intermissionTimer.stop();
+          this.finishGame();
+        }
+      });
+    });
   }
 
   // *** Emit Events
@@ -249,7 +272,7 @@ export class UserHandlerService {
     var userPass = {
       name: name,
       password: password,
-    }
+    };
     this._user.name = name;
     this._clientConnection.getSocket().emit('Client_LoginRequest', userPass);
   }
@@ -259,7 +282,7 @@ export class UserHandlerService {
     var userPass = {
       name: name,
       password: password,
-    }
+    };
     this._user.name = name;
     this._clientConnection.getSocket().emit('Client_RegisterRequest', userPass);
   }
@@ -290,8 +313,16 @@ export class UserHandlerService {
       .emit('Client_LobbyLeaveRequest', this._currentLobby.name);
   }
 
-  startLobby(timer: number, amount: number, difficulty: string, category: string): void {
-    this._currentLobby.sortedUsers = [this._currentLobby.leader, ...this._currentLobby.users];
+  startLobby(
+    timer: number,
+    amount: number,
+    difficulty: string,
+    category: string
+  ): void {
+    this._currentLobby.sortedUsers = [
+      this._currentLobby.leader,
+      ...this._currentLobby.users,
+    ];
     this._currentLobby.maxTimerSeconds = timer;
     this._currentLobby.totalQuestionCount = amount;
     this._currentLobby.difficulty = difficulty;
@@ -303,7 +334,7 @@ export class UserHandlerService {
       totalQuestionsAmount: amount,
       difficulty: difficulty,
       category: category,
-    }
+    };
     this._currentLobby.isStarting = true;
     this._clientConnection
       .getSocket()
@@ -353,7 +384,8 @@ export class UserHandlerService {
   userHadCorrectAnswer(name: string): boolean {
     var userHadCorrectAnswer = false;
     this._questionTopicResult.userResults.forEach((userResult) => {
-      if (userResult.name == name && userResult.addedScore > 0) userHadCorrectAnswer = true;
+      if (userResult.name == name && userResult.addedScore > 0)
+        userHadCorrectAnswer = true;
     });
     return userHadCorrectAnswer;
   }
@@ -361,15 +393,17 @@ export class UserHandlerService {
   getAddedScore(name: string): string {
     var addedScore = '';
     this._questionTopicResult.userResults.forEach((userResult) => {
-      if (userResult.name == name) addedScore = userResult.addedScore.toString();
-    })
+      if (userResult.name == name)
+        addedScore = userResult.addedScore.toString();
+    });
     return addedScore;
   }
 
   userHadStreakPoints(name: string): boolean {
     var userHadStreakPoints = false;
     this._questionTopicResult.userResults.forEach((userResult) => {
-      if (userResult.name == name && userResult.addedStreakScore > 0) userHadStreakPoints = true;
+      if (userResult.name == name && userResult.addedStreakScore > 0)
+        userHadStreakPoints = true;
     });
     return userHadStreakPoints;
   }
@@ -377,8 +411,9 @@ export class UserHandlerService {
   getStreakScore(name: string): string {
     var addedStreakScore = '';
     this._questionTopicResult.userResults.forEach((userResult) => {
-      if (userResult.name == name) addedStreakScore = userResult.addedStreakScore.toString();
-    })
+      if (userResult.name == name)
+        addedStreakScore = userResult.addedStreakScore.toString();
+    });
     return addedStreakScore;
   }
 
@@ -388,10 +423,8 @@ export class UserHandlerService {
     return answerCorrect;
   }
 
-
   resetQuizAppData() {
-    this._user = new User(),
-      this._currentLobby = new LobbyInfo();
+    (this._user = new User()), (this._currentLobby = new LobbyInfo());
     this._openLobbies = [];
     this._currentLeaderboardUsers = [];
     this._questionTimer = new Timer();
@@ -415,12 +448,12 @@ export class UserHandlerService {
     this._currentLobby.leader.currentWrongAnswers = 0;
     this._currentLobby.leader.currentCorrectAnswers = 0;
 
-    this._currentLobby.users.forEach(user => {
+    this._currentLobby.users.forEach((user) => {
       user.currentScore = 0;
       user.answerSubmitted = false;
       user.currentStreak = 0;
       user.currentWrongAnswers = 0;
       user.currentCorrectAnswers = 0;
-    })
+    });
   }
 }

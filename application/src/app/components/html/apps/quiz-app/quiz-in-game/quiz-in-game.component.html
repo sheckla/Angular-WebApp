@@ -19,7 +19,9 @@
         <mat-progress-spinner style="margin: 0 auto" class="example-margin" color="accent" [mode]="'determinate'"
           [value]="this.currentSpinnerProgress">
         </mat-progress-spinner>
-        <p class="center">{{this.userHandlerService.getQuestionTimer().currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}</p>
+        <p class="center">
+          {{this.userHandlerService.getQuestionTimer().currentTimer}}/{{this.userHandlerService.getLobbyInfo().maxTimerSeconds}}
+        </p>
       </div>
       <div class="spacer-s"></div>
     </div>
@@ -51,20 +53,14 @@
   <hr>
 
   <div class="row answerSection">
-    <!-- TODO: Questions must be shuffled in an array, then NGFOR over it -->
-    <!-- TODO: Idea - if you answer, the class change from outline to "normal button" (filled);
-      if its incorrect the correct answer changed to btn-danger (filled red!) -->
-
     <span class="mt-2"
-
       *ngFor="let topic of this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers, let i = index">
       <input type="radio" class="btn-check" autocomplete="off" name="answer" id="answer-{{i}}"
-
         [disabled]="this.answerisSelected" [(ngModel)]="this.selectedAnswer"
         [value]="this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]"
         (ngModelChange)="submitAnswer($event)">
       <label class="btn btn-outline-primary answer" for="answer-{{i}}"
-      [ngClass]="{'mark-correct': this.userHandlerService.validifyCorrectAnswer(this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]) && this.userHandlerService.questionResultsReceived,
+        [ngClass]="{'mark-correct': this.userHandlerService.validifyCorrectAnswer(this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]) && this.userHandlerService.questionResultsReceived,
       'mark-false': !this.userHandlerService.validifyCorrectAnswer(this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]) && this.userHandlerService.questionResultsReceived}">
         <img src="{{this.answerIconPaths[i]}}" class="answerIcon" alt="Answer-{{i}}">
         <!--
@@ -78,7 +74,7 @@
   </div>
 </div>
 
-<div *ngIf="this.userHandlerService.getLobbyInfo().finished">
+<!-- <div *ngIf="this.userHandlerService.getLobbyInfo().finished">
   GG boiz
   Returning to lobby in {{this.userHandlerService.intermissionTimer.currentTimer}} seconds
-</div>
+</div> -->

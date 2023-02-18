@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatIconModule } from '@angular/material/icon'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { IndexComponent } from './components/html/index/index.component';
@@ -21,34 +21,36 @@ import { QuizInGameComponent } from './components/html/apps/quiz-app/quiz-in-gam
 import { QuizRegisterComponent } from './components/html/apps/quiz-app/quiz-register/quiz-register.component';
 import { QuizCurrentPlayerComponent } from './components/html/apps/quiz-app/quiz-current-player/quiz-current-player.component';
 import { ImpressumComponent } from './components/html/impressum/impressum.component';
-
+import { DialogComponent } from './components/userAuth/services/popupDialog/popup.service';
+import { DialogWinnerComponent } from './components/userAuth/services/popupDialog/popup.service';
+import { DialogSelectableComponent } from './components/userAuth/services/popupDialog/popup.service';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavbarComponent,
-        UserLoginComponent,
-        IndexComponent,
-        QuizAppLayoutComponent,
-        QuizDashboardComponent,
-        QuizLobbyComponent,
-        QuizInGameComponent,
-        QuizRegisterComponent,
-        QuizCurrentPlayerComponent,
-        ImpressumComponent,
-    ],
-    providers: [],
-    bootstrap: [AppComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        MatDialogModule,
-        MatIconModule,
-        FormsModule,
-        MatSliderModule,
-        CommonModule,
-    ]
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    UserLoginComponent,
+    IndexComponent,
+    QuizAppLayoutComponent,
+    QuizDashboardComponent,
+    QuizLobbyComponent,
+    QuizInGameComponent,
+    QuizRegisterComponent,
+    QuizCurrentPlayerComponent,
+    ImpressumComponent,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatIconModule,
+    FormsModule,
+    MatSliderModule,
+    CommonModule,
+  ],
 })
 export class AppModule {}

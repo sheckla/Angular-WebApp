@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserHandlerService } from 'src/app/components/userAuth/services/user-handler.service';
+import { PopupService } from 'src/app/components/userAuth/services/popupDialog/popup.service';
 import { Subscription } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { Debug } from 'src/app/components/userAuth/services/util/Debug';
@@ -17,9 +18,12 @@ export class QuizInGameComponent implements OnInit {
   public answerisSelected: boolean = false;
   public answerIconPaths: string[] = [];
 
+  constructor(
+    public userHandlerService: UserHandlerService,
+    private popupService: PopupService,
 
-  constructor(public userHandlerService: UserHandlerService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer
+  ) {
     // *** Subscriptions ***
     this._subscriptions.push(
       // Timer for each new question
@@ -27,13 +31,16 @@ export class QuizInGameComponent implements OnInit {
         this.answerisSelected = false;
         this.selectedAnswer = '';
       })
-    )
+    );
     // Update Spinner for timer-tick or leave lobby if game is finished
     this._subscriptions.push(
-      this.userHandlerService.getQuestionTimer().timerTickEvent.subscribe((tick) => {
-        this.currentSpinnerProgress = tick / this.userHandlerService.getQuestionTimer().maxTimer * 100;
-      })
-    )
+      this.userHandlerService
+        .getQuestionTimer()
+        .timerTickEvent.subscribe((tick) => {
+          this.currentSpinnerProgress =
+            (tick / this.userHandlerService.getQuestionTimer().maxTimer) * 100;
+        })
+    );
   }
 
   ngOnInit(): void {
@@ -46,7 +53,8 @@ export class QuizInGameComponent implements OnInit {
 
   private initAnswerIconPaths(): void {
     for (var i = 0; i <= 3; i++) {
-      this.answerIconPaths[i] = '../../../../../../assets/img/answer_icon_' + i + '.png';
+      this.answerIconPaths[i] =
+        '../../../../../../assets/img/answer_icon_' + i + '.png';
     }
   }
 
@@ -66,6 +74,4 @@ export class QuizInGameComponent implements OnInit {
     const button = document.getElementById('answer-1');
     console.log(button);
   }
-
-
 }
