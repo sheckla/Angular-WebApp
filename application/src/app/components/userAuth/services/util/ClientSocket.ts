@@ -1,3 +1,4 @@
+import { EventEmitter } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Debug } from './Debug'
 /*
@@ -10,6 +11,7 @@ export class ClientSocket {
   private _host: string = "ws://localhost:3000";
   //private _host: string = "https://socketio-server.up.railway.app/";
   private _connected: boolean = false;
+  public connectionHasBeenLostEvent: EventEmitter<any> = new EventEmitter();
 
   // Async Connection Establish
   async establishConnection(): Promise<void> {
@@ -22,7 +24,7 @@ export class ClientSocket {
     return new Promise((success, failure) => {
       // Socket initialization
       this._socket = io(this._host, {
-        transports: ["websocket"],
+        transports: ["websocket", "polling"],
       });
 
       // Try to connect to Host
@@ -35,7 +37,8 @@ export class ClientSocket {
 
       // Check for connect_error in SocketIO
       this._socket.on("connect_error", (error) => {
-        this._connected = false;
+        if (this._connected) this.connectionHasBeenLostEvent.emit();
+        this.closeConnection();
         Debug.log("Error connecting to Host=" + this._host +
           ". Check Host configuration and try again");
         failure(); // notify callback
@@ -47,13 +50,14 @@ export class ClientSocket {
     if (this._connected) {
       this._socket.close();
       Debug.log("User logged out");
+      this._connected = false;
       return true;
     }
 
     return false;
   }
 
-  socketInitialized(): boolean {
+  connected(): boolean {
     return this._connected;
   }
 

@@ -11,6 +11,8 @@ export class User {
   public answerSubmitted: boolean = false;
   public totalScore: number = 0;
   public totalPlayedGames: number = 0;
+  public addedScore: number = 0;
+  public addedStreakScore: number = 0;
 }
 
 export class LobbyInfo {
@@ -25,6 +27,7 @@ export class LobbyInfo {
   public currentQuestionTopic: QuizQuestion = new QuizQuestion();
   public finished: boolean = false;
   public isStarting: boolean = false;
+  public sortedUsers: User[] = [];
 }
 
 // Same interface as requested from opentdb
@@ -36,6 +39,18 @@ export class QuizQuestion {
   public shuffledAnswers: string[] = [];
   public index: number = 0;
 }
+
+export class UserResult {
+  public name: string = '';
+  public addedScore: number = 0;
+  public addedStreakScore: number = 0;
+}
+
+export class QuestionTopicResult {
+  public userResults: UserResult[] = [];
+  public correctAnswer: string = '';
+}
+
 
 export class Timer {
   public timerFinishedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();

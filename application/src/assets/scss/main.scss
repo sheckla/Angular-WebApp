@@ -18,3 +18,7 @@ dark: rgb(34,34,34) // Body BG
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+mat-dialog-container {
+  background-color: rgb(59, 59, 59) !important;
+}

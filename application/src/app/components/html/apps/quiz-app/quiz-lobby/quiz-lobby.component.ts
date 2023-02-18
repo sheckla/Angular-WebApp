@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { UserHandlerService } from 'src/app/components/userAuth/services/user-handler.service';
 import { SettingHandlerService } from 'src/app/components/userAuth/services/setting-handler.service';
 import { LobbyInfo } from 'src/app/components/userAuth/services/util/QuizAppDataTypes';
+import { PopupService } from 'src/app/components/userAuth/services/popupDialog/popup.service';
 
 @Component({
   selector: 'app-quiz-lobby',
@@ -28,7 +29,8 @@ export class QuizLobbyComponent implements OnInit {
 
   constructor(
     public userHandlerService: UserHandlerService,
-    public settingHandler: SettingHandlerService
+    public settingHandler: SettingHandlerService,
+    private popup: PopupService
   ) {
     // preserve existing values if existing
     if (this.userHandlerService.getLobbyInfo().totalQuestionCount) this.defaultAmount = this.userHandlerService.getLobbyInfo().totalQuestionCount;
@@ -64,7 +66,13 @@ export class QuizLobbyComponent implements OnInit {
   }
 
   leaveLobby(): void {
-    this.userHandlerService.leaveLobby();
+    if ((this.userHandlerService.getUser().name == this.userHandlerService.getLobbyInfo().leader.name) &&(this.userHandlerService.getLobbyInfo().users && this.userHandlerService.getLobbyInfo().users.length >= 1)) {
+      this.popup.showPopupSelectable("Woah Nelly", "Wait Bro, you'll close lobby for others too").afterClosed().subscribe(result => {
+        if (result == 'confirm') this.userHandlerService.leaveLobby();
+      })
+    } else {
+      this.userHandlerService.leaveLobby();
+    }
   }
 
   startLobby(): void {

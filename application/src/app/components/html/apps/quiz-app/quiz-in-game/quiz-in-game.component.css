@@ -37,3 +37,26 @@
   float: right;
 }
 
+.mark-correct {
+  background-color: rgba(37, 174, 55, 0.539) !important;
+  animation: transform-size 1s;
+}
+
+.mark-false {
+  background-color: rgba(174, 37, 85, 0.224) !important;
+}
+
+@keyframes transform-size {
+  0% {
+    transform: scale(1.0)
+  }
+  50% {
+    transform: scale(1.03)
+  }
+  100% {
+    transform: scale(1.0)
+  }
+
+}
+
+

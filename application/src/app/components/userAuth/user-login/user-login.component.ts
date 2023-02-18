@@ -12,12 +12,13 @@ import { Subscription } from 'rxjs';
 export class UserLoginComponent {
   errorDisplayMessage = '';
   loginMode: boolean = true;
+  wrongUsernameInput: boolean = false;
+  wrongPasswordInput: boolean = false;
   private _subscriptions: Subscription[] = [];
 
   constructor(
     private userHandlerService: UserHandlerService,
-    private errorMessageService: ErrorMessagesService,
-    private dialog: MatDialog) {
+    private errorMessageService: ErrorMessagesService) {
       this._subscriptions.push(
         this.userHandlerService.loginStatusEvent.subscribe((status) => {
           this.errorDisplayMessage = errorMessageService.LoginFailed;
@@ -53,11 +54,13 @@ export class UserLoginComponent {
   login(name, password) {
     // Username length check
     if (name.length < 4) {
+      this.shakeButton("nameInput")
       this.errorDisplayMessage = this.errorMessageService.LoginUsernameTooShort;
       return;
     }
     if (password.length < 4) {
       this.errorDisplayMessage = this.errorMessageService.LoginPasswordTooShort;
+      this.shakeButton("passwordInput");
       return;
     }
 
@@ -78,5 +81,13 @@ export class UserLoginComponent {
         this.userHandlerService.register(name, password);
       }
     });
+  }
+
+  shakeButton(id: any) {
+    const button = document.getElementById(id)
+    button?.classList.add("btn-wrong-input");
+    setTimeout(() => {
+      button?.classList.remove('btn-wrong-input');
+    }, 500);
   }
 }

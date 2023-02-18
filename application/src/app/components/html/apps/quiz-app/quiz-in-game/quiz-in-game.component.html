@@ -56,12 +56,16 @@
       if its incorrect the correct answer changed to btn-danger (filled red!) -->
 
     <span class="mt-2"
+
       *ngFor="let topic of this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers, let i = index">
       <input type="radio" class="btn-check" autocomplete="off" name="answer" id="answer-{{i}}"
+
         [disabled]="this.answerisSelected" [(ngModel)]="this.selectedAnswer"
         [value]="this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]"
         (ngModelChange)="submitAnswer($event)">
-      <label class="btn btn-outline-primary answer" for="answer-{{i}}">
+      <label class="btn btn-outline-primary answer" for="answer-{{i}}"
+      [ngClass]="{'mark-correct': this.userHandlerService.validifyCorrectAnswer(this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]) && this.userHandlerService.questionResultsReceived,
+      'mark-false': !this.userHandlerService.validifyCorrectAnswer(this.userHandlerService.getLobbyInfo().currentQuestionTopic.shuffledAnswers[i]) && this.userHandlerService.questionResultsReceived}">
         <img src="{{this.answerIconPaths[i]}}" class="answerIcon" alt="Answer-{{i}}">
         <!--
             safe [innerHTML binding] for Sanitized DOM text (xss protection)

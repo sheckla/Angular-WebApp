@@ -62,4 +62,10 @@ export class QuizInGameComponent implements OnInit {
     this.userHandlerService.submitAnswer(answer);
   }
 
+  markCorrectAnswer(answer: string) {
+    const button = document.getElementById('answer-1');
+    console.log(button);
+  }
+
+
 }

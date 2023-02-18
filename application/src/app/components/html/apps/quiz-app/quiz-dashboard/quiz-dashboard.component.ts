@@ -72,6 +72,7 @@ export class QuizDashboardComponent implements OnInit {
   private validateLobbyName(lobbyName: string): boolean {
     if (lobbyName.length < 4) {
       this.statusMessage = this._errorMessageService.LobbyNameTooShortError;
+      this.shakeButton("lobbyInput");
       return false;
     }
     this.statusMessage = '';
@@ -110,4 +111,12 @@ export class QuizDashboardComponent implements OnInit {
   ];
 
   ngOnInit(): void {}
+
+  shakeButton(id: any) {
+      const button = document.getElementById(id)
+      button?.classList.add("btn-wrong-input");
+      setTimeout(() => {
+        button?.classList.remove('btn-wrong-input');
+      }, 500);
+  }
 }
