@@ -244,9 +244,9 @@ export class UserHandlerService {
       this.lobbyGameFinishedEvent.emit(true);
 
       console.log('from userhandler, slice 0,2');
-      console.log(this.getSortedUsers().slice(0, 2));
+      console.log(this.getSortedUsers().slice(0, 3));
       //Popup
-      this.popupService.showWinnerPopup(this.getSortedUsers().slice(0, 2));
+      this.popupService.showWinnerPopup(this.getSortedUsers().slice(0, 3));
 
       Debug.log(
         'Lobby Game finished, preparing to return to lobby in ' +

@@ -48,3 +48,7 @@ background: linear-gradient(90deg, rgba(141,16,172,0.76) 5%, rgba(195,32,236,1) 
   display: flex;
   align-items: flex-end;
 }
+
+.mat-dialog-content {
+ margin: 0 0 !important
+}
