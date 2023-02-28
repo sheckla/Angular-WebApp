@@ -8,8 +8,8 @@ import { Debug } from './Debug'
 */
 export class ClientSocket {
   private _socket!: Socket;
-  private _host: string = "ws://localhost:3000";
-  //private _host: string = "https://socketio-server.up.railway.app/";
+  private _host: string = "ws://localhost:3000"; // CHANGE TO SERVER PC
+  // private _host: string = "https://socketio-server.up.railway.app/";
   private _connected: boolean = false;
   public connectionHasBeenLostEvent: EventEmitter<any> = new EventEmitter();
 
@@ -24,7 +24,7 @@ export class ClientSocket {
     return new Promise((success, failure) => {
       // Socket initialization
       this._socket = io(this._host, {
-        transports: ["websocket", "polling"],
+        transports: ["websocket"],
       });
 
       // Try to connect to Host
