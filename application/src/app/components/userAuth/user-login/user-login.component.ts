@@ -64,14 +64,6 @@ export class UserLoginComponent {
       return;
     }
 
-    /* Don't close connection at failed request
-    /// TODO: Was ist performanter:
-    *       Socket-Connection aufrechterhalten bis neuer Login Request
-    *       ODER
-    *       Jedesmal neue Verbindung bei neuem Login
-    /// TODO: Timeout einbauen um Ressourcen zu sparen
-    */
-
     // Async establishConnection call
     this.userHandlerService.getClientSocket().establishConnection().then( () => {
       this.userHandlerService.initQuizGameListeners();

@@ -70,6 +70,7 @@ export class UserHandlerService {
     this._clientConnection
       .getSocket()
       .on('Client_LoginRequest_Status', (status) => {
+        console.log(status);
         this._user.isLoggedIn = status.success;
         this.loginStatusEvent.emit(status.success);
         if (status.success) {
